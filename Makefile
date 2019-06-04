@@ -6,7 +6,32 @@
 #    By: fhignett <fhignett@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/06/04 14:19:05 by fhignett       #+#    #+#                 #
-#    Updated: 2019/06/04 14:19:12 by fhignett      ########   odam.nl          #
+#    Updated: 2019/06/04 14:31:18 by fhignett      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
+NAME = wolf3d
+INCL = -Iincludes -Iminilibx_macos -Ift_libft/includes
+LIB = -Lminilibx_macos -lmlx libft/printlibft.a
+FRAMEWORK = -framework OpenGL -framework AppKit
+CFILES = *
+SOURCE = $(CFILES:%=source/%.c)
+OFILES = $(SOURCE:.c=.o) # HEBBEN WE DIT NODIG???
+FLAGS = -Wall -Werror -Wextra # ADD LATER
+
+all: $(NAME)
+
+$(NAME):
+        @echo "Compiling..."
+        @make -C libft
+        @gcc -o $(NAME) $(SOURCE) $(LIB) $(INCL) $(FRAMEWORK)
+        @make clean
+        @echo "Done"
+
+clean:
+        @make clean -C libft/
+
+fclean: clean
+        @rm -f $(NAME)
+        @make fclean -C libft
+        @echo "Cleaning..."
