@@ -1,10 +1,8 @@
 #ifndef WOLF3D_H
 # define WOLF3D_H
 
-# include "mlx.h"
 # include "libft.h"
 # include "ft_printf.h"
-# include <stdlib.h>
 
 # define KEY_ESC                53
 # define KEY_SPACE              49
@@ -39,6 +37,13 @@
 
 typedef unsigned char	t_byte;
 
+typedef struct			s_map
+{
+	int					height;
+	int					width;
+	int					**map;
+}						t_map;
+
 typedef struct			s_colour
 {
 	t_byte				r;
@@ -61,6 +66,7 @@ typedef struct			s_mlx
 	int					bits_per_pixel;
 	int					size_line;
 	int					endian;
+	t_map				*map;
 }						t_mlx;
 
 void					init_wolf(char *map);

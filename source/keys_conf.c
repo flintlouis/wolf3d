@@ -1,4 +1,5 @@
 #include "wolf3d.h"
+#include <stdlib.h>
 
 int	close_window(void *ptr)
 {
