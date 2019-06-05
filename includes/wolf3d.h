@@ -69,9 +69,10 @@ typedef struct			s_mlx
 	t_map				*map;
 }						t_mlx;
 
-void					init_wolf(char *map);
 int						close_window(void *ptr);
 int						key_press(int key, t_mlx *mlx);
 int						key_release(int key, t_mlx *mlx);
+void					init_wolf(char *map);
+t_map					*get_map(char *file);
 
 #endif

@@ -1,7 +1,7 @@
 #include "wolf3d.h"
 #include "mlx.h"
 
-void	run_wolf(t_mlx *mlx)
+static void	run_wolf(t_mlx *mlx)
 {
 	// mlx_hook(mlx->win, 4, 1L << 2, mouse_press, mlx);
 	// mlx_hook(mlx->win, 5, 1L << 3, mouse_release, mlx);
@@ -26,5 +26,22 @@ void	init_wolf(char *map)
 
 	mlx = MEM(t_mlx);
 	init_mlx(mlx);
+	mlx->map = get_map(map);
+///////////////////////
+	ft_printf("width = %d, height = %d\n\n", mlx->map->width, mlx->map->height);
+	int i = 0;
+	int j = 0;
+	while (j < mlx->map->height)
+	{
+		while (i < mlx->map->width)
+		{
+			ft_printf("%d ", mlx->map->map[j][i]);
+			i++;
+		}
+		ft_putendl("");
+		j++;
+		i = 0;
+	}
+//////////////////////
 	run_wolf(mlx);
 }
