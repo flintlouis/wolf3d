@@ -32,7 +32,7 @@
 # define KEY_P                  35
 
 # define MEM(x) 		(x*)ft_memalloc(sizeof(x))
-# define WIDTH			2000
+# define WIDTH			1200
 # define HEIGHT			800
 
 typedef unsigned char	t_byte;

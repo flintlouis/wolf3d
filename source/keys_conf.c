@@ -19,3 +19,8 @@ int	key_release(int key, t_mlx *mlx)
 {
 	return (0);
 }
+
+int	mouse_move(int x, int y, t_mlx *mlx)
+{
+	return (0);
+}

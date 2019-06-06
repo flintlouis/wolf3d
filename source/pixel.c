@@ -1,6 +1,6 @@
 #include "wolf3d.h"
 
-void            put_pixel(int x, int y, t_mlx *mlx, t_colour colour)
+static void            put_pixel(int x, int y, t_mlx *mlx, t_colour colour)
 {
 	int i;
 
@@ -19,7 +19,7 @@ void            put_pixel(int x, int y, t_mlx *mlx, t_colour colour)
 ** X++
 */
 
-static  void    plot_line1(t_mlx *mlx, t_point a, t_point b)
+static  void    plot_line1(t_mlx *mlx, t_point a, t_point b, t_colour colour)
 {
 	int	delta_y;
 	int	delta_x;
@@ -33,7 +33,7 @@ static  void    plot_line1(t_mlx *mlx, t_point a, t_point b)
 	delta_y = ABS(delta_y);
 	while (a.x <= b.x)
 	{
-		put_pixel(a.x, a.y, mlx, (t_colour){0xff, 0xff, 0xff});
+		put_pixel(a.x, a.y, mlx, colour);
 		if (d > 0)
 		{
 			a.y += sy;
@@ -48,7 +48,7 @@ static  void    plot_line1(t_mlx *mlx, t_point a, t_point b)
 ** Y++
 */
 
-static  void    plot_line2(t_mlx *mlx, t_point a, t_point b)
+static  void    plot_line2(t_mlx *mlx, t_point a, t_point b, t_colour colour)
 {
 	int	delta_x;
 	int	delta_y;
@@ -62,7 +62,7 @@ static  void    plot_line2(t_mlx *mlx, t_point a, t_point b)
 	delta_x = ABS(delta_x);
 	while (a.y <= b.y)
 	{
-		put_pixel(a.x, a.y, mlx, (t_colour){0xff, 0xff, 0xff});
+		put_pixel(a.x, a.y, mlx, colour);
 		if (d > 0)
 		{
 			a.x += sx;
@@ -79,7 +79,7 @@ static  void    plot_line2(t_mlx *mlx, t_point a, t_point b)
 ** that the delta between a & b never a negative number is
 */
 
-static  void    draw_line(t_mlx *mlx, t_point a, t_point b)
+void    draw_line(t_mlx *mlx, t_point a, t_point b, t_colour colour)
 {
 	int dx;
 	int dy;
@@ -89,15 +89,15 @@ static  void    draw_line(t_mlx *mlx, t_point a, t_point b)
 	if (ABS(dx) >= ABS(dy))
 	{
 		if (dx > 0)
-			plot_line1(mlx, a, b);
+			plot_line1(mlx, a, b, colour);
 		else
-			plot_line1(mlx, b, a);
+			plot_line1(mlx, b, a, colour);
 	}
 	else
 	{
 		if (dy > 0)
-			plot_line2(mlx, a, b);
+			plot_line2(mlx, a, b, colour);
 		else
-			plot_line2(mlx, b, a);
+			plot_line2(mlx, b, a, colour);
 	}
 }
