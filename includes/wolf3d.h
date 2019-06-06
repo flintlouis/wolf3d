@@ -3,7 +3,10 @@
 
 # include "libft.h"
 # include "ft_printf.h"
+# include <math.h>
+# include <stdio.h>
 
+# define PI						3.14159265359
 # define KEY_ESC                53
 # define KEY_SPACE              49
 # define KEY_LSHIFT             257
@@ -74,5 +77,6 @@ int						key_press(int key, t_mlx *mlx);
 int						key_release(int key, t_mlx *mlx);
 void					init_wolf(char *map);
 t_map					*get_map(char *file);
+void					raycaster(void);
 
 #endif
