@@ -1,31 +1,44 @@
 #include "wolf3d.h"
 #include "mlx.h"
 #include <math.h>
+#include <stdlib.h> /* FOR MINIMAP */
 
-#define MAP mlx->map->map
-void    draw_line(t_mlx *mlx, t_point a, t_point b, t_colour colour);
-
-double	to_radians(int degrees)
+static void		mini_map(t_player *player, int **map)
 {
-	return (degrees * (PI / 180));
+	static int prev_pos_x;
+	static int prev_pos_y;
+	
+	if (prev_pos_x != (int)player->pos_x || prev_pos_y != (int)player->pos_y)
+	{
+		system("clear");
+		prev_pos_x = player->pos_x;
+		prev_pos_y = player->pos_y;
+		int i = 0;
+		int j = 0;
+		while (j < 24)
+		{
+			while (i < 24)
+			{
+				if (j == (int)player->pos_x && i == (int)player->pos_y)
+					ft_printf("X ");
+				else
+					ft_printf("%d ", map[j][i]);
+				i++;
+			}
+			ft_putendl("");
+			j++;
+			i = 0;
+
+		}
+	}
 }
 
 int	raycaster(t_mlx *mlx)
 {
-	// int map[7][7] = 
-	// {
-	// 	{1, 1, 1, 1, 1, 1, 1},
-	// 	{1, 0, 0, 0, 0, 0, 1},
-	// 	{1, 0, 0, 0, 0, 0, 1},
-	// 	{1, 0, 0, 0, 0, 0, 1},
-	// 	{1, 0, 0, 0, 0, 0, 1},
-	// 	{1, 0, 0, 0, 0, 0, 1},
-	// 	{1, 1, 1, 1, 1, 1, 1},
-	// };
 	double x_intersect;
 	double y_intersect;
-	double pos_y;
-	double pos_x;
+	// double pos_y;
+	// double pos_x;
 	double dir_x;
 	double dir_y;
 	double plane_x, plane_y;
@@ -34,7 +47,6 @@ int	raycaster(t_mlx *mlx)
 	double cur_time;
 	double old_time;
 	double camera_x;
-	double camera_y;
 	double ray_dir_x;
 	double ray_dir_y;
 	int map_x;
@@ -54,33 +66,37 @@ int	raycaster(t_mlx *mlx)
 	int draw_start;
 	int draw_end;
 	t_colour colour;
+	int x;
 
-	pos_x = 10;
-	pos_y = 12;
+	// pos_x = 10;
+	// pos_y = 12;
 	dir_x = -1;
 	dir_y = 0;
 	plane_x = 0;
 	plane_y = 0.66;
 	old_time = 0;
 	cur_time = 0;
+	x = 0;
 
 	ft_bzero(mlx->data_addr, HEIGHT * WIDTH * (mlx->bits_per_pixel / 8));
 	/* PLANE */
-	for (int x = 0; x < WIDTH; x++)
+	while (x < WIDTH)
 	{
 		/* mapt viewing plane van -1 naar 1 */
 		camera_x = 2 * x / (double)WIDTH - 1;
 		ray_dir_x = dir_x + plane_x * camera_x;
-		ray_dir_y = dir_y + plane_y * camera_y;
+		ray_dir_y = dir_y + plane_y * camera_x;
+		// ft_printf("camera_x = %.2f, ray_dir_x = %.2f, ray_dir_y = %.2f\n", camera_x, ray_dir_x, ray_dir_y);
 
 		/* WHICH BOX THE PLAYER IS STANDING IN */
-		map_x = (int)pos_x;
-		map_y = (int)pos_y;
-
+		map_x = (int)mlx->player->pos_x;
+		map_y = (int)mlx->player->pos_y;
+		// ft_printf("map_x = %d, map_y = %d\n", map_x, map_y);
 
 		/* DISTANCE FROM X/Y SIDE TO OTHER X/Y SIDE */
 		delta_dist_x = fabs(1 / ray_dir_x);
 		delta_dist_y = fabs(1 / ray_dir_y);
+		// ft_printf("delta_dist_x = %.2f, delta_dist_y = %.2f\n", delta_dist_x, delta_dist_y);
 
 		hit = 0;
 
@@ -88,22 +104,22 @@ int	raycaster(t_mlx *mlx)
 		if (ray_dir_x < 0)
 		{
 			step_x = -1;
-			side_dist_x = (pos_x - map_x) * delta_dist_x;
+			side_dist_x = (mlx->player->pos_x - map_x) * delta_dist_x;
 		}
 		else
 		{
 			step_x = 1;
-			side_dist_x = (map_x + 1.0 - pos_x) * delta_dist_x;
+			side_dist_x = (map_x + 1.0 - mlx->player->pos_x) * delta_dist_x;
 		}
 		if (ray_dir_y < 0)
 		{
 			step_y = -1;
-			side_dist_y = (pos_y - map_y) * delta_dist_y;
+			side_dist_y = (mlx->player->pos_y - map_y) * delta_dist_y;
 		}
 		else
 		{
 			step_y = 1;
-			side_dist_y = (map_y + 1.0 - pos_y) * delta_dist_y;
+			side_dist_y = (map_y + 1.0 - mlx->player->pos_y) * delta_dist_y;
 		}
 
 		/* WHILE NO WALL HIT */
@@ -121,15 +137,15 @@ int	raycaster(t_mlx *mlx)
 				map_y += step_y;
 				side = 1;
 			}
-			if (MAP[map_y][map_x] > 0)
+			if (MAP[map_x][map_y] > 0)
 				hit = 1;
 		}
 
 		/* CALCULATE DISTANCE PROJECTED ON CAMERA DIRECTION */
 		if (side == 0)
-			perp_wall_dist = (map_x - pos_x + (1 - step_x) / 2) / ray_dir_x;
+			perp_wall_dist = (map_x - mlx->player->pos_x + (1 - step_x) / 2) / ray_dir_x;
 		else
-			perp_wall_dist = (map_y - pos_y + (1 - step_y) / 2) / ray_dir_y;
+			perp_wall_dist = (map_y - mlx->player->pos_y + (1 - step_y) / 2) / ray_dir_y;
 		
 		/* FOR HIGHER/LOWER WALLS DO FOR EXAMPLE 2*HEIGHT */
 		line_height = (int)(HEIGHT / perp_wall_dist);
@@ -160,9 +176,10 @@ int	raycaster(t_mlx *mlx)
 			colour.g /= 2;
 			colour.b /= 2;
 		}
-		ft_printf("x = %d, draw_start = %d, draw_end = %d\n", x, draw_start, draw_end);
+		x++;
 		draw_line(mlx, (t_point){x, draw_start}, (t_point){x, draw_end}, colour);
 	}
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
+	mini_map(mlx->player, MAP);
 	return (0);
 }

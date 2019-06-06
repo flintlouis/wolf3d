@@ -13,12 +13,22 @@ static void	run_wolf(t_mlx *mlx)
 	mlx_loop(mlx->mlx);
 }
 
-void	init_mlx(t_mlx *mlx)
+static void	init_mlx(t_mlx *mlx)
 {
 	mlx->mlx = mlx_init();
 	mlx->win = mlx_new_window(mlx->mlx, WIDTH, HEIGHT, "WOLF3D");
 	mlx->img = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
 	mlx->data_addr = mlx_get_data_addr(mlx->img, &(mlx->bits_per_pixel), &(mlx->size_line), &(mlx->endian));
+}
+
+static t_player *init_player(void)
+{
+	t_player *player;
+
+	player = MEM(t_player);
+	player->pos_x = 10;
+	player->pos_y = 12;
+	return(player);
 }
 
 void	init_wolf(char *map)
@@ -28,5 +38,6 @@ void	init_wolf(char *map)
 	mlx = MEM(t_mlx);
 	init_mlx(mlx);
 	mlx->map = get_map(map);
+	mlx->player = init_player();
 	run_wolf(mlx);
 }

@@ -4,7 +4,11 @@
 # include "libft.h"
 # include "ft_printf.h"
 
-# define PI						3.14159265359
+# define MEM(x) 		(x*)ft_memalloc(sizeof(x))
+# define WIDTH			1200
+# define HEIGHT			800
+# define MAP			mlx->map
+
 # define KEY_ESC                53
 # define KEY_SPACE              49
 # define KEY_LSHIFT             257
@@ -32,18 +36,13 @@
 # define KEY_3                  20
 # define KEY_P                  35
 
-# define MEM(x) 		(x*)ft_memalloc(sizeof(x))
-# define WIDTH			600
-# define HEIGHT			300
-
 typedef unsigned char	t_byte;
 
-typedef struct			s_map
+typedef struct			s_player
 {
-	int					height;
-	int					width;
-	int					**map;
-}						t_map;
+	double				pos_x;
+	double				pos_y;
+}						t_player;
 
 typedef struct			s_colour
 {
@@ -67,14 +66,16 @@ typedef struct			s_mlx
 	int					bits_per_pixel;
 	int					size_line;
 	int					endian;
-	t_map				*map;
+	int					**map;
+	t_player			*player;
 }						t_mlx;
 
 int						close_window(void *ptr);
 int						key_press(int key, t_mlx *mlx);
 int						key_release(int key, t_mlx *mlx);
-void					init_wolf(char *map);
-t_map					*get_map(char *file);
+int						**get_map(char *file);
 int						raycaster(t_mlx *mlx);
+void					init_wolf(char *map);
+void					draw_line(t_mlx *mlx, t_point a, t_point b, t_colour colour);
 
 #endif

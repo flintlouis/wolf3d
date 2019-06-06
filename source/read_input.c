@@ -21,49 +21,52 @@ static int		get_map_width(char *line)
 	return (width);
 }
 
-static void		get_map_size(char *file, t_map *map)
+static void		get_map_size(char *file, int *height, int *width)
 {
 	char *line;
 	int fd;
-	int width;
+	int size;
 
-	width = 0;
+	size = 0;
 	fd = open(file, O_RDONLY);
 	while (ft_get_next_line(fd, &line))
 	{
-		width = get_map_width(line);
-		if (!map->width)
-			map->width = width;
+		size = get_map_width(line);
+		if (!*width)
+			*width = size;
 		/* else if (width != map->width) ALS WE WILLEN DAT DE WIDTH OVERAL GELIJK MOET ZIJN
 			NOT A SQUARE */
-		map->height++;
+		(*height)++;
 		free(line);
 	}
 	close(fd);
 }
 
-t_map	*get_map(char *file)
+int				**get_map(char *file)
 {
-	t_map *map;
+	int **map;
 	int fd;
 	char *line;
 	int i;
 	int j;
+	int height;
+	int width;
 	char **tab;
 
 	i = 0;
 	j = 0;
-	map = MEM(t_map);
-	get_map_size(file, map);
+	height = 0;
+	width = 0;
+	get_map_size(file, &height, &width);
 	fd = open(file, O_RDONLY);
-	map->map = (int**)ft_memalloc(sizeof(int*) * map->height);
+	map = (int**)ft_memalloc(sizeof(int*) * height);
 	while (ft_get_next_line(fd, &line))
 	{
-		map->map[j] = (int*)ft_memalloc(sizeof(int) * map->width);
+		map[j] = (int*)ft_memalloc(sizeof(int) * width);
 		tab = ft_strsplit(line, ' ');
 		while (tab[i])
 		{
-			map->map[j][i] = ft_atoi(tab[i]);
+			map[j][i] = ft_atoi(tab[i]);
 			i++;
 		}
 		ft_free_2darray((void**)tab);
