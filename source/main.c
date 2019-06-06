@@ -5,7 +5,6 @@ int main(int argc, char **argv)
 	if (argc != 2)
 		ft_putendl("Usage: ./wolf3d [map]");
 	else
-		raycaster();
-		// init_wolf(argv[1]);
+		init_wolf(argv[1]);
   return (0);
 }
