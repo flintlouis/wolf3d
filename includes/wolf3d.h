@@ -3,6 +3,7 @@
 
 # include "libft.h"
 # include "ft_printf.h"
+# include <stdio.h> // voor testen ff
 
 # define MEM(x) 		(x*)ft_memalloc(sizeof(x))
 # define WIDTH			1200
