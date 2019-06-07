@@ -48,6 +48,7 @@ static double	calc_wall_distance(t_player *player, int side, t_point map_pos, t_
 
 }
 
+/* SET COLOUR FOR NUMBER */
 static t_colour	set_colour(t_mlx *mlx, t_point map_pos, int side)
 {
 	t_colour colour;
@@ -159,8 +160,6 @@ int				raycaster(t_mlx *mlx)
 	t_point step;
 	t_point map_pos;
 
-	t_colour colour;
-
 	x = 0;
 	/* PLANE */
 	while (x < WIDTH)
@@ -182,11 +181,8 @@ int				raycaster(t_mlx *mlx)
 
 		/* SET HEIGHT OF WALLS TOO DRAW */		/* MULTIPLY HEIGHT FOR BIGGER WALLS */
 		set_wall_height(&draw_start, &draw_end, (int)((2 * HEIGHT) / calc_wall_distance(PLAYER, side, map_pos, step, ray_dir)));
-
-		/* SET COLOUR FOR NUMBER */
-		colour = set_colour(mlx, map_pos, side);
 	
-		draw_ver_line(mlx, (t_point){x, draw_start}, (t_point){x, draw_end}, colour);
+		draw_ver_line(mlx, (t_point){x, draw_start}, (t_point){x, draw_end}, set_colour(mlx, map_pos, side));
 		x++;
 	}
 	draw_image(mlx);
