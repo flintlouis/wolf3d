@@ -10,23 +10,16 @@ int	close_window(void *ptr)
 
 int	key_press(int key, t_mlx *mlx)
 {
-	printf("player x:  %.1lf player y: %.1lf\n", PLAYER->pos.x, PLAYER->pos.y);
-	printf("%d\n", MAP[6][12]);
-	printf("%d\n", MAP[6][11]);
-	printf("%d\n", MAP[6][10]);
+	/* Handles player movement + checks for wall collisions */
 	if (key == KEY_ESC)
 		close_window(NULL);
-	if (key == KEY_S && !MAP[(int)PLAYER->pos.x][(int)(PLAYER->pos.y) + 1])
+	if (key == KEY_S && !MAP[(int)PLAYER->pos.y + 1][(int)(PLAYER->pos.x)])
 		PLAYER->pos.y += 0.1;
-	if (key == KEY_W && !MAP[(int)PLAYER->pos.x][(int)(PLAYER->pos.y) - 1])
-	{
-		printf("MAP NUMBER: %d\n", MAP[(int)(PLAYER->pos.x)][(int)(PLAYER->pos.y) - 1]);
-		printf("MAP COORD: x: %d y: %d\n", (int)(PLAYER->pos.x), (int)(PLAYER->pos.y) - 1);
+	if (key == KEY_W && !MAP[(int)PLAYER->pos.y - 1][(int)(PLAYER->pos.x)])
 		PLAYER->pos.y -= 0.1;
-	}
-	if (key == KEY_D && !MAP[(int)(PLAYER->pos.x) + 1][(int)(PLAYER->pos.y)])
+	if (key == KEY_D && !MAP[(int)(PLAYER->pos.y)][(int)(PLAYER->pos.x) + 1])
 		PLAYER->pos.x += 0.1;
-	if (key == KEY_A && !MAP[(int)(PLAYER->pos.x)- 1][(int)(PLAYER->pos.y)])
+	if (key == KEY_A && !MAP[(int)(PLAYER->pos.y)][(int)(PLAYER->pos.x - 1)])
 		PLAYER->pos.x -= 0.1;
 	return (0);
 }
