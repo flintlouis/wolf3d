@@ -8,18 +8,18 @@ static void		mini_map(t_player *player, int **map)
 	static int prev_pos_x;
 	static int prev_pos_y;
 	
-	if (prev_pos_x != (int)player->pos_x || prev_pos_y != (int)player->pos_y)
+	if (prev_pos_x != (int)player->pos.x || prev_pos_y != (int)player->pos.y)
 	{
 		system("clear");
-		prev_pos_x = player->pos_x;
-		prev_pos_y = player->pos_y;
+		prev_pos_y = player->pos.y;
+		prev_pos_x = player->pos.x;
 		int i = 0;
 		int j = 0;
 		while (j < 24)
 		{
 			while (i < 24)
 			{
-				if (j == (int)player->pos_x && i == (int)player->pos_y)
+				if (j == (int)player->pos.y && i == (int)player->pos.x)
 					ft_printf("X ");
 				else
 					ft_printf("%d ", map[j][i]);
@@ -33,122 +33,121 @@ static void		mini_map(t_player *player, int **map)
 	}
 }
 
-int	raycaster(t_mlx *mlx)
+static void		draw_image(t_mlx *mlx)
 {
-	double x_intersect;
-	double y_intersect;
-	// double pos_y;
-	// double pos_x;
-	double dir_x;
-	double dir_y;
-	double plane_x, plane_y;
-	double dy;
-	double dx;
-	double cur_time;
-	double old_time;
-	double camera_x;
-	double ray_dir_x;
-	double ray_dir_y;
-	int map_x;
-	int map_y;
-	/* DISTANCE FROM PLAYER TO GRID CROSS X OR Y */
-	double side_dist_x;
-	double side_dist_y;
-	/* what direction to step in x or y-direction (either +1 or -1) */
-	int step_x;
-	int step_y;
-	int hit;
-	int side; /* NS WALL HIT? OR EW WALL HIT? */
-	double perp_wall_dist;
-	double delta_dist_x;
-	double delta_dist_y;
+	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
+	ft_bzero(mlx->data_addr, HEIGHT * WIDTH * (mlx->bits_per_pixel / 8));
+}
+
+/* CALCULATE DISTANCE PROJECTED ON CAMERA DIRECTION */
+static double	calc_wall_distance(t_player *player, int side, t_point map_pos, t_point step, t_dpoint ray_dir)
+{
+	if (side == 0)
+		return ((map_pos.y - player->pos.y + (1 - step.y) / 2) / ray_dir.y);
+	else
+		return ((map_pos.x - player->pos.x + (1 - step.x) / 2) / ray_dir.x);
+
+}
+
+static t_colour set_colour(t_mlx *mlx, t_point map_pos)
+{
+	if (MAP[map_pos.y][map_pos.x] == 1)
+		return ((t_colour){125,125,125});
+	else if (MAP[map_pos.y][map_pos.x] == 2)
+		return ((t_colour){125,125,0});
+	else if (MAP[map_pos.y][map_pos.x] == 3)
+		return ((t_colour){0,125,125});
+	else if (MAP[map_pos.y][map_pos.x] == 4)
+		return ((t_colour){125,0,125});
+	else
+		return ((t_colour){10,10,10});
+}
+
+int				raycaster(t_mlx *mlx)
+{
 	int line_height;
 	int draw_start;
 	int draw_end;
-	t_colour colour;
+	int hit;
+	int side; /* X WALL HIT OR Y WALL HIT */
 	int x;
+	double camera_x;
+	t_dpoint plane;
+	t_dpoint dir;
+	t_dpoint side_dist;	/* DISTANCE FROM PLAYER TO GRID CROSS X OR Y */
+	t_dpoint delta_dist;
+	t_dpoint ray_dir;
+	t_colour colour;
+	t_point step; /* WHAT DIRECTION TO GO X OR Y (EITHER +1 || -1) */
+	t_point map_pos;
 
-	// pos_x = 10;
-	// pos_y = 12;
-	dir_x = -1;
-	dir_y = 0;
-	plane_x = 0;
-	plane_y = 0.66;
-	old_time = 0;
-	cur_time = 0;
+	dir.y = -1;
+	dir.x = 0;
+	plane.y = 0;
+	plane.x = 0.66;
 	x = 0;
 
-	ft_bzero(mlx->data_addr, HEIGHT * WIDTH * (mlx->bits_per_pixel / 8));
 	/* PLANE */
 	while (x < WIDTH)
 	{
 		/* mapt viewing plane van -1 naar 1 */
 		camera_x = 2 * x / (double)WIDTH - 1;
-		ray_dir_x = dir_x + plane_x * camera_x;
-		ray_dir_y = dir_y + plane_y * camera_x;
-		// ft_printf("camera_x = %.2f, ray_dir_x = %.2f, ray_dir_y = %.2f\n", camera_x, ray_dir_x, ray_dir_y);
+		ray_dir.y = dir.y + plane.y * camera_x;
+		ray_dir.x = dir.x + plane.x * camera_x;
 
 		/* WHICH BOX THE PLAYER IS STANDING IN */
-		map_x = (int)mlx->player->pos_x;
-		map_y = (int)mlx->player->pos_y;
-		// ft_printf("map_x = %d, map_y = %d\n", map_x, map_y);
+		map_pos.y = (int)PLAYER->pos.y;
+		map_pos.x = (int)PLAYER->pos.x;
 
 		/* DISTANCE FROM X/Y SIDE TO OTHER X/Y SIDE */
-		delta_dist_x = fabs(1 / ray_dir_x);
-		delta_dist_y = fabs(1 / ray_dir_y);
-		// ft_printf("delta_dist_x = %.2f, delta_dist_y = %.2f\n", delta_dist_x, delta_dist_y);
+		delta_dist.y = fabs(1 / ray_dir.y);
+		delta_dist.x = fabs(1 / ray_dir.x);
 
-		hit = 0;
 
 		/* CALC STEP FOR MAP + INIT SIDE_DIST */
-		if (ray_dir_x < 0)
+		if (ray_dir.y < 0)
 		{
-			step_x = -1;
-			side_dist_x = (mlx->player->pos_x - map_x) * delta_dist_x;
+			step.y = -1;
+			side_dist.y = (PLAYER->pos.y - map_pos.y) * delta_dist.y;
 		}
 		else
 		{
-			step_x = 1;
-			side_dist_x = (map_x + 1.0 - mlx->player->pos_x) * delta_dist_x;
+			step.y = 1;
+			side_dist.y = (map_pos.y + 1.0 - PLAYER->pos.y) * delta_dist.y;
 		}
-		if (ray_dir_y < 0)
+		if (ray_dir.x < 0)
 		{
-			step_y = -1;
-			side_dist_y = (mlx->player->pos_y - map_y) * delta_dist_y;
+			step.x = -1;
+			side_dist.x = (PLAYER->pos.x - map_pos.x) * delta_dist.x;
 		}
 		else
 		{
-			step_y = 1;
-			side_dist_y = (map_y + 1.0 - mlx->player->pos_y) * delta_dist_y;
+			step.x = 1;
+			side_dist.x = (map_pos.x + 1.0 - PLAYER->pos.x) * delta_dist.x;
 		}
 
 		/* WHILE NO WALL HIT */
+		hit = 0;
 		while (hit == 0)
 		{
-			if (side_dist_x < side_dist_y)
+			if (side_dist.y < side_dist.x)
 			{
-				side_dist_x += delta_dist_x;
-				map_x += step_x;
+				side_dist.y += delta_dist.y;
+				map_pos.y += step.y;
 				side = 0;
 			}
 			else
 			{
-				side_dist_y += delta_dist_y;
-				map_y += step_y;
+				side_dist.x += delta_dist.x;
+				map_pos.x += step.x;
 				side = 1;
 			}
-			if (MAP[map_x][map_y] > 0)
+			if (MAP[map_pos.y][map_pos.x] > 0)
 				hit = 1;
 		}
-
-		/* CALCULATE DISTANCE PROJECTED ON CAMERA DIRECTION */
-		if (side == 0)
-			perp_wall_dist = (map_x - mlx->player->pos_x + (1 - step_x) / 2) / ray_dir_x;
-		else
-			perp_wall_dist = (map_y - mlx->player->pos_y + (1 - step_y) / 2) / ray_dir_y;
 		
 		/* FOR HIGHER/LOWER WALLS DO FOR EXAMPLE 2*HEIGHT */
-		line_height = (int)(HEIGHT / perp_wall_dist);
+		line_height = (int)(HEIGHT / calc_wall_distance(PLAYER, side, map_pos, step, ray_dir));
 
 		draw_start = -line_height / 2 + HEIGHT / 2;
 		if (draw_start < 0)
@@ -156,20 +155,8 @@ int	raycaster(t_mlx *mlx)
 		draw_end = line_height / 2 + HEIGHT / 2;
 		if (draw_end >= HEIGHT)
 			draw_end = HEIGHT - 1;
-
-		switch (MAP[map_x][map_y])
-		{
-		case 1: colour = (t_colour){125,125,125}; 
-			break;
-		case 2: colour = (t_colour){125,0,0}; 
-			break;
-		case 3: colour = (t_colour){0,125,0}; 
-			break;
-		case 4: colour = (t_colour){0,0,125};
-			break;
-		default: colour = (t_colour){125,125,0};
-			break;
-		}
+		/* SET COLOUR FOR NUMBER */
+		colour = set_colour(mlx, map_pos);
 		if (side == 1)
 		{
 			colour.r /= 2;
@@ -177,9 +164,9 @@ int	raycaster(t_mlx *mlx)
 			colour.b /= 2;
 		}
 		x++;
-		draw_line(mlx, (t_point){x, draw_start}, (t_point){x, draw_end}, colour);
+		draw_ver_line(mlx, (t_point){x, draw_start}, (t_point){x, draw_end}, colour);
 	}
-	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
+	draw_image(mlx);
 	mini_map(mlx->player, MAP);
 	return (0);
 }

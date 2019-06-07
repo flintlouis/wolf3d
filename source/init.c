@@ -26,8 +26,8 @@ static t_player *init_player(void)
 	t_player *player;
 
 	player = MEM(t_player);
-	player->pos_x = 10;
-	player->pos_y = 12;
+	player->pos.x = 12.0;
+	player->pos.y = 10.0;
 	return(player);
 }
 

@@ -8,6 +8,7 @@
 # define WIDTH			1200
 # define HEIGHT			800
 # define MAP			mlx->map
+# define PLAYER			mlx->player
 
 # define KEY_ESC                53
 # define KEY_SPACE              49
@@ -38,12 +39,6 @@
 
 typedef unsigned char	t_byte;
 
-typedef struct			s_player
-{
-	double				pos_x;
-	double				pos_y;
-}						t_player;
-
 typedef struct			s_colour
 {
 	t_byte				r;
@@ -51,11 +46,22 @@ typedef struct			s_colour
 	t_byte				b;
 }						t_colour;
 
+typedef struct			s_dpoint
+{
+	double				x;
+	double				y;
+}						t_dpoint;
+
 typedef struct			s_point
 {
 	int					x;
 	int					y;
 }						t_point;
+
+typedef struct			s_player
+{
+	t_dpoint			pos;
+}						t_player;
 
 typedef struct			s_mlx
 {
@@ -76,6 +82,6 @@ int						key_release(int key, t_mlx *mlx);
 int						**get_map(char *file);
 int						raycaster(t_mlx *mlx);
 void					init_wolf(char *map);
-void					draw_line(t_mlx *mlx, t_point a, t_point b, t_colour colour);
+void					draw_ver_line(t_mlx *mlx, t_point a, t_point b, t_colour colour);
 
 #endif
