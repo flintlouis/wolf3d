@@ -81,34 +81,9 @@ static t_dpoint	set_raydir(int x, t_player *player)
 	return (ray_dir);
 }
 
-static int		wall_hit(int **map, t_dpoint *side_dist, t_dpoint delta_dist, t_point *map_pos, t_point step)
-{
-	int hit;
-	int side;
-
-	hit = 0;
-	while (hit == 0)
-	{
-		if (side_dist->y < side_dist->x)
-		{
-			side_dist->y += delta_dist.y;
-			map_pos->y += step.y;
-			side = 0;
-		}
-		else
-		{
-			side_dist->x += delta_dist.x;
-			map_pos->x += step.x;
-			side = 1;
-		}
-		if (map[map_pos->y][map_pos->x] > 0)
-			hit = 1;
-	}
-	return (side);
-}
-
 static void		set_wall_height(int *draw_start, int *draw_end, int line_height)
 {
+	/* CHANGE THE DIVISION TO LOOK UP AND DOWN */
 	*draw_start = -line_height / 2 + HEIGHT / 2;
 	if (*draw_start < 0)
 		*draw_start = 0;
@@ -144,6 +119,32 @@ static t_point	calc_step_dir(t_player *player, t_dpoint ray_dir, t_dpoint *side_
 	return (step);
 }
 
+static int		wall_hit(int **map, t_dpoint side_dist, t_dpoint delta_dist, t_point *map_pos, t_point step)
+{
+	int hit;
+	int side;
+
+	hit = 0;
+	while (hit == 0)
+	{
+		if (side_dist.y < side_dist.x)
+		{
+			side_dist.y += delta_dist.y;
+			map_pos->y += step.y;
+			side = 0;
+		}
+		else
+		{
+			side_dist.x += delta_dist.x;
+			map_pos->x += step.x;
+			side = 1;
+		}
+		if (map[map_pos->y][map_pos->x] > 0)
+			hit = 1;
+	}
+	return (side);
+}
+
 int				raycaster(t_mlx *mlx)
 {
 	int draw_start;
@@ -164,6 +165,7 @@ int				raycaster(t_mlx *mlx)
 	/* PLANE */
 	while (x < WIDTH)
 	{
+		/* CALC VECTOR FOR RAY ON PLANE POS */
 		ray_dir = set_raydir(x, PLAYER);
 
 		/* WHICH BOX THE PLAYER IS STANDING IN */
@@ -172,12 +174,11 @@ int				raycaster(t_mlx *mlx)
 		/* DISTANCE FROM X/Y SIDE TO OTHER X/Y SIDE */
 		delta_dist = (t_dpoint){fabs(1 / ray_dir.x), fabs(1 / ray_dir.y)};
 
-
 		/* CALC STEP FOR MAP + INIT SIDE_DIST */
 		step = calc_step_dir(PLAYER, ray_dir, &side_dist, delta_dist, map_pos);
 
 		/* X OR Y WALL HIT */
-		side = wall_hit(MAP, &side_dist, delta_dist, &map_pos, step);
+		side = wall_hit(MAP, side_dist, delta_dist, &map_pos, step);
 
 		/* SET HEIGHT OF WALLS TOO DRAW */		/* MULTIPLY HEIGHT FOR BIGGER WALLS */
 		set_wall_height(&draw_start, &draw_end, (int)((2 * HEIGHT) / calc_wall_distance(PLAYER, side, map_pos, step, ray_dir)));
