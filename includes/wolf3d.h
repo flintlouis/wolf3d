@@ -62,6 +62,8 @@ typedef struct			s_point
 typedef struct			s_player
 {
 	t_dpoint			pos;
+	t_dpoint			looking_dir;
+	t_dpoint			plane;
 }						t_player;
 
 typedef struct			s_mlx

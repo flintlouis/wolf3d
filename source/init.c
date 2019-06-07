@@ -26,8 +26,17 @@ static t_player *init_player(void)
 	t_player *player;
 
 	player = MEM(t_player);
+	/* WHERE THE PLAYER SPAWNS ON MAP */
 	player->pos.x = 12.0;
 	player->pos.y = 10.0;
+
+	/* ??? SOMETHING TO DO WITH PLANE */
+	player->plane.x = 0.66;
+	player->plane.y = 0;
+
+	/* WHICH WAY THE PLAYER I LOOKING */
+	player->looking_dir.x = 0;
+	player->looking_dir.y = -1;
 	return(player);
 }
 
