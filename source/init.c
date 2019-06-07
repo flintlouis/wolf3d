@@ -37,6 +37,8 @@ static t_player *init_player(void)
 	/* WHICH WAY THE PLAYER I LOOKING */
 	player->looking_dir.x = 0;
 	player->looking_dir.y = -1;
+
+	player->look = 4;
 	return(player);
 }
 

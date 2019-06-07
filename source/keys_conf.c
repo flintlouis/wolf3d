@@ -21,6 +21,10 @@ int	key_press(int key, t_mlx *mlx)
 		PLAYER->pos.x += 0.1;
 	if (key == KEY_A && !MAP[(int)(PLAYER->pos.y)][(int)(PLAYER->pos.x - 1)])
 		PLAYER->pos.x -= 0.1;
+	if (key == KEY_UP)
+		PLAYER->look += 10;
+	if (key == KEY_DOWN)
+		PLAYER->look -= 10;
 	return (0);
 }
 

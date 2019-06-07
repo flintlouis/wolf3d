@@ -82,13 +82,13 @@ static t_dpoint	set_raydir(int x, t_player *player)
 	return (ray_dir);
 }
 
-static void		set_wall_height(int *draw_start, int *draw_end, int line_height)
+static void		set_wall_height(t_player *player, int *draw_start, int *draw_end, int line_height)
 {
 	/* CHANGE THE DIVISION TO LOOK UP AND DOWN */
-	*draw_start = -line_height / 2 + HEIGHT / 2;
+	*draw_start = (-line_height / 2 + HEIGHT / 2) + player->look;
 	if (*draw_start < 0)
 		*draw_start = 0;
-	*draw_end = line_height / 2 + HEIGHT / 2;
+	*draw_end = (line_height / 2 + HEIGHT / 2) + player->look;
 	if (*draw_end >= HEIGHT)
 		*draw_end = HEIGHT - 1;
 }
@@ -180,7 +180,7 @@ int				raycaster(t_mlx *mlx)
 		side = wall_hit(MAP, side_dist, delta_dist, &map_pos, step);
 
 		/* SET HEIGHT OF WALLS TOO DRAW */		/* MULTIPLY HEIGHT FOR BIGGER WALLS */
-		set_wall_height(&draw_start, &draw_end, (int)((2 * HEIGHT) / calc_wall_distance(PLAYER, side, map_pos, step, ray_dir)));
+		set_wall_height(PLAYER, &draw_start, &draw_end, (int)((2 * HEIGHT) / calc_wall_distance(PLAYER, side, map_pos, step, ray_dir)));
 	
 		draw_ver_line(mlx, (t_point){x, draw_start}, (t_point){x, draw_end}, set_colour(mlx, map_pos, side));
 		x++;
