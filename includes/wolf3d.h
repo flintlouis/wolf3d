@@ -87,5 +87,7 @@ int						**get_map(char *file);
 int						raycaster(t_mlx *mlx);
 void					init_wolf(char *map);
 void					draw_ver_line(t_mlx *mlx, t_point a, t_point b, t_colour colour);
+void					rotate_left(t_mlx *mlx);
+void					rotate_right(t_mlx *mlx);
 
 #endif

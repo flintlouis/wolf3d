@@ -61,7 +61,7 @@ static t_colour	set_colour(t_mlx *mlx, t_point map_pos, int side)
 	else if (MAP[map_pos.y][map_pos.x] == 4)
 		colour = (t_colour){125,0,125};
 	else
-		colour = (t_colour){10,10,10};
+		colour = (t_colour){255,255,255};
 	if (side == 1)
 	{
 		colour.r /= 2;
