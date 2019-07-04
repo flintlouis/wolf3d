@@ -65,6 +65,7 @@ typedef struct			s_player
 	t_dpoint			looking_dir;
 	t_dpoint			plane;
 	int					look;
+	char				run:1;
 }						t_player;
 
 typedef struct			s_mlx
@@ -85,7 +86,9 @@ int						key_press(int key, t_mlx *mlx);
 int						key_release(int key, t_mlx *mlx);
 int						mouse_move(int x, int y, t_mlx *mlx);
 int						**get_map(char *file);
-int						raycaster(t_mlx *mlx);
+int						wolfenstein(t_mlx *mlx);
+long					time_between_frames(void);
+void					raycaster(t_mlx *mlx);
 void					init_wolf(char *map);
 void					draw_ver_line(t_mlx *mlx, t_point a, t_point b, t_colour colour);
 void					rotate_left(t_mlx *mlx, double degrees);

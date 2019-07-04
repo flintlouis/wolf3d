@@ -8,13 +8,18 @@ int	close_window(void *ptr)
 	return (0);
 }
 
+/* Handles player movement + checks for wall collisions */
 static void move(t_dpoint *direction, t_mlx *mlx, int sign)
 {
 	double tmpy;
 	double tmpx;
+	int speed;
 
-	tmpy = PLAYER->pos.y + sign * (direction->y / 10);
-	tmpx = PLAYER->pos.x + sign * (direction->x / 10);
+	speed = 10;
+	if (PLAYER->run)
+		speed = 6;
+	tmpy = PLAYER->pos.y + sign * (direction->y / speed);
+	tmpx = PLAYER->pos.x + sign * (direction->x / speed);
 	if (!MAP[(int)(tmpy)][(int)(PLAYER->pos.x)])
 		PLAYER->pos.y = tmpy;
 	if (!MAP[(int)(PLAYER->pos.y)][(int)(tmpx)])
@@ -23,7 +28,6 @@ static void move(t_dpoint *direction, t_mlx *mlx, int sign)
 
 int	key_press(int key, t_mlx *mlx)
 {
-	/* Handles player movement + checks for wall collisions */
 	if (key == KEY_ESC)
 		close_window(NULL);
 	if (key == KEY_S)
@@ -42,11 +46,15 @@ int	key_press(int key, t_mlx *mlx)
 		rotate_right(mlx, 1);
 	if (key == KEY_LEFT)
 		rotate_left(mlx, -1);
+	if (key == KEY_LSHIFT)
+		PLAYER->run = 1;	
 	return (0);
 }
 
 int	key_release(int key, t_mlx *mlx)
 {
+	if (key == KEY_LSHIFT)
+		PLAYER->run = 0;
 	return (0);
 }
 
