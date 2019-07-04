@@ -83,11 +83,12 @@ typedef struct			s_mlx
 int						close_window(void *ptr);
 int						key_press(int key, t_mlx *mlx);
 int						key_release(int key, t_mlx *mlx);
+int						mouse_move(int x, int y, t_mlx *mlx);
 int						**get_map(char *file);
 int						raycaster(t_mlx *mlx);
 void					init_wolf(char *map);
 void					draw_ver_line(t_mlx *mlx, t_point a, t_point b, t_colour colour);
-void					rotate_left(t_mlx *mlx);
-void					rotate_right(t_mlx *mlx);
+void					rotate_left(t_mlx *mlx, double degrees);
+void					rotate_right(t_mlx *mlx, double degrees);
 
 #endif

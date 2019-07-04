@@ -13,34 +13,62 @@ int	key_press(int key, t_mlx *mlx)
 	/* Handles player movement + checks for wall collisions */
 	if (key == KEY_ESC)
 		close_window(NULL);
-	if (key == KEY_S && !MAP[(int)PLAYER->pos.y + 1][(int)(PLAYER->pos.x)])
+	if (key == KEY_S)
 	{
-		PLAYER->pos.y -= PLAYER->looking_dir.y / 10;
-		PLAYER->pos.x -= PLAYER->looking_dir.x / 10;
+		double tmpy;
+		double tmpx;
+
+		tmpy = PLAYER->pos.y - PLAYER->looking_dir.y / 10;
+		tmpx = PLAYER->pos.x - PLAYER->looking_dir.x / 10;
+		if (!MAP[(int)(tmpy)][(int)(PLAYER->pos.x)])
+			PLAYER->pos.y = tmpy;
+		if (!MAP[(int)(PLAYER->pos.y)][(int)(tmpx)])
+			PLAYER->pos.x = tmpx;
 	}
-	if (key == KEY_W && !MAP[(int)PLAYER->pos.y - 1][(int)(PLAYER->pos.x)])
+	if (key == KEY_W)
 	{
-		PLAYER->pos.y += PLAYER->looking_dir.y / 10;
-		PLAYER->pos.x += PLAYER->looking_dir.x / 10;
+		double tmpy;
+		double tmpx;
+
+		tmpy = PLAYER->pos.y + PLAYER->looking_dir.y / 10;
+		tmpx = PLAYER->pos.x + PLAYER->looking_dir.x / 10;
+		if (!MAP[(int)(tmpy)][(int)(PLAYER->pos.x)])
+			PLAYER->pos.y = tmpy;
+		if (!MAP[(int)(PLAYER->pos.y)][(int)(tmpx)])
+			PLAYER->pos.x = tmpx;
 	}
-	if (key == KEY_D && !MAP[(int)(PLAYER->pos.y)][(int)(PLAYER->pos.x) + 1])
+	if (key == KEY_D)
 	{
-		PLAYER->pos.y += PLAYER->plane.y / 10;
-		PLAYER->pos.x += PLAYER->plane.x / 10;
+		double tmpy;
+		double tmpx;
+
+		tmpy = PLAYER->pos.y + PLAYER->plane.y / 10;
+		tmpx = PLAYER->pos.x + PLAYER->plane.x / 10;
+		if (!MAP[(int)(tmpy)][(int)(PLAYER->pos.x)])
+			PLAYER->pos.y = tmpy;
+		if (!MAP[(int)(PLAYER->pos.y)][(int)(tmpx)])
+			PLAYER->pos.x = tmpx;
 	}
-	if (key == KEY_A && !MAP[(int)(PLAYER->pos.y)][(int)(PLAYER->pos.x - 1)])
+	if (key == KEY_A)
 	{
-		PLAYER->pos.y -= PLAYER->plane.y / 10;
-		PLAYER->pos.x -= PLAYER->plane.x / 10;
+		double tmpy;
+		double tmpx;
+
+		tmpy = PLAYER->pos.y - PLAYER->plane.y / 10;
+		tmpx = PLAYER->pos.x - PLAYER->plane.x / 10;
+		if (!MAP[(int)(tmpy)][(int)(PLAYER->pos.x)])
+			PLAYER->pos.y = tmpy;
+		if (!MAP[(int)(PLAYER->pos.y)][(int)(tmpx)])
+			PLAYER->pos.x = tmpx;
 	}
 	if (key == KEY_UP)
 		PLAYER->look += 10;
 	if (key == KEY_DOWN)
 		PLAYER->look -= 10;
 	if (key == KEY_RIGHT)
-		rotate_right(mlx);
+		rotate_right(mlx, 1);
 	if (key == KEY_LEFT)
-		rotate_left(mlx);
+		rotate_left(mlx, -1);
 	return (0);
 }
 
@@ -51,5 +79,12 @@ int	key_release(int key, t_mlx *mlx)
 
 int	mouse_move(int x, int y, t_mlx *mlx)
 {
+	static int prevx;
+
+	if (x < prevx)
+		rotate_left(mlx, -2.5);
+	else if (x > prevx)
+		rotate_right(mlx, 2.5);
+	prevx = x;
 	return (0);
 }

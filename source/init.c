@@ -5,7 +5,7 @@ static void	run_wolf(t_mlx *mlx)
 {
 	// mlx_hook(mlx->win, 4, 1L << 2, mouse_press, mlx);
 	// mlx_hook(mlx->win, 5, 1L << 3, mouse_release, mlx);
-	// mlx_hook(mlx->win, 6, 1L << 6, mouse_move, mlx);
+	mlx_hook(mlx->win, 6, 1L << 6, mouse_move, mlx);
 	mlx_loop_hook(mlx->mlx, raycaster, mlx);
 	mlx_hook(mlx->win, 2, 1L << 0, key_press, mlx);
 	mlx_hook(mlx->win, 3, 1L << 1, key_release, mlx);
