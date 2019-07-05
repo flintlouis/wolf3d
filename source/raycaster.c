@@ -17,13 +17,13 @@ static t_colour	set_colour(t_mlx *mlx, t_point map_pos, int side)
 	if (MAP[map_pos.y][map_pos.x] == 1)
 		colour = (t_colour){125,125,125};
 	else if (MAP[map_pos.y][map_pos.x] == 2)
-		colour = (t_colour){125,125,0};
+		colour = (t_colour){125,0,0};
 	else if (MAP[map_pos.y][map_pos.x] == 3)
 		colour = (t_colour){0,125,125};
 	else if (MAP[map_pos.y][map_pos.x] == 4)
 		colour = (t_colour){125,0,125};
 	else
-		colour = (t_colour){240,240,240};
+		colour = (t_colour){212,175,55};
 	if (side == 1)
 	{
 		colour.r /= 2;

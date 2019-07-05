@@ -40,10 +40,15 @@ static void		draw_image(t_mlx *mlx)
 
 int wolfenstein(t_mlx *mlx)
 {
-	system("clear");
-	ft_printf("time inbetween frames = %ld\n", time_between_frames());
+	// system("clear");
+	// ft_printf("time inbetween frames = %ld\n", time_between_frames());
+
 	raycaster(mlx);
 	draw_image(mlx);
-	// mini_map(mlx->player, MAP);
+
+	move_player(mlx);
+	player_look(mlx);
+
+	mini_map(mlx->player, MAP);
 	return (0);
 }

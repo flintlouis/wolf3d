@@ -54,5 +54,6 @@ void	init_wolf(char *map)
 	init_mlx(mlx);
 	mlx->map = get_map(map);
 	mlx->player = init_player();
+	mlx->controls = MEM(t_controls);
 	run_wolf(mlx);
 }

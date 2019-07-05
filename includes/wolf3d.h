@@ -10,6 +10,7 @@
 # define HEIGHT			800
 # define MAP			mlx->map
 # define PLAYER			mlx->player
+# define CONTROLS		mlx->controls
 
 # define KEY_ESC                53
 # define KEY_SPACE              49
@@ -65,8 +66,20 @@ typedef struct			s_player
 	t_dpoint			looking_dir;
 	t_dpoint			plane;
 	int					look;
-	char				run:1;
 }						t_player;
+
+typedef struct			s_controls
+{
+	char				run:1;
+	char				front:1;
+	char				back:1;
+	char				left:1;
+	char				right:1;
+	char				look_left:1;
+	char				look_right:1;
+	int					cur_x; /* DEL FOR MOUSE */
+	int					prev_x; /* DEL FOR MOUSE */
+}						t_controls;
 
 typedef struct			s_mlx
 {
@@ -79,6 +92,7 @@ typedef struct			s_mlx
 	int					endian;
 	int					**map;
 	t_player			*player;
+	t_controls			*controls;
 }						t_mlx;
 
 int						close_window(void *ptr);
@@ -88,10 +102,11 @@ int						mouse_move(int x, int y, t_mlx *mlx);
 int						**get_map(char *file);
 int						wolfenstein(t_mlx *mlx);
 long					time_between_frames(void);
+void					player_look(t_mlx *mlx);
+void					move_player(t_mlx *mlx);
 void					raycaster(t_mlx *mlx);
 void					init_wolf(char *map);
 void					draw_ver_line(t_mlx *mlx, t_point a, t_point b, t_colour colour);
-void					rotate_left(t_mlx *mlx, double degrees);
-void					rotate_right(t_mlx *mlx, double degrees);
+void					rotate(t_mlx *mlx, double degrees);
 
 #endif
