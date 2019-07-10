@@ -14,6 +14,7 @@ static double	calc_wall_distance(t_player *player, int side, t_point map_pos, t_
 static t_colour	set_colour(t_mlx *mlx, t_point map_pos, int side)
 {
 	t_colour colour;
+
 	if (MAP[map_pos.y][map_pos.x] == 1)
 		colour = (t_colour){125,125,125};
 	else if (MAP[map_pos.y][map_pos.x] == 2)
