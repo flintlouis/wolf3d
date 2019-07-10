@@ -1,43 +1,5 @@
 #include "wolf3d.h"
-#include "mlx.h"
 #include <math.h>
-#include <stdlib.h> /* FOR MINIMAP */
-
-static void		mini_map(t_player *player, int **map)
-{
-	static int prev_pos_x;
-	static int prev_pos_y;
-	
-	if (prev_pos_x != (int)player->pos.x || prev_pos_y != (int)player->pos.y)
-	{
-		system("clear");
-		prev_pos_y = player->pos.y;
-		prev_pos_x = player->pos.x;
-		int i = 0;
-		int j = 0;
-		while (j < 24)
-		{
-			while (i < 24)
-			{
-				if (j == (int)player->pos.y && i == (int)player->pos.x)
-					ft_printf("X ");
-				else
-					ft_printf("%d ", map[j][i]);
-				i++;
-			}
-			ft_putendl("");
-			j++;
-			i = 0;
-
-		}
-	}
-}
-
-static void		draw_image(t_mlx *mlx)
-{
-	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
-	ft_bzero(mlx->data_addr, HEIGHT * WIDTH * (mlx->bits_per_pixel / 8));
-}
 
 static double	calc_wall_distance(t_player *player, int side, t_point map_pos, t_point step, t_dpoint ray_dir)
 {
@@ -52,16 +14,17 @@ static double	calc_wall_distance(t_player *player, int side, t_point map_pos, t_
 static t_colour	set_colour(t_mlx *mlx, t_point map_pos, int side)
 {
 	t_colour colour;
+
 	if (MAP[map_pos.y][map_pos.x] == 1)
 		colour = (t_colour){125,125,125};
 	else if (MAP[map_pos.y][map_pos.x] == 2)
-		colour = (t_colour){125,125,0};
+		colour = (t_colour){125,0,0};
 	else if (MAP[map_pos.y][map_pos.x] == 3)
 		colour = (t_colour){0,125,125};
 	else if (MAP[map_pos.y][map_pos.x] == 4)
 		colour = (t_colour){125,0,125};
 	else
-		colour = (t_colour){10,10,10};
+		colour = (t_colour){212,175,55};
 	if (side == 1)
 	{
 		colour.r /= 2;
@@ -146,7 +109,7 @@ static int		wall_hit(int **map, t_dpoint side_dist, t_dpoint delta_dist, t_point
 	return (side);
 }
 
-int				raycaster(t_mlx *mlx)
+void			raycaster(t_mlx *mlx)
 {
 	int draw_start;
 	int draw_end;
@@ -185,7 +148,4 @@ int				raycaster(t_mlx *mlx)
 		draw_ver_line(mlx, (t_point){x, draw_start}, (t_point){x, draw_end}, set_colour(mlx, map_pos, side));
 		x++;
 	}
-	draw_image(mlx);
-	mini_map(mlx->player, MAP);
-	return (0);
 }

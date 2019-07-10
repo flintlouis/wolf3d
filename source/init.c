@@ -1,12 +1,16 @@
 #include "wolf3d.h"
 #include "mlx.h"
+#include <time.h>
+#include <stdlib.h>
 
 static void	run_wolf(t_mlx *mlx)
 {
+	srand(time(0));
 	// mlx_hook(mlx->win, 4, 1L << 2, mouse_press, mlx);
 	// mlx_hook(mlx->win, 5, 1L << 3, mouse_release, mlx);
-	// mlx_hook(mlx->win, 6, 1L << 6, mouse_move, mlx);
-	mlx_loop_hook(mlx->mlx, raycaster, mlx);
+	mlx_hook(mlx->win, 6, 1L << 6, mouse_move, mlx);
+	mlx_loop_hook(mlx->mlx, wolfenstein, mlx);
+	mlx_hook(mlx->win, 2, 1L << 0, key_press, mlx);
 	mlx_hook(mlx->win, 2, 1L << 0, key_press, mlx);
 	mlx_hook(mlx->win, 3, 1L << 1, key_release, mlx);
 	mlx_hook(mlx->win, 17, 1L << 17, close_window, NULL);
@@ -30,11 +34,11 @@ static t_player *init_player(void)
 	player->pos.x = 10;
 	player->pos.y = 12;
 
-	/* ??? SOMETHING TO DO WITH PLANE */
+	/* PLANE WIDTH */
 	player->plane.x = 0.66;
 	player->plane.y = 0;
 
-	/* WHICH WAY THE PLAYER I LOOKING */
+	/* WHICH WAY THE PLAYER IS LOOKING */
 	player->looking_dir.x = 0;
 	player->looking_dir.y = -1;
 
@@ -50,5 +54,6 @@ void	init_wolf(char *map)
 	init_mlx(mlx);
 	mlx->map = get_map(map);
 	mlx->player = init_player();
+	mlx->controls = MEM(t_controls);
 	run_wolf(mlx);
 }
