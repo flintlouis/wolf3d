@@ -65,7 +65,6 @@ typedef struct			s_player
 	t_dpoint			pos;
 	t_dpoint			looking_dir;
 	t_dpoint			plane;
-	int					look;
 }						t_player;
 
 typedef struct			s_controls

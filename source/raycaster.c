@@ -48,10 +48,10 @@ static t_dpoint	set_raydir(int x, t_player *player)
 static void		set_wall_height(t_player *player, int *draw_start, int *draw_end, int line_height)
 {
 	/* CHANGE THE DIVISION TO LOOK UP AND DOWN */
-	*draw_start = (-line_height / 2 + HEIGHT / 2) + player->look;
+	*draw_start = (-line_height / 2 + HEIGHT / 2);
 	if (*draw_start < 0)
 		*draw_start = 0;
-	*draw_end = (line_height / 2 + HEIGHT / 2) + player->look;
+	*draw_end = (line_height / 2 + HEIGHT / 2);
 	if (*draw_end >= HEIGHT)
 		*draw_end = HEIGHT - 1;
 }

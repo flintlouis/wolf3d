@@ -23,9 +23,9 @@ void	rotate(t_mlx *mlx, double degrees)
 
 void	player_look(t_mlx *mlx)
 {
-	if (/* CONTROLS->prev_x < CONTROLS->cur_x || */ CONTROLS->look_right)
+	if (CONTROLS->look_right)
 		rotate(mlx, 1.5);
-	if (/* CONTROLS->prev_x > CONTROLS->cur_x || */ CONTROLS->look_left)
+	if (CONTROLS->look_left)
 		rotate(mlx, -1.5);
 	CONTROLS->prev_x = CONTROLS->cur_x;
 }
