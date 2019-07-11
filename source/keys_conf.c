@@ -45,6 +45,15 @@ int	key_release(int key, t_mlx *mlx)
 		CONTROLS->look_left = 0;
 	if (key == KEY_RIGHT)
 		CONTROLS->look_right = 0;
+
+	if (key == KEY_SPACE) {
+		PLAYER->pos.x = 11;
+		PLAYER->pos.y = 12;
+		PLAYER->plane.x = 0.66;
+		PLAYER->plane.y = 0;
+		PLAYER->looking_dir.x = 0;
+		PLAYER->looking_dir.y = -1;
+	}
 	return (0);
 }
 
