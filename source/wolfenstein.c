@@ -40,8 +40,15 @@ static void		draw_image(t_mlx *mlx)
 
 int wolfenstein(t_mlx *mlx)
 {
-	// system("clear");
-	// ft_printf("time inbetween frames = %ld\n", time_between_frames());
+	static double x;
+	static double y;
+
+	if (x != PLAYER->pos.x || y != PLAYER->pos.y) {
+		system("clear");
+		ft_printf("player: posx = %.2f, posy = %.2f\n", PLAYER->pos.x, PLAYER->pos.y);
+		x = PLAYER->pos.x;
+		y = PLAYER->pos.y;
+	}
 
 	raycaster(mlx);
 	draw_image(mlx);
@@ -49,6 +56,6 @@ int wolfenstein(t_mlx *mlx)
 	move_player(mlx);
 	player_look(mlx);
 
-	mini_map(mlx->player, MAP);
+	// mini_map(mlx->player, MAP);
 	return (0);
 }

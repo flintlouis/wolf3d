@@ -20,10 +20,6 @@ int	key_press(int key, t_mlx *mlx)
 		CONTROLS->right = 1;
 	if (key == KEY_A)
 		CONTROLS->left = 1;
-	if (key == KEY_UP)
-		PLAYER->look += 10;
-	if (key == KEY_DOWN)
-		PLAYER->look -= 10;
 	if (key == KEY_RIGHT)
 		CONTROLS->look_right = 1;
 	if (key == KEY_LEFT)
@@ -49,18 +45,19 @@ int	key_release(int key, t_mlx *mlx)
 		CONTROLS->look_left = 0;
 	if (key == KEY_RIGHT)
 		CONTROLS->look_right = 0;
+
+	if (key == KEY_SPACE) {
+		PLAYER->pos.x = 11;
+		PLAYER->pos.y = 12;
+		PLAYER->plane.x = 0.66;
+		PLAYER->plane.y = 0;
+		PLAYER->looking_dir.x = 0;
+		PLAYER->looking_dir.y = -1;
+	}
 	return (0);
 }
 
 int	mouse_move(int x, int y, t_mlx *mlx)
 {
-	CONTROLS->cur_x = x;
-	// static int prevx;
-
-	// if (x < prevx)
-	// 	rotate(mlx, -2.5);
-	// else if (x > prevx)
-	// 	rotate(mlx, 2.5);
-	// prevx = x;
 	return (0);
 }

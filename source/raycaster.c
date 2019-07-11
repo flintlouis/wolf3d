@@ -15,16 +15,16 @@ static t_colour	set_colour(t_mlx *mlx, t_point map_pos, int side)
 {
 	t_colour colour;
 
-	if (MAP[map_pos.y][map_pos.x] == 1)
+	// if (MAP[map_pos.y][map_pos.x] == 1)
 		colour = (t_colour){125,125,125};
-	else if (MAP[map_pos.y][map_pos.x] == 2)
-		colour = (t_colour){125,0,0};
-	else if (MAP[map_pos.y][map_pos.x] == 3)
-		colour = (t_colour){0,125,125};
-	else if (MAP[map_pos.y][map_pos.x] == 4)
-		colour = (t_colour){125,0,125};
-	else
-		colour = (t_colour){212,175,55};
+	// else if (MAP[map_pos.y][map_pos.x] == 2)
+	// 	colour = (t_colour){125,0,0};
+	// else if (MAP[map_pos.y][map_pos.x] == 3)
+	// 	colour = (t_colour){0,125,125};
+	// else if (MAP[map_pos.y][map_pos.x] == 4)
+	// 	colour = (t_colour){125,0,125};
+	// else
+	// 	colour = (t_colour){212,175,55};
 	if (side == 1)
 	{
 		colour.r /= 2;
@@ -48,10 +48,10 @@ static t_dpoint	set_raydir(int x, t_player *player)
 static void		set_wall_height(t_player *player, int *draw_start, int *draw_end, int line_height)
 {
 	/* CHANGE THE DIVISION TO LOOK UP AND DOWN */
-	*draw_start = (-line_height / 2 + HEIGHT / 2) + player->look;
+	*draw_start = (-line_height / 2 + HEIGHT / 2);
 	if (*draw_start < 0)
 		*draw_start = 0;
-	*draw_end = (line_height / 2 + HEIGHT / 2) + player->look;
+	*draw_end = (line_height / 2 + HEIGHT / 2);
 	if (*draw_end >= HEIGHT)
 		*draw_end = HEIGHT - 1;
 }
