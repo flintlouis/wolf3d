@@ -44,13 +44,13 @@ int wolfenstein(t_mlx *mlx)
 {
 	draw_image(mlx);
 	
-	draw_texture(mlx);
+	// draw_texture(mlx);
 
-	// raycaster(mlx);
+	raycaster(mlx);
 	
-	// move_player(mlx);
-	// player_look(mlx);
+	move_player(mlx);
+	player_look(mlx);
 
-	// mini_map(mlx->player, MAP);
+	mini_map(mlx->player, MAP);
 	return (0);
 }

@@ -48,26 +48,7 @@ static ssize_t		*get_textures_fd(int *size)
 	return (textures_fd);
 }
 
-t_texture	*load_textures(void)
-{
-	ssize_t		*textures_fd;
-	t_texture	*textures;
-	int 		i;
-	int			size;
-
-	textures_fd = get_textures_fd(&size);
-	textures = (t_texture*)ft_memalloc(sizeof(t_texture) * size);
-	i = 0;
-	while (i < size){
-		textures[i] = store_texture(textures_fd[i]);
-		close(textures_fd[i]);
-		i++;
-	}
-	free(textures_fd);
-	return (textures);
-}
-
-t_texture	store_texture(ssize_t fd)
+static t_texture	store_texture(ssize_t fd)
 {
 	t_texture		texture;
 	t_byte			header[54];
@@ -95,4 +76,23 @@ t_texture	store_texture(ssize_t fd)
 		i--;
 	}
 	return (texture);
+}
+
+t_texture	*load_textures(void)
+{
+	ssize_t		*textures_fd;
+	t_texture	*textures;
+	int 		i;
+	int			size;
+
+	textures_fd = get_textures_fd(&size);
+	textures = (t_texture*)ft_memalloc(sizeof(t_texture) * size);
+	i = 0;
+	while (i < size){
+		textures[i] = store_texture(textures_fd[i]);
+		close(textures_fd[i]);
+		i++;
+	}
+	free(textures_fd);
+	return (textures);
 }

@@ -114,5 +114,6 @@ void					raycaster(t_mlx *mlx);
 void					init_wolf(char *map);
 void					draw_ver_line(t_mlx *mlx, t_point a, t_point b, t_colour colour);
 void					rotate(t_mlx *mlx, double degrees);
+t_texture				*load_textures(void);
 
 #endif
