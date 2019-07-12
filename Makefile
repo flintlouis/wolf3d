@@ -6,7 +6,7 @@
 #    By: fhignett <fhignett@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/06/04 14:19:05 by fhignett       #+#    #+#                 #
-#    Updated: 2019/07/12 14:47:00 by fhignett      ########   odam.nl          #
+#    Updated: 2019/07/12 22:07:33 by flintlouis    ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ all: $(NAME)
 $(NAME):
 		@echo "Compiling..."
 		@make -C libft
-		@gcc -o $(NAME) $(SOURCE) $(LIB) $(INCL) $(FRAMEWORK) -g
+		@gcc -o $(NAME) $(SOURCE) $(LIB) $(INCL) $(FRAMEWORK)
 		@make clean
 		@echo "Done"
 
