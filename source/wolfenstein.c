@@ -42,12 +42,15 @@ void	draw_texture(t_mlx *mlx);
 
 int wolfenstein(t_mlx *mlx)
 {
-	raycaster(mlx);
 	draw_image(mlx);
-	// draw_texture(mlx);
-	move_player(mlx);
-	player_look(mlx);
+	
+	draw_texture(mlx);
 
-	mini_map(mlx->player, MAP);
+	// raycaster(mlx);
+	
+	// move_player(mlx);
+	// player_look(mlx);
+
+	// mini_map(mlx->player, MAP);
 	return (0);
 }
