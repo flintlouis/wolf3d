@@ -11,7 +11,7 @@
 # define MAP			mlx->map
 # define PLAYER			mlx->player
 # define CONTROLS		mlx->controls
-# define TEXTURE_COUNT	3
+# define TEXTURES		mlx->textures
 
 # define KEY_ESC                53
 # define KEY_SPACE              49
@@ -59,8 +59,7 @@ typedef struct			s_texture
 {
 	int					width;
 	int					height;
-	t_byte				id;
-	t_colour			*colours;
+	t_colour			**colours;
 }						t_texture;
 
 typedef struct			s_point
@@ -85,8 +84,6 @@ typedef struct			s_controls
 	char				right:1;
 	char				look_left:1;
 	char				look_right:1;
-	int					cur_x; /* DEL FOR MOUSE */
-	int					prev_x; /* DEL FOR MOUSE */
 }						t_controls;
 
 typedef struct			s_mlx
@@ -101,6 +98,7 @@ typedef struct			s_mlx
 	int					**map;
 	t_player			*player;
 	t_controls			*controls;
+	t_texture			*textures;
 }						t_mlx;
 
 int						close_window(void *ptr);

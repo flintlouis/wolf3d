@@ -15,16 +15,16 @@ static t_colour	set_colour(t_mlx *mlx, t_point map_pos, int side)
 {
 	t_colour colour;
 
-	// if (MAP[map_pos.y][map_pos.x] == 1)
+	if (MAP[map_pos.y][map_pos.x] == 1)
 		colour = (t_colour){125,125,125};
-	// else if (MAP[map_pos.y][map_pos.x] == 2)
-	// 	colour = (t_colour){125,0,0};
-	// else if (MAP[map_pos.y][map_pos.x] == 3)
-	// 	colour = (t_colour){0,125,125};
-	// else if (MAP[map_pos.y][map_pos.x] == 4)
-	// 	colour = (t_colour){125,0,125};
-	// else
-	// 	colour = (t_colour){212,175,55};
+	else if (MAP[map_pos.y][map_pos.x] == 2)
+		colour = (t_colour){125,0,0};
+	else if (MAP[map_pos.y][map_pos.x] == 3)
+		colour = (t_colour){0,125,125};
+	else if (MAP[map_pos.y][map_pos.x] == 4)
+		colour = (t_colour){125,0,125};
+	else
+		colour = (t_colour){212,175,55};
 	if (side == 1)
 	{
 		colour.r /= 2;
@@ -109,6 +109,7 @@ static int		wall_hit(int **map, t_dpoint side_dist, t_dpoint delta_dist, t_point
 	return (side);
 }
 
+void	draw_texture(t_mlx *mlx, t_point a, t_point b, int id);//////////////////////
 void			raycaster(t_mlx *mlx)
 {
 	int draw_start;
@@ -146,6 +147,7 @@ void			raycaster(t_mlx *mlx)
 		set_wall_height(PLAYER, &draw_start, &draw_end, (int)((2 * HEIGHT) / calc_wall_distance(PLAYER, side, map_pos, step, ray_dir)));
 	
 		draw_ver_line(mlx, (t_point){x, draw_start}, (t_point){x, draw_end}, set_colour(mlx, map_pos, side));
+		// draw_texture(mlx, (t_point){x, draw_start}, (t_point){x, draw_end}, MAP[map_pos.y][map_pos.x]);
 		x++;
 	}
 }
