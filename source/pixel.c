@@ -1,6 +1,6 @@
 #include "wolf3d.h"
 
-static void		put_pixel(int x, int y, t_mlx *mlx, t_colour colour)
+void		put_pixel(int x, int y, t_mlx *mlx, t_colour colour)
 {
 	int i;
 

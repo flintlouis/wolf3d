@@ -8,9 +8,9 @@ t_texture	*load_textures(void)
 	t_texture	*textures;
 	int 		i;
 
-	fd[0] = open("img/RED.bmp", O_RDONLY);
-	fd[1] = open("img/BLk.bmp", O_RDONLY);
-	fd[2] = open("img/WHT.bmp", O_RDONLY);
+	fd[0] = open("img/bluestone.bmp", O_RDONLY);
+	fd[1] = open("img/greystone.bmp", O_RDONLY);
+	fd[2] = open("img/barrel.bmp", O_RDONLY);
 	textures = (t_texture*)ft_memalloc(sizeof(t_texture) * TEXTURE_COUNT);
 	i = 0;
 	while (i < TEXTURE_COUNT){
@@ -33,11 +33,11 @@ t_texture	store_texture(ssize_t fd)
 	texture.width = (int)header[18]; //*(int*)&header[18];
 	texture.height = (int)header[22];
 	texture.colours = (t_colour**)ft_memalloc(sizeof(t_colour*) * texture.height);
-	i = 0;
-	while (i < texture.height){
-		j = 0;
+	i = texture.height - 1;
+	while (i >= 0){
+		j = texture.width - 1;
 		texture.colours[i] = (t_colour*)ft_memalloc(sizeof(t_colour) * texture.width);
-		while (j < texture.width)
+		while (j >= 0)
 		{
 			read(fd, buff, 3);
 			if (buff[0]) {
@@ -45,9 +45,9 @@ t_texture	store_texture(ssize_t fd)
 				texture.colours[i][j].g = buff[1];
 				texture.colours[i][j].r = buff[2];
 			}
-			j++;
+			j--;
 		}
-		i++;
+		i--;
 	}
 	return (texture);
 }
