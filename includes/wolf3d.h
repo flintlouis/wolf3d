@@ -59,7 +59,6 @@ typedef struct			s_texture
 {
 	int					width;
 	int					height;
-	t_byte				id;
 	t_colour			**colours;
 }						t_texture;
 
@@ -85,8 +84,6 @@ typedef struct			s_controls
 	char				right:1;
 	char				look_left:1;
 	char				look_right:1;
-	int					cur_x; /* DEL FOR MOUSE */
-	int					prev_x; /* DEL FOR MOUSE */
 }						t_controls;
 
 typedef struct			s_mlx

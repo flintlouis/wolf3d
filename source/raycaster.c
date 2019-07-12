@@ -109,6 +109,7 @@ static int		wall_hit(int **map, t_dpoint side_dist, t_dpoint delta_dist, t_point
 	return (side);
 }
 
+void	draw_texture(t_mlx *mlx, t_point a, t_point b, int id);//////////////////////
 void			raycaster(t_mlx *mlx)
 {
 	int draw_start;
@@ -145,7 +146,8 @@ void			raycaster(t_mlx *mlx)
 		/* SET HEIGHT OF WALLS TOO DRAW */		/* MULTIPLY HEIGHT FOR BIGGER WALLS */
 		set_wall_height(PLAYER, &draw_start, &draw_end, (int)((2 * HEIGHT) / calc_wall_distance(PLAYER, side, map_pos, step, ray_dir)));
 	
-		draw_ver_line(mlx, (t_point){x, draw_start}, (t_point){x, draw_end}, set_colour(mlx, map_pos, side));
+		// draw_ver_line(mlx, (t_point){x, draw_start}, (t_point){x, draw_end}, set_colour(mlx, map_pos, side));
+		draw_texture(mlx, (t_point){x, draw_start}, (t_point){x, draw_end}, MAP[map_pos.y][map_pos.x]);
 		x++;
 	}
 }

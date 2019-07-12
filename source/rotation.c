@@ -27,5 +27,4 @@ void	player_look(t_mlx *mlx)
 		rotate(mlx, 1.5);
 	if (CONTROLS->look_left)
 		rotate(mlx, -1.5);
-	CONTROLS->prev_x = CONTROLS->cur_x;
 }
