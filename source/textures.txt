@@ -1,0 +1,10 @@
+barrel
+bluestone
+eagle
+greenlight
+greystone
+mossy
+pillar
+purplestone
+redbrick
+wood
