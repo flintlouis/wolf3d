@@ -8,10 +8,11 @@
 # define MEM(x) 		(x*)ft_memalloc(sizeof(x))
 # define WIDTH			1200
 # define HEIGHT			800
+# define TEXTURE_COUNT	3
 # define MAP			mlx->map
 # define PLAYER			mlx->player
 # define CONTROLS		mlx->controls
-# define TEXTURE_COUNT	3
+# define TEXTURES		mlx->textures
 
 # define KEY_ESC                53
 # define KEY_SPACE              49
@@ -60,7 +61,7 @@ typedef struct			s_texture
 	int					width;
 	int					height;
 	t_byte				id;
-	t_colour			*colours;
+	t_colour			**colours;
 }						t_texture;
 
 typedef struct			s_point
@@ -101,6 +102,7 @@ typedef struct			s_mlx
 	int					**map;
 	t_player			*player;
 	t_controls			*controls;
+	t_texture			*textures;
 }						t_mlx;
 
 int						close_window(void *ptr);

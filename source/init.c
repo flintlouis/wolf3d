@@ -8,6 +8,7 @@ static void	run_wolf(t_mlx *mlx)
 	srand(time(0));
 	// mlx_hook(mlx->win, 4, 1L << 2, mouse_press, mlx);
 	// mlx_hook(mlx->win, 5, 1L << 3, mouse_release, mlx);
+	
 	mlx_hook(mlx->win, 6, 1L << 6, mouse_move, mlx);
 	mlx_loop_hook(mlx->mlx, wolfenstein, mlx);
 	mlx_hook(mlx->win, 2, 1L << 0, key_press, mlx);
@@ -53,6 +54,6 @@ void	init_wolf(char *map)
 	mlx->map = get_map(map);
 	mlx->player = init_player();
 	mlx->controls = MEM(t_controls);
-	load_textures();
-	// run_wolf(mlx);
+	mlx->textures = load_textures();
+	run_wolf(mlx);
 }
