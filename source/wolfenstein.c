@@ -1,6 +1,7 @@
 #include "wolf3d.h"
 #include "mlx.h"
 #include <stdlib.h> /* FOR MINIMAP */
+#include <pthread.h>
 
 static void		mini_map(t_player *player, int **map)
 {
@@ -34,19 +35,48 @@ static void		mini_map(t_player *player, int **map)
 
 static void		draw_image(t_mlx *mlx)
 {
+	char *fps;
+
+	fps = ft_itoa(frames());
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
+	mlx_string_put(mlx->mlx, mlx->win, 10, 10, 0xffffff, fps);
+	free(fps);
 	ft_bzero(mlx->data_addr, HEIGHT * WIDTH * (mlx->bits_per_pixel / 8));
 }
 
-void	draw_texture(t_mlx *mlx);
+static void	join_threads(int i, pthread_t *threads)
+{
+	while (i >= 0)
+	{
+		i--;
+		pthread_join(threads[i], NULL);
+	}
+}
+
+static void threading(t_mlx *mlx)
+{
+	int			i;
+	t_mlx		data[THREAD];
+	pthread_t	threads[THREAD];
+
+	i = 0;
+	while (i < THREAD)
+	{
+		ft_memcpy(&data[i], mlx, sizeof(t_mlx));
+		data[i].x[0] = (WIDTH / THREAD) * i;
+		data[i].x[1] = (WIDTH / THREAD) * (i + 1);
+		pthread_create(&threads[i], NULL, raycaster, &data[i]);
+		i++;
+	}
+	join_threads(i, threads);
+}
 
 int wolfenstein(t_mlx *mlx)
 {
 	draw_image(mlx);
-	
-	// draw_texture(mlx);
 
-	raycaster(mlx);
+	// raycaster(mlx);
+	threading(mlx);
 	
 	move_player(mlx);
 	player_look(mlx);

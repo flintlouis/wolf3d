@@ -109,13 +109,14 @@ static int		wall_hit(int **map, t_dpoint side_dist, t_dpoint delta_dist, t_point
 	return (side);
 }
 
-void	draw_texture(t_mlx *mlx, t_point a, t_point b, int id);//////////////////////
-void			raycaster(t_mlx *mlx)
+void			*raycaster(void *data)
 {
 	int draw_start;
 	int draw_end;
 	int side;
-	int x;
+	int wall_height;
+
+	double wall_distance;
 
 	t_dpoint side_dist;
 	t_dpoint delta_dist;
@@ -124,12 +125,14 @@ void			raycaster(t_mlx *mlx)
 	t_point step;
 	t_point map_pos;
 
-	x = 0;
+	t_mlx *mlx;
+	
+	mlx = (t_mlx*)data;
 	/* PLANE */
-	while (x < WIDTH)
+	while (mlx->x[0] < mlx->x[1])
 	{
 		/* CALC VECTOR FOR RAY ON PLANE POS */
-		ray_dir = set_raydir(x, PLAYER);
+		ray_dir = set_raydir(mlx->x[0], PLAYER);
 
 		/* WHICH BOX THE PLAYER IS STANDING IN */
 		map_pos = (t_point){(int)PLAYER->pos.x, (int)PLAYER->pos.y};
@@ -143,11 +146,35 @@ void			raycaster(t_mlx *mlx)
 		/* X OR Y WALL HIT */
 		side = wall_hit(MAP, side_dist, delta_dist, &map_pos, step);
 
-		/* SET HEIGHT OF WALLS TOO DRAW */		/* MULTIPLY HEIGHT FOR BIGGER WALLS */
-		set_wall_height(PLAYER, &draw_start, &draw_end, (int)((2 * HEIGHT) / calc_wall_distance(PLAYER, side, map_pos, step, ray_dir)));
-	
-		draw_ver_line(mlx, (t_point){x, draw_start}, (t_point){x, draw_end}, set_colour(mlx, map_pos, side));
-		// draw_texture(mlx, (t_point){x, draw_start}, (t_point){x, draw_end}, MAP[map_pos.y][map_pos.x]);
-		x++;
+		wall_distance = calc_wall_distance(PLAYER, side, map_pos, step, ray_dir);
+		
+		/* MULTIPLY HEIGHT FOR BIGGER WALLS */
+		wall_height = (int)((2 * HEIGHT) / wall_distance);
+
+		/* SET HEIGHT OF WALLS TOO DRAW */
+		set_wall_height(PLAYER, &draw_start, &draw_end, wall_height);
+
+		// draw_ver_line(mlx, (t_point){x, draw_start}, (t_point){x, draw_end}, set_colour(mlx, map_pos, side));
+///////////////////////////////////////////////////////////////////////// DRAW TEXTURES
+		int texture;
+		double wall_coll; /* Where exactly the wall was hit */
+		int texture_x;
+
+		texture = MAP[map_pos.y][map_pos.x] - 1;
+		if (side == 0)
+			wall_coll = PLAYER->pos.x + wall_distance * ray_dir.x;
+		else
+			wall_coll = PLAYER->pos.y + wall_distance * ray_dir.y;
+		wall_coll -= floor(wall_coll);
+
+		texture_x = (int)(wall_coll * TEXTURES->width);
+		if (side == 0 && ray_dir.y > 0)
+			texture_x = TEXTURES->width - texture_x - 1;
+		else if (side == 1 && ray_dir.x < 0)
+			texture_x = TEXTURES->width - texture_x - 1;
+		
+		draw_texture(mlx, (int[2]){draw_start, draw_end}, wall_height, texture, side, mlx->x[0], texture_x);
+		mlx->x[0]++;
 	}
+	return (0);
 }

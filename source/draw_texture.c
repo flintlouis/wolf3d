@@ -1,7 +1,5 @@
 #include "wolf3d.h"
 
-void		put_pixel(int x, int y, t_mlx *mlx, t_colour colour);
-
 t_colour	divide_colour(t_colour c, int nb)
 {
 	c.r /= nb;
@@ -10,46 +8,21 @@ t_colour	divide_colour(t_colour c, int nb)
 	return (c);
 }
 
-// void	draw_texture(t_mlx *mlx, t_point a, t_point b, int id)
-// {
-// 	int i;
-// 	int j;
-// 	int height;
-// 	int width;
-
-// 	i = 0;
-// 	j = 0;
-// 	height = ABS(b.y - a.y);
-// 	id--;
-// 	while (a.y <= b.y)
-// 	{
-// 		put_pixel(a.x, a.y, mlx, TEXTURES[id].colours[i][j]);
-// 		a.y++;
-// 		i++;
-// 	}
-// }
-
-void	draw_texture(t_mlx *mlx)
+void	draw_texture(t_mlx *mlx, int *draw_pos, int wall_height, int texture, int side, int x, int texture_x)
 {
-	int nb;
-	int j, i = 0;
-	int id = 3;
+	int y;
+	int texture_y;
+	int d;
 
-	id--;
-	while (i < TEXTURES->height) {
-		j = 0;
-		while (j < TEXTURES->width) {
-
-			nb = 1;
-			put_pixel(10 + j, 10 + i, mlx, divide_colour(TEXTURES[id].colours[i][j], nb));
-			nb++;
-			put_pixel(100 + j, 10 + i, mlx, divide_colour(TEXTURES[id].colours[i][j], nb));
-			nb++;
-			put_pixel(200 + j, 10 + i, mlx, divide_colour(TEXTURES[id].colours[i][j], nb));
-			nb++;
-			put_pixel(300 + j, 10 + i, mlx, divide_colour(TEXTURES[id].colours[i][j], nb));
-			j++;
-		}
-		i++;
+	y = draw_pos[0];
+	while (y < draw_pos[1])
+	{
+		d = y * 256 - HEIGHT * 128 + wall_height * 128;
+		texture_y = ((d * TEXTURES->height) / wall_height) / 256;
+		t_colour colour = TEXTURES[texture].colours[texture_y][texture_x];
+		if (side ==1)
+			colour = divide_colour(colour, 2);
+		put_pixel(x, y, mlx, colour);
+		y++;
 	}
 }

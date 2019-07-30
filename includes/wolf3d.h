@@ -8,6 +8,7 @@
 # define MEM(x) 		(x*)ft_memalloc(sizeof(x))
 # define WIDTH			1200
 # define HEIGHT			800
+# define THREAD			100
 # define MAP			mlx->map
 # define PLAYER			mlx->player
 # define CONTROLS		mlx->controls
@@ -95,6 +96,7 @@ typedef struct			s_mlx
 	int					bits_per_pixel;
 	int					size_line;
 	int					endian;
+	int					x[2];
 	int					**map;
 	t_player			*player;
 	t_controls			*controls;
@@ -107,13 +109,16 @@ int						key_release(int key, t_mlx *mlx);
 int						mouse_move(int x, int y, t_mlx *mlx);
 int						**get_map(char *file);
 int						wolfenstein(t_mlx *mlx);
+int						frames(void);
 long					time_between_frames(void);
 void					player_look(t_mlx *mlx);
 void					move_player(t_mlx *mlx);
-void					raycaster(t_mlx *mlx);
 void					init_wolf(char *map);
-void					draw_ver_line(t_mlx *mlx, t_point a, t_point b, t_colour colour);
+void					draw_ver_line(t_mlx *mlx, t_point a, t_point b, t_colour colour); /* Only for colour walls */
+void					draw_texture(t_mlx *mlx, int *draw_pos, int wall_height, int texture, int side, int x, int texture_x); /* For texture */
+void					put_pixel(int x, int y, t_mlx *mlx, t_colour colour);;
 void					rotate(t_mlx *mlx, double degrees);
+void					*raycaster(void *data);
 t_texture				*load_textures(void);
 
 #endif
