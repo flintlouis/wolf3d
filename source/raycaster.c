@@ -47,7 +47,6 @@ static t_dpoint	set_raydir(int x, t_player *player)
 
 static void		set_wall_height(t_player *player, int *draw_start, int *draw_end, int line_height)
 {
-	/* CHANGE THE DIVISION TO LOOK UP AND DOWN */
 	*draw_start = (-line_height / 2 + HEIGHT / 2);
 	if (*draw_start < 0)
 		*draw_start = 0;
@@ -167,11 +166,11 @@ void			*raycaster(void *data)
 			wall_coll = PLAYER->pos.y + wall_distance * ray_dir.y;
 		wall_coll -= floor(wall_coll);
 
-		texture_x = (int)(wall_coll * TEXTURES->width);
-		if (side == 0 && ray_dir.y > 0)
-			texture_x = TEXTURES->width - texture_x - 1;
-		else if (side == 1 && ray_dir.x < 0)
-			texture_x = TEXTURES->width - texture_x - 1;
+		texture_x = (int)(wall_coll * TEXTURES[texture].width);
+		if ((side == 0 && ray_dir.y > 0) || (side == 1 && ray_dir.x < 0))
+			texture_x = TEXTURES[texture].width - texture_x - 1;
+		// else if (side == 1 && ray_dir.x < 0)
+		// 	texture_x = TEXTURES[texture].width - texture_x - 1;
 		
 		draw_texture(mlx, (int[2]){draw_start, draw_end}, wall_height, texture, side, mlx->x[0], texture_x);
 		mlx->x[0]++;

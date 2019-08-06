@@ -1,27 +1,29 @@
 #include "wolf3d.h"
 
-t_colour	divide_colour(t_colour c, int nb)
+void	shift_colour(t_colour *c, int nb)
 {
-	c.r /= nb;
-	c.g /= nb;
-	c.b /= nb;
-	return (c);
+	c->r >>= nb;
+	c->g >>= nb;
+	c->b >>= nb;
 }
 
-void	draw_texture(t_mlx *mlx, int *draw_pos, int wall_height, int texture, int side, int x, int texture_x)
+void	draw_texture(t_mlx *mlx, int *draw_pos, int wall_height, int textureId, int side, int x, int texture_x)
 {
 	int y;
 	int texture_y;
-	int d;
+	long d; /* Goes beyond an integer */
 
+	t_texture texture = TEXTURES[textureId];
+	t_colour **colours = texture.colours;
+	t_colour colour;
 	y = draw_pos[0];
 	while (y < draw_pos[1])
 	{
-		d = y * 256 - HEIGHT * 128 + wall_height * 128;
-		texture_y = ((d * TEXTURES->height) / wall_height) / 256;
-		t_colour colour = TEXTURES[texture].colours[texture_y][texture_x];
+		d = (y << 8) - ((HEIGHT - (long)wall_height) << 7); //y * 256 - HEIGHT * 128 + (long)wall_height * 128 (Voor afronding fouten)
+		texture_y = ((d * texture.height) / wall_height) >> 8;
+		colour = colours[texture_y][texture_x];
 		if (side ==1)
-			colour = divide_colour(colour, 2);
+			shift_colour(&colour, 1);
 		put_pixel(x, y, mlx, colour);
 		y++;
 	}

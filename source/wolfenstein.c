@@ -75,12 +75,14 @@ int wolfenstein(t_mlx *mlx)
 {
 	draw_image(mlx);
 
+	// mlx->x[0] = 0;
+	// mlx->x[1] = WIDTH;
 	// raycaster(mlx);
 	threading(mlx);
 	
 	move_player(mlx);
 	player_look(mlx);
 
-	mini_map(mlx->player, MAP);
+	// mini_map(mlx->player, MAP);
 	return (0);
 }

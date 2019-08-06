@@ -6,7 +6,7 @@
 #    By: fhignett <fhignett@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/06/04 14:19:05 by fhignett       #+#    #+#                 #
-#    Updated: 2019/07/12 22:07:33 by flintlouis    ########   odam.nl          #
+#    Updated: 2019/08/01 23:35:00 by flintlouis    ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,14 +17,14 @@ FRAMEWORK = -framework OpenGL -framework AppKit
 CFILES = *
 SOURCE = $(CFILES:%=source/%.c)
 OFILES = $(SOURCE:.c=.o) # HEBBEN WE DIT NODIG???
-FLAGS = -Wall -Werror -Wextra # ADD LATER
+FLAGS = -Wall -Werror -Wextra # ADD LATER -O2
 
 all: $(NAME)
 
 $(NAME):
 		@echo "Compiling..."
 		@make -C libft
-		@gcc -o $(NAME) $(SOURCE) $(LIB) $(INCL) $(FRAMEWORK)
+		@gcc -o $(NAME) $(SOURCE) $(LIB) $(INCL) $(FRAMEWORK) 
 		@make clean
 		@echo "Done"
 
