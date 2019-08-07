@@ -7,7 +7,7 @@ static void		mini_map(t_player *player, int **map)
 {
 	static int prev_pos_x;
 	static int prev_pos_y;
-	
+
 	if (prev_pos_x != (int)player->pos.x || prev_pos_y != (int)player->pos.y)
 	{
 		system("clear");
@@ -28,7 +28,6 @@ static void		mini_map(t_player *player, int **map)
 			ft_putendl("");
 			j++;
 			i = 0;
-
 		}
 	}
 }
@@ -74,15 +73,10 @@ static void threading(t_mlx *mlx)
 int wolfenstein(t_mlx *mlx)
 {
 	draw_image(mlx);
-
-	// mlx->x[0] = 0;
-	// mlx->x[1] = WIDTH;
-	// raycaster(mlx);
 	threading(mlx);
 	
 	move_player(mlx);
 	player_look(mlx);
-
 	// mini_map(mlx->player, MAP);
 	return (0);
 }

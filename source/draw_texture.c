@@ -20,7 +20,7 @@ void	draw_texture(t_mlx *mlx, int *draw_pos, int wall_height, int textureId, int
 	while (y < draw_pos[1])
 	{
 		d = (y << 8) - ((HEIGHT - (long)wall_height) << 7); //y * 256 - HEIGHT * 128 + (long)wall_height * 128 (Voor afronding fouten)
-		texture_y = ((d * texture.height) / wall_height) >> 8;
+		texture_y = ((d * texture.height) / wall_height) >> 8; // / 256
 		colour = colours[texture_y][texture_x];
 		if (side ==1)
 			shift_colour(&colour, 1);

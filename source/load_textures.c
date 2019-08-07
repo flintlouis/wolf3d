@@ -60,11 +60,11 @@ static t_texture	store_texture(ssize_t fd)
 	/* read bitmap header */
 	read(fd, header, 54);
 	offset = (int)header[11] * 256 + (int)header[10];
-	texture.width = (int)header[18]; /* Only works if the size is one byte big */
-	texture.height = (int)header[22]; /* Only works if the size is one byte big */
+	texture.width = (int)header[21]*16777216+(int)header[20]*65536+(int)header[19]*256+(int)header[18]; /* Only works if the size is one byte big */
+	texture.height = (int)header[25]*16777216+(int)header[24]*65536+(int)header[23]*256+(int)header[22]; /* Only works if the size is one byte big */
 	texture.colours = (t_colour**)ft_memalloc(sizeof(t_colour*) * texture.height);
 	i = texture.height - 1;
-	if (offset != 54)
+	if (offset > 54)
 	{
 		offset -= 54;
 		t_byte xtra[offset];

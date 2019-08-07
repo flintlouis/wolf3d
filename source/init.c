@@ -5,7 +5,6 @@
 
 static void	run_wolf(t_mlx *mlx)
 {
-	srand(time(0));
 	// mlx_hook(mlx->win, 4, 1L << 2, mouse_press, mlx);
 	// mlx_hook(mlx->win, 5, 1L << 3, mouse_release, mlx);
 	
@@ -55,5 +54,6 @@ void	init_wolf(char *map)
 	mlx->player = init_player();
 	mlx->controls = MEM(t_controls);
 	mlx->textures = load_textures();
+
 	run_wolf(mlx);
 }

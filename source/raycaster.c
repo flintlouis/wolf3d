@@ -153,7 +153,7 @@ void			*raycaster(void *data)
 		/* SET HEIGHT OF WALLS TOO DRAW */
 		set_wall_height(PLAYER, &draw_start, &draw_end, wall_height);
 
-		// draw_ver_line(mlx, (t_point){x, draw_start}, (t_point){x, draw_end}, set_colour(mlx, map_pos, side));
+		// draw_ver_line(mlx, (t_point){mlx->x[0], draw_start}, (t_point){mlx->x[0], draw_end}, set_colour(mlx, map_pos, side));
 ///////////////////////////////////////////////////////////////////////// DRAW TEXTURES
 		int texture;
 		double wall_coll; /* Where exactly the wall was hit */
