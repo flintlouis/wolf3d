@@ -70,11 +70,36 @@ static void threading(t_mlx *mlx)
 	join_threads(i, threads);
 }
 
+void	draw_texture_test(t_mlx *mlx)
+{
+	int nb;
+	int j, i = 0;
+	int id = 10;
+	t_colour colour;
+
+	id--;
+	while (i < TEXTURES[id].height) {
+		j = 0;
+		while (j < TEXTURES[id].width) {
+			colour = TEXTURES[id].colours[i][j];
+			if (TEXTURES[id].colours[i][j].opacity)
+				put_pixel(10 + j, 10 + i, mlx, colour);
+			colour = TEXTURES[id - 1].colours[i][j];
+			if (TEXTURES[id - 1].colours[i][j].opacity)
+				put_pixel(300 + j, 10 + i, mlx, colour);
+			j++;
+		}
+		i++;
+	}
+}
+
 int wolfenstein(t_mlx *mlx)
 {
 	draw_image(mlx);
 	threading(mlx);
-	
+
+	// draw_texture_test(mlx);
+
 	move_player(mlx);
 	player_look(mlx);
 	// mini_map(mlx->player, MAP);

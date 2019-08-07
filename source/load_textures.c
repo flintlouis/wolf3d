@@ -52,6 +52,7 @@ static t_texture	store_texture(ssize_t fd)
 {
 	t_texture		texture;
 	t_byte			header[54];
+	// t_byte			buff[4];
 	t_byte			buff[3];
 	int				offset;
 	int 			i;
@@ -60,8 +61,8 @@ static t_texture	store_texture(ssize_t fd)
 	/* read bitmap header */
 	read(fd, header, 54);
 	offset = (int)header[11] * 256 + (int)header[10];
-	texture.width = (int)header[21]*16777216+(int)header[20]*65536+(int)header[19]*256+(int)header[18]; /* Only works if the size is one byte big */
-	texture.height = (int)header[25]*16777216+(int)header[24]*65536+(int)header[23]*256+(int)header[22]; /* Only works if the size is one byte big */
+	texture.width = (int)header[21]*16777216+(int)header[20]*65536+(int)header[19]*256+(int)header[18];
+	texture.height = (int)header[25]*16777216+(int)header[24]*65536+(int)header[23]*256+(int)header[22];
 	texture.colours = (t_colour**)ft_memalloc(sizeof(t_colour*) * texture.height);
 	i = texture.height - 1;
 	if (offset > 54)
@@ -70,15 +71,17 @@ static t_texture	store_texture(ssize_t fd)
 		t_byte xtra[offset];
 		read(fd, xtra, offset);
 	}
+
 	while (i >= 0){
 		j = 0;
 		texture.colours[i] = (t_colour*)ft_memalloc(sizeof(t_colour) * texture.width);
 		while (j < texture.width)
 		{
-			read(fd, buff, 3);
+			read(fd, buff, 3);//4);
 			texture.colours[i][j].b = buff[0];
 			texture.colours[i][j].g = buff[1];
 			texture.colours[i][j].r = buff[2];
+			// texture.colours[i][j].opacity = buff[3];
 			j++;
 		}
 		i--;

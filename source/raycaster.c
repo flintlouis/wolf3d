@@ -154,7 +154,7 @@ void			*raycaster(void *data)
 		set_wall_height(PLAYER, &draw_start, &draw_end, wall_height);
 
 		// draw_ver_line(mlx, (t_point){mlx->x[0], draw_start}, (t_point){mlx->x[0], draw_end}, set_colour(mlx, map_pos, side));
-///////////////////////////////////////////////////////////////////////// DRAW TEXTURES
+		////////////////////////////////////////////////////////////////////////////////////////////////////////// DRAW TEXTURES
 		int texture;
 		double wall_coll; /* Where exactly the wall was hit */
 		int texture_x;
@@ -169,8 +169,6 @@ void			*raycaster(void *data)
 		texture_x = (int)(wall_coll * TEXTURES[texture].width);
 		if ((side == 0 && ray_dir.y > 0) || (side == 1 && ray_dir.x < 0))
 			texture_x = TEXTURES[texture].width - texture_x - 1;
-		// else if (side == 1 && ray_dir.x < 0)
-		// 	texture_x = TEXTURES[texture].width - texture_x - 1;
 		
 		draw_texture(mlx, (int[2]){draw_start, draw_end}, wall_height, texture, side, mlx->x[0], texture_x);
 		mlx->x[0]++;

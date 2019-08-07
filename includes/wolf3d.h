@@ -48,6 +48,7 @@ typedef struct			s_colour
 	t_byte				r;
 	t_byte				g;
 	t_byte				b;
+	t_byte				opacity;
 }						t_colour;
 
 typedef struct			s_dpoint
