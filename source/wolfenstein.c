@@ -52,7 +52,7 @@ static void	join_threads(int i, pthread_t *threads)
 	}
 }
 
-static void threading(t_mlx *mlx)
+static void threading(t_mlx *mlx, void*(*f)(void*))
 {
 	int			i;
 	t_mlx		data[THREAD];
@@ -64,7 +64,7 @@ static void threading(t_mlx *mlx)
 		ft_memcpy(&data[i], mlx, sizeof(t_mlx));
 		data[i].x[0] = (WIDTH / THREAD) * i;
 		data[i].x[1] = (WIDTH / THREAD) * (i + 1);
-		pthread_create(&threads[i], NULL, raycaster, &data[i]);
+		pthread_create(&threads[i], NULL, f, &data[i]);
 		i++;
 	}
 	join_threads(i, threads);
@@ -74,19 +74,31 @@ void	draw_texture_test(t_mlx *mlx)
 {
 	int nb;
 	int j, i = 0;
-	int id = 10;
+	int id = 1;
 	t_colour colour;
 
 	id--;
-	while (i < TEXTURES[id].height) {
+	while (i < SPRITES[id].height) {
 		j = 0;
-		while (j < TEXTURES[id].width) {
-			colour = TEXTURES[id].colours[i][j];
-			if (TEXTURES[id].colours[i][j].opacity)
-				put_pixel(10 + j, 10 + i, mlx, colour);
-			colour = TEXTURES[id - 1].colours[i][j];
-			if (TEXTURES[id - 1].colours[i][j].opacity)
-				put_pixel(300 + j, 10 + i, mlx, colour);
+		while (j < SPRITES[id].width) {
+			colour = SPRITES[id].colours[i][j];
+			if (SPRITES[id].colours[i][j].opacity)
+				put_pixel(10 + j, 300 + i, mlx, colour);
+			colour = SPRITES[id + 1].colours[i][j];
+			if (SPRITES[id + 1].colours[i][j].opacity)
+				put_pixel(100 + j, 300 + i, mlx, colour);
+			colour = SPRITES[id + 2].colours[i][j];
+			if (SPRITES[id + 2].colours[i][j].opacity)
+				put_pixel(200 + j, 300 + i, mlx, colour);
+			colour = SPRITES[id + 3].colours[i][j];
+			if (SPRITES[id+ 3].colours[i][j].opacity)
+				put_pixel(300 + j, 300 + i, mlx, colour);
+			colour = SPRITES[id + 4].colours[i][j];
+			if (SPRITES[id+ 4].colours[i][j].opacity)
+				put_pixel(400 + j, 300 + i, mlx, colour);
+			colour = SPRITES[id + 5].colours[i][j];
+			if (SPRITES[id+ 5].colours[i][j].opacity)
+				put_pixel(500 + j, 300 + i, mlx, colour);
 			j++;
 		}
 		i++;
@@ -96,9 +108,9 @@ void	draw_texture_test(t_mlx *mlx)
 int wolfenstein(t_mlx *mlx)
 {
 	draw_image(mlx);
-	threading(mlx);
+	threading(mlx, raycaster);
 
-	// draw_texture_test(mlx);
+	draw_texture_test(mlx);
 
 	move_player(mlx);
 	player_look(mlx);

@@ -1,0 +1,9 @@
+Sprites/barrel
+Sprites/cage
+Sprites/chandelier
+Sprites/lamp
+Sprites/pillar
+Sprites/plant
+Sprites/ss1
+Sprites/table
+Sprites/trans

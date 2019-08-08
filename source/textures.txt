@@ -1,10 +1,5 @@
-Fav./greystone
-Fav./mossy
-Fav./eagle
-Fav./redbrick
-Fav./Bald2atest
-Fav./wood
-Fav./greenlight
-Fav./soldier
-flint
-elkan
+Textures/eagle
+Textures/wood
+Textures/redbrick
+Textures/mossy
+Textures/greystone

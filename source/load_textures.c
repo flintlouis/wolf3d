@@ -20,7 +20,7 @@ static int		get_textures_size(char *file)
 	return (size);
 }
 
-static ssize_t		*get_textures_fd(int *size)
+static ssize_t		*get_textures_fd(int *size, char *file)
 {
 	int fd;
 	ssize_t	*textures_fd;
@@ -29,8 +29,8 @@ static ssize_t		*get_textures_fd(int *size)
 	int i;
 
 	i = 0;
-	fd = open("source/textures.txt", O_RDONLY);
-	*size = get_textures_size("source/textures.txt");
+	fd = open(file, O_RDONLY);
+	*size = get_textures_size(file);
 	textures_fd = (ssize_t*)ft_memalloc(sizeof(ssize_t) * (*size));
 	while (ft_get_next_line(fd, &line))
 	{
@@ -52,11 +52,11 @@ static t_texture	store_texture(ssize_t fd)
 {
 	t_texture		texture;
 	t_byte			header[54];
-	// t_byte			buff[4];
-	t_byte			buff[3];
+	t_byte			*buff;
 	int				offset;
 	int 			i;
 	int				j;
+	int				bpp;
 
 	/* read bitmap header */
 	read(fd, header, 54);
@@ -71,32 +71,35 @@ static t_texture	store_texture(ssize_t fd)
 		t_byte xtra[offset];
 		read(fd, xtra, offset);
 	}
-
+	bpp = (int)header[28] / 8;
+	buff = (t_byte*)malloc(sizeof(t_byte) * bpp);
 	while (i >= 0){
 		j = 0;
 		texture.colours[i] = (t_colour*)ft_memalloc(sizeof(t_colour) * texture.width);
 		while (j < texture.width)
 		{
-			read(fd, buff, 3);//4);
+			read(fd, buff, bpp);
 			texture.colours[i][j].b = buff[0];
 			texture.colours[i][j].g = buff[1];
 			texture.colours[i][j].r = buff[2];
-			// texture.colours[i][j].opacity = buff[3];
+			if (bpp == 4)
+				texture.colours[i][j].opacity = buff[3];
 			j++;
 		}
 		i--;
 	}
+	free(buff);
 	return (texture);
 }
 
-t_texture	*load_textures(void)
+t_texture	*get_textures(char *file)
 {
 	ssize_t		*textures_fd;
 	t_texture	*textures;
 	int 		i;
 	int			size;
 
-	textures_fd = get_textures_fd(&size);
+	textures_fd = get_textures_fd(&size, file);
 	textures = (t_texture*)ft_memalloc(sizeof(t_texture) * size);
 	i = 0;
 	while (i < size){
@@ -107,3 +110,4 @@ t_texture	*load_textures(void)
 	free(textures_fd);
 	return (textures);
 }
+
