@@ -14,12 +14,3 @@ void		put_pixel(int x, int y, t_mlx *mlx, t_colour colour)
 		mlx->data_addr[i] = colour.r;
 	}
 }
-
-void			draw_ver_line(t_mlx *mlx, t_point a, t_point b, t_colour colour)
-{
-	while (a.y <= b.y)
-	{
-		put_pixel(a.x, a.y, mlx, colour);
-		a.y++;
-	}
-}

@@ -74,30 +74,30 @@ void	draw_texture_test(t_mlx *mlx)
 {
 	int nb;
 	int j, i = 0;
-	int id = 1;
+	int id = 6;
 	t_colour colour;
 
 	id--;
-	while (i < SPRITES[id].height) {
+	while (i < TEXTURES[id].height) {
 		j = 0;
-		while (j < SPRITES[id].width) {
-			colour = SPRITES[id].colours[i][j];
-			if (SPRITES[id].colours[i][j].opacity)
+		while (j < TEXTURES[id].width) {
+			colour = TEXTURES[id].colours[i][j];
+			if (TEXTURES[id].colours[i][j].opacity)
 				put_pixel(10 + j, 300 + i, mlx, colour);
-			colour = SPRITES[id + 1].colours[i][j];
-			if (SPRITES[id + 1].colours[i][j].opacity)
+			colour = TEXTURES[id + 1].colours[i][j];
+			if (TEXTURES[id + 1].colours[i][j].opacity)
 				put_pixel(100 + j, 300 + i, mlx, colour);
-			colour = SPRITES[id + 2].colours[i][j];
-			if (SPRITES[id + 2].colours[i][j].opacity)
+			colour = TEXTURES[id + 2].colours[i][j];
+			if (TEXTURES[id + 2].colours[i][j].opacity)
 				put_pixel(200 + j, 300 + i, mlx, colour);
-			colour = SPRITES[id + 3].colours[i][j];
-			if (SPRITES[id+ 3].colours[i][j].opacity)
+			colour = TEXTURES[id + 3].colours[i][j];
+			if (TEXTURES[id+ 3].colours[i][j].opacity)
 				put_pixel(300 + j, 300 + i, mlx, colour);
-			colour = SPRITES[id + 4].colours[i][j];
-			if (SPRITES[id+ 4].colours[i][j].opacity)
+			colour = TEXTURES[id + 4].colours[i][j];
+			if (TEXTURES[id+ 4].colours[i][j].opacity)
 				put_pixel(400 + j, 300 + i, mlx, colour);
-			colour = SPRITES[id + 5].colours[i][j];
-			if (SPRITES[id+ 5].colours[i][j].opacity)
+			colour = TEXTURES[id + 5].colours[i][j];
+			if (TEXTURES[id+ 5].colours[i][j].opacity)
 				put_pixel(500 + j, 300 + i, mlx, colour);
 			j++;
 		}
@@ -108,7 +108,10 @@ void	draw_texture_test(t_mlx *mlx)
 int wolfenstein(t_mlx *mlx)
 {
 	draw_image(mlx);
-	threading(mlx, raycaster);
+	// threading(mlx, raycaster);
+	mlx->x[0] = 0;
+	mlx->x[1] = WIDTH;
+	raycaster(mlx);
 
 	draw_texture_test(mlx);
 

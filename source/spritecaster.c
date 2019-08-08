@@ -84,7 +84,7 @@ static int		wall_hit(int **map, t_dpoint side_dist, t_dpoint delta_dist, t_point
 	return (side);
 }
 
-void			*raycaster(void *data)
+void			*spritecaster(void *data)
 {
 	int draw_start;
 	int draw_end;

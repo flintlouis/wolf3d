@@ -54,7 +54,6 @@ void	init_wolf(char *map)
 	mlx->player = init_player();
 	mlx->controls = MEM(t_controls);
 	mlx->textures = get_textures("source/textures.txt");
-	mlx->sprites = get_textures("source/sprites.txt");
 
 	run_wolf(mlx);
 }

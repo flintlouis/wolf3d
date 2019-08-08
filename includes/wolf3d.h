@@ -13,7 +13,6 @@
 # define PLAYER			mlx->player
 # define CONTROLS		mlx->controls
 # define TEXTURES		mlx->textures
-# define SPRITES		mlx->sprites
 
 # define KEY_ESC                53
 # define KEY_SPACE              49
@@ -103,7 +102,6 @@ typedef struct			s_mlx
 	t_player			*player;
 	t_controls			*controls;
 	t_texture			*textures;
-	t_texture			*sprites;
 }						t_mlx;
 
 int						close_window(void *ptr);
@@ -117,8 +115,7 @@ long					time_between_frames(void);
 void					player_look(t_mlx *mlx);
 void					move_player(t_mlx *mlx);
 void					init_wolf(char *map);
-void					draw_ver_line(t_mlx *mlx, t_point a, t_point b, t_colour colour); /* Only for colour walls */
-void					draw_texture(t_mlx *mlx, int *draw_pos, int wall_height, int texture, int side, int x, int texture_x); /* For texture */
+void					draw_texture(t_mlx *mlx, int *draw_pos, int wall_height, int texture, int side, int x, int texture_x);
 void					put_pixel(int x, int y, t_mlx *mlx, t_colour colour);;
 void					rotate(t_mlx *mlx, double degrees);
 void					*raycaster(void *data);
