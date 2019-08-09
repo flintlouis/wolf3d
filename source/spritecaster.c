@@ -61,7 +61,6 @@ static t_point	calc_step_dir(t_player *player, t_dpoint ray_dir, t_dpoint *side_
 static int		wall_hit(int **map, t_dpoint side_dist, t_dpoint delta_dist, t_point *map_pos, t_point step)
 {
 	int hit;
-	int side;
 
 	hit = 0;
 	while (!hit)
@@ -70,18 +69,18 @@ static int		wall_hit(int **map, t_dpoint side_dist, t_dpoint delta_dist, t_point
 		{
 			side_dist.y += delta_dist.y;
 			map_pos->y += step.y;
-			side = 0;
 		}
 		else
 		{
 			side_dist.x += delta_dist.x;
 			map_pos->x += step.x;
-			side = 1;
 		}
-		if (map[map_pos->y][map_pos->x] > 0)
+		if (map[map_pos->y][map_pos->x] > 5)
+			break ;
+		else if (map[map_pos->y][map_pos->x] > 0)
 			hit = 1;
 	}
-	return (side);
+	return (hit);
 }
 
 void			*spritecaster(void *data)
@@ -119,9 +118,14 @@ void			*spritecaster(void *data)
 		step = calc_step_dir(PLAYER, ray_dir, &side_dist, delta_dist, map_pos);
 
 		/* X OR Y WALL HIT */
-		side = wall_hit(MAP, side_dist, delta_dist, &map_pos, step);
+		if (wall_hit(MAP, side_dist, delta_dist, &map_pos, step))
+		{
+			mlx->x[0]++;
+			continue ;
+		}
 
-		wall_distance = calc_wall_distance(PLAYER, side, map_pos, step, ray_dir);
+		/* Distance between 2 vectors: √(x2-x1)^2+(y2-y1)^2 */
+		wall_distance = sqrt(pow(((double)map_pos.x - PLAYER->pos.x), 2) + pow((map_pos.y - PLAYER->pos.y), 2));
 		
 		/* MULTIPLY HEIGHT FOR BIGGER WALLS */
 		wall_height = (int)((2 * HEIGHT) / wall_distance);
