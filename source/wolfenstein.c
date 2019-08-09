@@ -114,6 +114,9 @@ int wolfenstein(t_mlx *mlx)
 	mlx->x[0] = 0;
 	mlx->x[1] = WIDTH;
 	raycaster(mlx);
+	mlx->x[0] = 0;
+	mlx->x[1] = WIDTH;
+	spritecaster(mlx);
 
 	move_player(mlx);
 	player_look(mlx);

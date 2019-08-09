@@ -82,7 +82,7 @@ static int		wall_hit(int **map, t_dpoint side_dist, t_dpoint delta_dist, t_point
 	}
 	return (hit);
 }
-
+void	draw_sprite(t_mlx *mlx, int *draw_pos, int wall_height, int textureId, int x, int texture_x);
 void			*spritecaster(void *data)
 {
 	int draw_start;
@@ -139,17 +139,17 @@ void			*spritecaster(void *data)
 		int texture_x;
 
 		texture = MAP[map_pos.y][map_pos.x] - 1;
-		if (side == 0)
+		// if (side == 0)
 			wall_coll = PLAYER->pos.x + wall_distance * ray_dir.x;
-		else
-			wall_coll = PLAYER->pos.y + wall_distance * ray_dir.y;
-		wall_coll -= floor(wall_coll);
+		// else
+			// wall_coll = PLAYER->pos.y + wall_distance * ray_dir.y;
 
+		wall_coll -= floor(wall_coll);
 		texture_x = (int)(wall_coll * TEXTURES[texture].width);
-		if ((side == 0 && ray_dir.y > 0) || (side == 1 && ray_dir.x < 0))
-			texture_x = TEXTURES[texture].width - texture_x - 1;
-		
-		draw_texture(mlx, (int[2]){draw_start, draw_end}, wall_height, texture, side, mlx->x[0], texture_x);
+		// if ((side == 0 && ray_dir.y > 0) || (side == 1 && ray_dir.x < 0))
+		// 	texture_x = TEXTURES[texture].width - texture_x - 1;
+		draw_sprite(mlx, (int[2]){draw_start, draw_end}, wall_height, texture, mlx->x[0], texture_x);
+
 		mlx->x[0]++;
 	}
 	return (0);
