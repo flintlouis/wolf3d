@@ -22,9 +22,10 @@ void	draw_texture(t_mlx *mlx, int *draw_pos, int wall_height, int textureId, int
 		d = (y << 8) - ((HEIGHT - (long)wall_height) << 7); //y * 256 - HEIGHT * 128 + (long)wall_height * 128 (Voor afronding fouten)
 		texture_y = ((d * texture.height) / wall_height) >> 8; // / 256
 		colour = colours[texture_y][texture_x];
-		if (side ==1)
+		if (side == 1)
 			shift_colour(&colour, 1);
-		put_pixel(x, y, mlx, colour);
+		// if (colours[texture_y][texture_x].opacity > 0)
+			put_pixel(x, y, mlx, colour);
 		y++;
 	}
 }

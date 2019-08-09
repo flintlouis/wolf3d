@@ -82,6 +82,7 @@ static t_texture	store_texture(ssize_t fd)
 			texture.colours[i][j].b = buff[0];
 			texture.colours[i][j].g = buff[1];
 			texture.colours[i][j].r = buff[2];
+			texture.colours[i][j].opacity = 255;
 			if (bpp == 4)
 				texture.colours[i][j].opacity = buff[3];
 			j++;
