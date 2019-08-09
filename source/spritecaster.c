@@ -21,12 +21,12 @@ static t_dpoint	set_raydir(int x, t_player *player)
 	return (ray_dir);
 }
 
-static void		set_wall_height(t_player *player, int *draw_start, int *draw_end, int line_height)
+static void		set_wall_height(t_player *player, int *draw_start, int *draw_end, int wall_height)
 {
-	*draw_start = (-line_height / 2 + HEIGHT / 2);
+	*draw_start = (-wall_height / 2 + HEIGHT / 2);
 	if (*draw_start < 0)
 		*draw_start = 0;
-	*draw_end = (line_height / 2 + HEIGHT / 2);
+	*draw_end = (wall_height / 2 + HEIGHT / 2);
 	if (*draw_end >= HEIGHT)
 		*draw_end = HEIGHT - 1;
 }
@@ -125,7 +125,7 @@ void			*spritecaster(void *data)
 		}
 
 		/* Distance between 2 vectors: √(x2-x1)^2+(y2-y1)^2 */
-		wall_distance = sqrt(pow(((double)map_pos.x - PLAYER->pos.x), 2) + pow((map_pos.y - PLAYER->pos.y), 2));
+		wall_distance = sqrt(pow((((double)map_pos.x + 0.5) - PLAYER->pos.x), 2) + pow(((map_pos.y + 0.5) - PLAYER->pos.y), 2));
 		
 		/* MULTIPLY HEIGHT FOR BIGGER WALLS */
 		wall_height = (int)((2 * HEIGHT) / wall_distance);
@@ -140,7 +140,7 @@ void			*spritecaster(void *data)
 
 		texture = MAP[map_pos.y][map_pos.x] - 1;
 		// if (side == 0)
-			wall_coll = PLAYER->pos.x + wall_distance * ray_dir.x;
+			// wall_coll = PLAYER->pos.x + wall_distance * ray_dir.x;
 		// else
 			// wall_coll = PLAYER->pos.y + wall_distance * ray_dir.y;
 
