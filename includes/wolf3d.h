@@ -64,6 +64,14 @@ typedef struct			s_texture
 	t_colour			**colours;
 }						t_texture;
 
+typedef	struct 			s_mapobject //////////////
+{
+	t_dpoint			rel_loc;
+	t_dpoint			location;
+	t_texture			sprite;
+}						t_mapobject;
+
+
 typedef struct			s_point
 {
 	int					x;
@@ -75,6 +83,7 @@ typedef struct			s_player
 	t_dpoint			pos;
 	t_dpoint			looking_dir;
 	t_dpoint			plane;
+	double				angle; ///////////
 }						t_player;
 
 typedef struct			s_controls
@@ -97,8 +106,15 @@ typedef struct			s_mlx
 	int					bits_per_pixel;
 	int					size_line;
 	int					endian;
+
+	double				*z; /////////////
+	t_mapobject			*objects; //////////
+	int					map_height; ////////////
+	int					map_width; ////////////
+	int					object_count; /////////
+
 	int					x[2];
-	int					**map;
+	int					**map; // MAKE OWN STRUCT
 	t_player			*player;
 	t_controls			*controls;
 	t_texture			*textures;
@@ -108,7 +124,7 @@ int						close_window(void *ptr);
 int						key_press(int key, t_mlx *mlx);
 int						key_release(int key, t_mlx *mlx);
 int						mouse_move(int x, int y, t_mlx *mlx);
-int						**get_map(char *file);
+int						**get_map(char *file, int *map_height, int *map_width, int *object_count);
 int						wolfenstein(t_mlx *mlx);
 int						frames(void);
 long					time_between_frames(void);
@@ -119,6 +135,7 @@ void					draw_texture(t_mlx *mlx, int *draw_pos, int wall_height, int texture, i
 void					put_pixel(int x, int y, t_mlx *mlx, t_colour colour);;
 void					rotate(t_mlx *mlx, double degrees);
 void					*raycaster(void *data);
+void					set_player_angle(t_mlx *mlx, double degrees);
 t_texture				*get_textures(char *file);
 
 #endif

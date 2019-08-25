@@ -32,14 +32,37 @@ static void		mini_map(t_player *player, int **map)
 	}
 }
 
+static void write_info(t_mlx *mlx, char *label, int value1, int value2, int line)
+{
+	int y_pos = 10 + 20 * line;
+	
+	mlx_string_put(mlx->mlx, mlx->win, 10, y_pos, 0xffffff, label);
+	char *ch_val1 = ft_itoa(value1);
+	char *ch_val2 = ft_itoa(value2);
+	mlx_string_put(mlx->mlx, mlx->win, 200, y_pos, 0xffffff, ch_val1);
+	mlx_string_put(mlx->mlx, mlx->win, 250, y_pos, 0xffffff, ch_val2);
+	free(ch_val1);
+	free(ch_val2);
+}
+
+static void		info(t_mlx *mlx)
+{
+	write_info(mlx, "Player pos x,y", PLAYER->pos.x, PLAYER->pos.y, 0);
+	write_info(mlx, "Plane x,y", PLAYER->plane.x*100, PLAYER->plane.y*100, 1);
+	write_info(mlx, "Looking dir x,y", PLAYER->looking_dir.x*100, PLAYER->looking_dir.y*100, 2);
+	write_info(mlx, "Mid z", mlx->z[599] * 100, mlx->z[600] * 100, 3);
+	write_info(mlx, "Angle", 0, PLAYER->angle, 4);
+}
+
 static void		draw_image(t_mlx *mlx)
 {
-	char *fps;
+	// char *fps;
 
-	fps = ft_itoa(frames());
+	// fps = ft_itoa(frames());
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
-	mlx_string_put(mlx->mlx, mlx->win, 10, 10, 0xffffff, fps);
-	free(fps);
+	// mlx_string_put(mlx->mlx, mlx->win, 10, 10, 0xffffff, fps);
+	// free(fps);
+	info(mlx);
 	ft_bzero(mlx->data_addr, HEIGHT * WIDTH * (mlx->bits_per_pixel / 8));
 }
 
@@ -70,56 +93,16 @@ static void threading(t_mlx *mlx, void*(*f)(void*))
 	join_threads(i, threads);
 }
 
-void	draw_texture_test(t_mlx *mlx)
-{
-	int nb;
-	int j, i = 0;
-	int id = 6;
-	t_colour colour;
-
-	id--;
-	while (i < TEXTURES[id].height) {
-		j = 0;
-		while (j < TEXTURES[id].width) {
-			colour = TEXTURES[id].colours[i][j];
-			if (TEXTURES[id].colours[i][j].opacity)
-				put_pixel(10 + j, 300 + i, mlx, colour);
-			colour = TEXTURES[id + 1].colours[i][j];
-			if (TEXTURES[id + 1].colours[i][j].opacity)
-				put_pixel(100 + j, 300 + i, mlx, colour);
-			colour = TEXTURES[id + 2].colours[i][j];
-			if (TEXTURES[id + 2].colours[i][j].opacity)
-				put_pixel(200 + j, 300 + i, mlx, colour);
-			colour = TEXTURES[id + 3].colours[i][j];
-			if (TEXTURES[id+ 3].colours[i][j].opacity)
-				put_pixel(300 + j, 300 + i, mlx, colour);
-			colour = TEXTURES[id + 4].colours[i][j];
-			if (TEXTURES[id+ 4].colours[i][j].opacity)
-				put_pixel(400 + j, 300 + i, mlx, colour);
-			colour = TEXTURES[id + 5].colours[i][j];
-			if (TEXTURES[id+ 5].colours[i][j].opacity)
-				put_pixel(500 + j, 300 + i, mlx, colour);
-			j++;
-		}
-		i++;
-	}
-}
-
-void			*spritecaster(void *data);
+void	spritecaster(t_mlx *mlx);
 
 int wolfenstein(t_mlx *mlx)
 {
 	draw_image(mlx);
-	// threading(mlx, raycaster);
-	mlx->x[0] = 0;
-	mlx->x[1] = WIDTH;
-	raycaster(mlx);
-	mlx->x[0] = 0;
-	mlx->x[1] = WIDTH;
-	spritecaster(mlx);
+	threading(mlx, raycaster);
 
 	move_player(mlx);
 	player_look(mlx);
+	spritecaster(mlx);
 	// mini_map(mlx->player, MAP);
 	return (0);
 }

@@ -21,7 +21,7 @@ static t_dpoint	set_raydir(int x, t_player *player)
 	return (ray_dir);
 }
 
-static void		set_wall_height(t_player *player, int *draw_start, int *draw_end, int line_height)
+void		set_wall_height(int *draw_start, int *draw_end, int line_height)
 {
 	*draw_start = (-line_height / 2 + HEIGHT / 2);
 	if (*draw_start < 0)
@@ -122,12 +122,14 @@ void			*raycaster(void *data)
 		side = wall_hit(MAP, side_dist, delta_dist, &map_pos, step);
 
 		wall_distance = calc_wall_distance(PLAYER, side, map_pos, step, ray_dir);
+
+		mlx->z[mlx->x[0]] = wall_distance; ////////////////////////// Z buffer
 		
 		/* MULTIPLY HEIGHT FOR BIGGER WALLS */
 		wall_height = (int)((2 * HEIGHT) / wall_distance);
 
 		/* SET HEIGHT OF WALLS TOO DRAW */
-		set_wall_height(PLAYER, &draw_start, &draw_end, wall_height);
+		set_wall_height(&draw_start, &draw_end, wall_height);
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////// DRAW TEXTURES
 		int texture;
