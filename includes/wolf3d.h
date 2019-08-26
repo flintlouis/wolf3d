@@ -138,6 +138,7 @@ long					time_between_frames(void);
 double					to_radians(double degrees);
 
 void					draw_texture(t_mlx *mlx, int *draw_pos, int wall_height, int texture, int side, int x, int texture_x);
+void					draw_sprite(t_mlx *mlx, int *draw_pos, int wall_height, t_texture *texture, int x, int texture_x);
 void					init_wolf(char *map);
 void					init_level(t_mlx *mlx, char *file);
 void					move_player(t_mlx *mlx);
@@ -147,6 +148,7 @@ void					put_pixel(int x, int y, t_mlx *mlx, t_colour colour);;
 void					rotate(t_mlx *mlx, double degrees);
 void					rotate_vector(t_dpoint *vector, double rad);
 void					set_player_angle(t_player *player, double degrees);
+void					set_wall_height(int *draw_start, int *draw_end, int line_height);
 void					spritecaster(t_mlx *mlx);
 
 void					*raycaster(void *data);

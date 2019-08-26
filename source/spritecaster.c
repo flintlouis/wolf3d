@@ -2,12 +2,6 @@
 #include <math.h>
 #include <stdlib.h>
 
-t_dpoint sub_vector(t_dpoint *a, t_dpoint *b);
-void	rotate_vector(t_dpoint *vector, double rad);
-double to_radians(double degrees);
-void		set_wall_height(int *draw_start, int *draw_end, int line_height);
-void	draw_sprite(t_mlx *mlx, int *draw_pos, int wall_height, t_texture *texture, int x, int texture_x);
-
 void	calculate_relative_positions(t_mlx *mlx)
 {
 	int i;
@@ -37,12 +31,12 @@ void	set_sprite_width(int *start, int *end, t_dpoint *location)
 
 int		max(int a, int b)
 {
-	return a > b ? a : b;
+	return (a > b ? a : b);
 }
 
 int		min(int a, int b)
 {
-	return a < b ? a : b;
+	return (a < b ? a : b);
 }
 
 void	render_sprite(t_mlx *mlx, t_mapobject *object)
