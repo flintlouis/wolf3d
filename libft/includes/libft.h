@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/01/09 14:45:47 by fhignett       #+#    #+#                */
-/*   Updated: 2019/05/10 17:28:44 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/08/26 15:30:43 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ int					ft_isascii(int c);
 int					ft_isprint(int c);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
+int					ft_max(int a, int b);
+int					ft_min(int a, int b);
 int					ft_intlen(long long n);
 int					ft_power(int x, size_t n);
 int					ft_countwords(char const *s, char c);

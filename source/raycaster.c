@@ -132,22 +132,22 @@ void			*raycaster(void *data)
 		set_wall_height(&draw_start, &draw_end, wall_height);
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////// DRAW TEXTURES
-		int texture;
+		int texture_id;
 		double wall_coll; /* Where exactly the wall was hit */
 		int texture_x;
 
-		texture = MAP[map_pos.y][map_pos.x] - 1;
+		texture_id = MAP[map_pos.y][map_pos.x] - 1;
 		if (side == 0)
 			wall_coll = PLAYER->pos.x + wall_distance * ray_dir.x;
 		else
 			wall_coll = PLAYER->pos.y + wall_distance * ray_dir.y;
 		wall_coll -= floor(wall_coll);
 
-		texture_x = (int)(wall_coll * TEXTURES[texture].width);
+		texture_x = (int)(wall_coll * TEXTURES[texture_id].width);
 		if ((side == 0 && ray_dir.y > 0) || (side == 1 && ray_dir.x < 0))
-			texture_x = TEXTURES[texture].width - texture_x - 1;
+			texture_x = TEXTURES[texture_id].width - texture_x - 1;
 		
-		draw_texture(mlx, (int[2]){draw_start, draw_end}, wall_height, texture, side, mlx->x[0], texture_x);
+		draw_texture(mlx, &TEXTURES[texture_id], mlx->x[0], (t_draw){wall_height, draw_start, draw_end, texture_x, side});
 		mlx->x[0]++;
 	}
 	return (0);

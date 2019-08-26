@@ -47,6 +47,18 @@
 
 typedef unsigned char	t_byte;
 
+typedef struct			s_point
+{
+	int					x;
+	int					y;
+}						t_point;
+
+typedef struct			s_dpoint
+{
+	double				x;
+	double				y;
+}						t_dpoint;
+
 typedef struct			s_colour
 {
 	t_byte				r;
@@ -55,11 +67,14 @@ typedef struct			s_colour
 	t_byte				opacity;
 }						t_colour;
 
-typedef struct			s_dpoint
+typedef struct			s_draw
 {
-	double				x;
-	double				y;
-}						t_dpoint;
+	int					height;
+	int					start;
+	int					end;
+	int					x;
+	int					side;
+}						t_draw;
 
 typedef struct			s_texture
 {
@@ -74,13 +89,6 @@ typedef	struct 			s_mapobject
 	t_dpoint			location;
 	t_texture			sprite;
 }						t_mapobject;
-
-
-typedef struct			s_point
-{
-	int					x;
-	int					y;
-}						t_point;
 
 typedef struct			s_player
 {
@@ -137,8 +145,8 @@ long					time_between_frames(void);
 
 double					to_radians(double degrees);
 
-void					draw_texture(t_mlx *mlx, int *draw_pos, int wall_height, int texture, int side, int x, int texture_x);
-void					draw_sprite(t_mlx *mlx, int *draw_pos, int wall_height, t_texture *texture, int x, int texture_x);
+void					draw_texture(t_mlx *mlx, t_texture *texture, int x, t_draw draw);
+void					draw_sprite(t_mlx *mlx, t_texture *texture, int x, t_draw draw);
 void					init_wolf(char *map);
 void					init_level(t_mlx *mlx, char *file);
 void					move_player(t_mlx *mlx);
