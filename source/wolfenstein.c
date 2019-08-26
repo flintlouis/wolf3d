@@ -35,10 +35,13 @@ static void		mini_map(t_player *player, int **map)
 static void write_info(t_mlx *mlx, char *label, int value1, int value2, int line)
 {
 	int y_pos = 10 + 20 * line;
+	char *ch_val1;
+	char *ch_val2;
+
+	ch_val1 = ft_itoa(value1);
+	ch_val2 = ft_itoa(value2);
 	
 	mlx_string_put(mlx->mlx, mlx->win, 10, y_pos, 0xffffff, label);
-	char *ch_val1 = ft_itoa(value1);
-	char *ch_val2 = ft_itoa(value2);
 	mlx_string_put(mlx->mlx, mlx->win, 200, y_pos, 0xffffff, ch_val1);
 	mlx_string_put(mlx->mlx, mlx->win, 250, y_pos, 0xffffff, ch_val2);
 	free(ch_val1);
@@ -47,21 +50,16 @@ static void write_info(t_mlx *mlx, char *label, int value1, int value2, int line
 
 static void		info(t_mlx *mlx)
 {
-	write_info(mlx, "Player pos x,y", PLAYER->pos.x, PLAYER->pos.y, 0);
-	write_info(mlx, "Plane x,y", PLAYER->plane.x*100, PLAYER->plane.y*100, 1);
-	write_info(mlx, "Looking dir x,y", PLAYER->looking_dir.x*100, PLAYER->looking_dir.y*100, 2);
-	write_info(mlx, "Mid z", mlx->z[599] * 100, mlx->z[600] * 100, 3);
+	write_info(mlx, "FPS", 0, frames(), 0);
+	write_info(mlx, "Player pos x,y", PLAYER->pos.x, PLAYER->pos.y, 1);
+	write_info(mlx, "Plane x,y", PLAYER->plane.x*100, PLAYER->plane.y*100, 2);
+	write_info(mlx, "Looking dir x,y", PLAYER->looking_dir.x*100, PLAYER->looking_dir.y*100, 3);
 	write_info(mlx, "Angle", 0, PLAYER->angle, 4);
 }
 
 static void		draw_image(t_mlx *mlx)
 {
-	// char *fps;
-
-	// fps = ft_itoa(frames());
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
-	// mlx_string_put(mlx->mlx, mlx->win, 10, 10, 0xffffff, fps);
-	// free(fps);
 	info(mlx);
 	ft_bzero(mlx->data_addr, HEIGHT * WIDTH * (mlx->bits_per_pixel / 8));
 }
@@ -92,8 +90,6 @@ static void threading(t_mlx *mlx, void*(*f)(void*))
 	}
 	join_threads(i, threads);
 }
-
-void	spritecaster(t_mlx *mlx);
 
 int wolfenstein(t_mlx *mlx)
 {

@@ -133,6 +133,7 @@ int						mouse_move(int x, int y, t_mlx *mlx);
 int						wolfenstein(t_mlx *mlx);
 int						frames(void);
 long					time_between_frames(void);
+void					spritecaster(t_mlx *mlx);
 void					init_level(t_mlx *mlx, char *file);
 void					player_look(t_mlx *mlx);
 void					move_player(t_mlx *mlx);
