@@ -13,7 +13,7 @@ void	calculate_relative_positions(t_mlx *mlx)
 	int i;
 
 	i = 0;
-	while (i < mlx->object_count)
+	while (i < LEVEL->object_count)
 	{
 		t_mapobject *current = &mlx->objects[i];
 		current->rel_loc = sub_vector(&current->location, &PLAYER->pos);
@@ -76,10 +76,10 @@ void	spritecaster(t_mlx *mlx)
 	int i;
 
 	calculate_relative_positions(mlx);
-	qsort((void*)mlx->objects, mlx->object_count, sizeof(t_mapobject), compare_mapobject_distance);
+	qsort((void*)mlx->objects, LEVEL->object_count, sizeof(t_mapobject), compare_mapobject_distance);
 
 	i = 0;
-	while (i < mlx->object_count)
+	while (i < LEVEL->object_count)
 	{
 		if (mlx->objects[i].rel_loc.y <= 0)
 			break ;

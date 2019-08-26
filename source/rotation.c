@@ -79,25 +79,24 @@ static void set_vector(t_dpoint *vector, double angle, double distance)
 	multiply_vector(distance, vector);
 }
 
-void	set_player_angle(t_mlx *mlx, double degrees)
+void	set_player_angle(t_player *player, double degrees)
 {
-	PLAYER->angle = degrees;
+	player->angle = degrees;
 
-	// Make sure the value is always between 0 and 360
-	if (PLAYER->angle < 0)
-		PLAYER->angle += 360;
-	else if (PLAYER->angle > 360)
-		PLAYER->angle -= 360;
+	if (player->angle < 0)
+		player->angle += 360;
+	else if (player->angle > 360)
+		player->angle -= 360;
 
-	set_vector(&PLAYER->looking_dir,PLAYER->angle, 1);
-	set_vector(&PLAYER->plane,PLAYER->angle + 90, 0.66);
+	set_vector(&player->looking_dir,player->angle, 1);
+	set_vector(&player->plane,player->angle + 90, 0.66);
 	
 }
 
 void	player_look(t_mlx *mlx)
 {
 	if (CONTROLS->look_right)
-		set_player_angle(mlx, PLAYER->angle + 1.5);
+		set_player_angle(PLAYER, PLAYER->angle + 1.5);
 	if (CONTROLS->look_left)
-		set_player_angle(mlx, PLAYER->angle - 1.5);
+		set_player_angle(PLAYER, PLAYER->angle - 1.5);
 }
