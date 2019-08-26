@@ -10,6 +10,7 @@
 # define HEIGHT			800
 # define THREAD			12
 # define WALLCOUNT		5
+# define OBJECTCOL		12
 # define MAP			mlx->level->map
 # define LEVEL			mlx->level
 # define PLAYER			mlx->player
@@ -103,9 +104,8 @@ typedef struct			s_controls
 typedef struct			s_level
 {
 	int					object_count;
-	int					height;
-	int					width;
 	int					**map;
+	t_point				size;
 }						t_level;
 
 typedef struct			s_mlx
@@ -127,22 +127,35 @@ typedef struct			s_mlx
 }						t_mlx;
 
 int						close_window(void *ptr);
+int						frames(void);
 int						key_press(int key, t_mlx *mlx);
 int						key_release(int key, t_mlx *mlx);
 int						mouse_move(int x, int y, t_mlx *mlx);
 int						wolfenstein(t_mlx *mlx);
-int						frames(void);
+
 long					time_between_frames(void);
-void					spritecaster(t_mlx *mlx);
-void					init_level(t_mlx *mlx, char *file);
-void					player_look(t_mlx *mlx);
-void					move_player(t_mlx *mlx);
-void					init_wolf(char *map);
+
+double					to_radians(double degrees);
+
 void					draw_texture(t_mlx *mlx, int *draw_pos, int wall_height, int texture, int side, int x, int texture_x);
+void					init_wolf(char *map);
+void					init_level(t_mlx *mlx, char *file);
+void					move_player(t_mlx *mlx);
+void					multiply_vector(double m, t_dpoint *vector);
+void					player_look(t_player *player, t_controls *controls);
 void					put_pixel(int x, int y, t_mlx *mlx, t_colour colour);;
 void					rotate(t_mlx *mlx, double degrees);
-void					*raycaster(void *data);
+void					rotate_vector(t_dpoint *vector, double rad);
 void					set_player_angle(t_player *player, double degrees);
+void					spritecaster(t_mlx *mlx);
+
+void					*raycaster(void *data);
+
+t_dpoint				add_vector(t_dpoint *a, t_dpoint *b);
+t_dpoint				get_unit_x(double rot);
+t_dpoint				get_unit_y(double rot);
+t_dpoint				sub_vector(t_dpoint *a, t_dpoint *b);
+
 t_texture				*get_textures(char *file);
 
 #endif

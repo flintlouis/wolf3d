@@ -1,6 +1,5 @@
 #include "wolf3d.h"
 #include "mlx.h"
-#include <time.h>
 #include <stdlib.h>
 
 static void	run_wolf(t_mlx *mlx)
@@ -22,7 +21,7 @@ static void	init_mlx(t_mlx *mlx)
 	mlx->win = mlx_new_window(mlx->mlx, WIDTH, HEIGHT, "WOLF3D");
 	mlx->img = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
 	mlx->data_addr = mlx_get_data_addr(mlx->img, &(mlx->bits_per_pixel), &(mlx->size_line), &(mlx->endian));
-	mlx->z = (double*)ft_memalloc(sizeof(double) * WIDTH);//////////////
+	mlx->z = (double*)ft_memalloc(sizeof(double) * WIDTH);
 }
 
 static void init_mapobjects(t_mlx *mlx)
@@ -34,10 +33,10 @@ static void init_mapobjects(t_mlx *mlx)
 	i = 0;
 	obj_index = 0;
 	mlx->objects = (t_mapobject*)ft_memalloc(sizeof(t_mapobject) * LEVEL->object_count);
-	while (i < LEVEL->height)
+	while (i < LEVEL->size.y)
 	{
 		j = 0;
-		while (j < LEVEL->width)
+		while (j < LEVEL->size.x)
 		{
 			if (MAP[i][j] > WALLCOUNT)
 			{

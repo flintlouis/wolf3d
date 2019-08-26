@@ -21,8 +21,12 @@ static void		mini_map(t_player *player, int **map)
 			{
 				if (j == (int)player->pos.y && i == (int)player->pos.x)
 					ft_printf("X ");
+				else if (!map[j][i])
+					ft_printf("  ");
+				else if (map[j][i] > WALLCOUNT)
+					ft_printf("S ");
 				else
-					ft_printf("%d ", map[j][i]);
+					ft_printf("W ");
 				i++;
 			}
 			ft_putendl("");
@@ -95,10 +99,10 @@ int wolfenstein(t_mlx *mlx)
 {
 	draw_image(mlx);
 	threading(mlx, raycaster);
+	spritecaster(mlx);
 
 	move_player(mlx);
-	player_look(mlx);
-	spritecaster(mlx);
-	// mini_map(mlx->player, MAP);
+	player_look(PLAYER, CONTROLS);
+	mini_map(PLAYER, MAP);
 	return (0);
 }

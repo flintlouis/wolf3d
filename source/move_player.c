@@ -12,9 +12,9 @@ static void move(t_dpoint *move, t_mlx *mlx, int direction)
 		speed = 10;
 	tmpy = PLAYER->pos.y + direction * (move->y / speed);
 	tmpx = PLAYER->pos.x + direction * (move->x / speed);
-	if (MAP[(int)(tmpy)][(int)(PLAYER->pos.x)] == 0)
+	if (MAP[(int)(tmpy)][(int)(PLAYER->pos.x)] == 0 || MAP[(int)(tmpy)][(int)(PLAYER->pos.x)] > OBJECTCOL)
 		PLAYER->pos.y = tmpy;
-	if (MAP[(int)(PLAYER->pos.y)][(int)(tmpx)] == 0)
+	if (MAP[(int)(PLAYER->pos.y)][(int)(tmpx)] == 0 || MAP[(int)(PLAYER->pos.y)][(int)(tmpx)] > OBJECTCOL)
 		PLAYER->pos.x = tmpx;
 }
 
