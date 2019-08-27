@@ -3,12 +3,13 @@
 
 # include "libft.h"
 # include "ft_printf.h"
+# include <pthread.h>
 # include <stdio.h> // voor testen ff
 
 # define MEM(x) 		(x*)ft_memalloc(sizeof(x))
 # define WIDTH			1200
 # define HEIGHT			800
-# define THREAD			12
+# define THREAD			4
 # define WALLCOUNT		5
 # define OBJECTCOL		12
 # define MAP			mlx->level->map
@@ -17,6 +18,7 @@
 # define CONTROLS		mlx->controls
 # define TEXTURES		mlx->textures
 # define OBJECTS		mlx->objects
+# define SPRITE			mlx->sprite
 
 # define KEY_ESC                53
 # define KEY_SPACE              49
@@ -116,6 +118,16 @@ typedef struct			s_level
 	t_point				size;
 }						t_level;
 
+typedef struct			s_prite
+{
+	int					start;
+	int					end;
+	int					height;
+	int					draw_start;
+	int					draw_end;
+	int					id;
+}						t_sprite;
+
 typedef struct			s_mlx
 {
 	void				*mlx;
@@ -132,6 +144,7 @@ typedef struct			s_mlx
 	t_player			*player;
 	t_controls			*controls;
 	t_texture			*textures;
+	t_sprite			*sprite;
 }						t_mlx;
 
 int						close_window(void *ptr);
@@ -145,10 +158,10 @@ long					time_between_frames(void);
 
 double					to_radians(double degrees);
 
-void					draw_texture(t_mlx *mlx, t_texture *texture, int x, t_draw draw);
-void					draw_sprite(t_mlx *mlx, t_texture *texture, int x, t_draw draw);
+void					draw_object(t_mlx *mlx, t_texture *texture, int x, t_draw draw);
 void					init_wolf(char *map);
 void					init_level(t_mlx *mlx, char *file);
+void					join_threads(int i, pthread_t *threads);
 void					move_player(t_mlx *mlx);
 void					multiply_vector(double m, t_dpoint *vector);
 void					player_look(t_player *player, t_controls *controls);

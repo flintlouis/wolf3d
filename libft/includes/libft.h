@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/01/09 14:45:47 by fhignett       #+#    #+#                */
-/*   Updated: 2019/08/26 15:30:43 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/08/27 19:08:04 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
-void				ft_print_byte(unsigned char byte);
+void				ft_print_byte(const void *byte, size_t size);
 void				ft_sort_int_tab(int *tab, unsigned int size);
 void				ft_lstadd_back(t_list **alst, t_list *new);
 void				ft_lstinsert(t_list *node, t_list *new);

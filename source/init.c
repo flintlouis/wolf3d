@@ -22,6 +22,7 @@ static void	init_mlx(t_mlx *mlx)
 	mlx->img = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
 	mlx->data_addr = mlx_get_data_addr(mlx->img, &(mlx->bits_per_pixel), &(mlx->size_line), &(mlx->endian));
 	mlx->z = (double*)ft_memalloc(sizeof(double) * WIDTH);
+	mlx->sprite = MEM(t_sprite);
 }
 
 static void init_mapobjects(t_mlx *mlx)
@@ -61,6 +62,5 @@ void	init_wolf(char *map)
 	CONTROLS = MEM(t_controls);
 	TEXTURES = get_textures("source/textures.txt");
 	init_mapobjects(mlx);
-
 	run_wolf(mlx);
 }

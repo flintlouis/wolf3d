@@ -11,17 +11,9 @@ int	close_window(void *ptr)
 int	key_press(int key, t_mlx *mlx)
 {
 	if (key == KEY_PLUS)
-	{
 		mlx->objects[0].location.x += 0.01;
-		// mlx->objects[0].location.y 
-
-	}
 	if (key == KEY_MIN)
-	{
 		mlx->objects[0].location.x -= 0.01;
-		// mlx->objects[0].location.y 
-
-	}
 	if (key == KEY_ESC)
 		close_window(NULL);
 	if (key == KEY_S)
@@ -57,15 +49,6 @@ int	key_release(int key, t_mlx *mlx)
 		CONTROLS->look_left = 0;
 	if (key == KEY_RIGHT)
 		CONTROLS->look_right = 0;
-
-	if (key == KEY_SPACE) {
-		PLAYER->pos.x = 11.5;
-		PLAYER->pos.y = 12.5;
-		PLAYER->plane.x = 0.66;
-		PLAYER->plane.y = 0;
-		PLAYER->looking_dir.x = 0;
-		PLAYER->looking_dir.y = -1;
-	}
 	return (0);
 }
 

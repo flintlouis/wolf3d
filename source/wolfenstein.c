@@ -1,7 +1,6 @@
 #include "wolf3d.h"
 #include "mlx.h"
 #include <stdlib.h> /* FOR MINIMAP */
-#include <pthread.h>
 
 static void		mini_map(t_player *player, int **map)
 {
@@ -77,7 +76,7 @@ static void		draw_image(t_mlx *mlx)
 	ft_bzero(mlx->data_addr, HEIGHT * WIDTH * (mlx->bits_per_pixel / 8));
 }
 
-static void	join_threads(int i, pthread_t *threads)
+void	join_threads(int i, pthread_t *threads)
 {
 	while (i >= 0)
 	{
@@ -97,22 +96,40 @@ static void threading(t_mlx *mlx, void*(*f)(void*))
 	{
 		ft_memcpy(&data[i], mlx, sizeof(t_mlx));
 		data[i].x[0] = (WIDTH / THREAD) * i;
-		data[i].x[1] = (WIDTH / THREAD) * (i + 1);
+		data[i].x[1] = i == THREAD - 1 ? WIDTH : (WIDTH / THREAD) * (i + 1);
 		pthread_create(&threads[i], NULL, f, &data[i]);
 		i++;
 	}
 	join_threads(i, threads);
 }
 
+static void *draw_floor(void *data)
+{
+	int		y;
+	t_mlx	*mlx;
+
+	mlx = (t_mlx*)data;
+	while(mlx->x[0] < mlx->x[1])
+	{
+		y =  HEIGHT >> 1;
+		while (y < HEIGHT)
+		{
+			put_pixel(mlx->x[0], y, mlx, (t_colour){25,25,25});
+			y++;
+		}
+		mlx->x[0]++;
+	}
+	return (0);
+}
+
 int wolfenstein(t_mlx *mlx)
 {
 	draw_image(mlx);
+	threading(mlx, draw_floor);
 	threading(mlx, raycaster);
-	
 	spritecaster(mlx);
-
 	move_player(mlx);
 	player_look(PLAYER, CONTROLS);
-	// mini_map(PLAYER, MAP);
+	mini_map(PLAYER, MAP);
 	return (0);
 }

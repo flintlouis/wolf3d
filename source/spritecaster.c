@@ -29,30 +29,50 @@ static void	set_sprite_width(int *start, int *end, t_dpoint *location)
 	*end = (int)((((location->x + 0.5) / (location->y * 0.66)) + 1) * (WIDTH / 2));
 }
 
-static void	render_sprite(t_mlx *mlx, t_mapobject *object)
+static void *draw_sprite(void *data)
 {
-	int start;
-	int end;
-	int sprite_height;
-	int draw_start;
-	int draw_end;
+	t_mlx *mlx;
 
-	set_sprite_width(&start, &end, &object->rel_loc);
-	if (start >= WIDTH || end < 0) // Out of view
+	mlx = (t_mlx*)data;
+	while(mlx->x[0] < mlx->x[1])
+	{
+		int texture_x = ((mlx->x[0] - SPRITE->start) * OBJECTS[SPRITE->id].sprite.width) / (SPRITE->end - SPRITE->start);
+		if (OBJECTS[SPRITE->id].rel_loc.y < mlx->z[mlx->x[0]])
+			draw_object(mlx, &OBJECTS[SPRITE->id].sprite, mlx->x[0], (t_draw){SPRITE->height, SPRITE->draw_start, SPRITE->draw_end, texture_x, 0});
+		mlx->x[0]++;
+	}
+	return (0);
+}
+
+static void sprite_threading(t_mlx *mlx, void*(*f)(void*), int x, int x_end)
+{
+	int			i;
+	t_mlx		data[THREAD];
+	pthread_t	threads[THREAD];
+	int v;
+
+	i = 0;
+	v = (x_end - x) / THREAD;
+	while (i < THREAD)
+	{
+		ft_memcpy(&data[i], mlx, sizeof(t_mlx));
+		data[i].x[0] = x + v * i;
+		data[i].x[1] = i == THREAD - 1 ? x_end : x + v * (i + 1);
+		pthread_create(&threads[i], NULL, f, &data[i]);
+		i++;
+	}
+	join_threads(i, threads);
+}
+
+static void	render_sprite(t_mlx *mlx)
+{
+	set_sprite_width(&SPRITE->start, &SPRITE->end, &OBJECTS[SPRITE->id].rel_loc);
+	if (SPRITE->start >= WIDTH || SPRITE->end < 0) // Out of view
 		return ;
-	sprite_height = (int)((2 * HEIGHT) / object->rel_loc.y);
-	set_wall_height(&draw_start, &draw_end, sprite_height);
+	SPRITE->height = (int)((2 * HEIGHT) / OBJECTS[SPRITE->id].rel_loc.y);
+	set_wall_height(&SPRITE->draw_start, &SPRITE->draw_end, SPRITE->height);
 
-	int x = ft_max(0, start);
-	int x_end = ft_min(end, WIDTH);
-
-	 while(x < x_end)
-	 {
-		 int texture_x = ((x - start) * object->sprite.width) / (end - start);
-		 if (object->rel_loc.y < mlx->z[x])
-		 	draw_sprite(mlx, &object->sprite, x, (t_draw){sprite_height, draw_start, draw_end, texture_x});
-		 x++;
-	 }
+	sprite_threading(mlx, draw_sprite, ft_max(0, SPRITE->start), ft_min(SPRITE->end, WIDTH));
 }
 
 void	spritecaster(t_mlx *mlx)
@@ -67,7 +87,8 @@ void	spritecaster(t_mlx *mlx)
 	{
 		if (mlx->objects[i].rel_loc.y <= 0)
 			break ;
-		render_sprite(mlx, &mlx->objects[i]);
+		SPRITE->id = i;
+		render_sprite(mlx);
 		i++;
 	}
 }

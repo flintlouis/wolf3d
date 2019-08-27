@@ -147,7 +147,7 @@ void			*raycaster(void *data)
 		if ((side == 0 && ray_dir.y > 0) || (side == 1 && ray_dir.x < 0))
 			texture_x = TEXTURES[texture_id].width - texture_x - 1;
 		
-		draw_texture(mlx, &TEXTURES[texture_id], mlx->x[0], (t_draw){wall_height, draw_start, draw_end, texture_x, side});
+		draw_object(mlx, &TEXTURES[texture_id], mlx->x[0], (t_draw){wall_height, draw_start, draw_end, texture_x, side});
 		mlx->x[0]++;
 	}
 	return (0);

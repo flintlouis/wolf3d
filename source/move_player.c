@@ -7,9 +7,9 @@ static void move(t_dpoint *move, t_mlx *mlx, int direction)
 	double tmpx;
 	int speed;
 
-	speed = 20;
+	speed = 10;
 	if (CONTROLS->run)
-		speed = 10;
+		speed = 5;
 	tmpy = PLAYER->pos.y + direction * (move->y / speed);
 	tmpx = PLAYER->pos.x + direction * (move->x / speed);
 	if (MAP[(int)(tmpy)][(int)(PLAYER->pos.x)] == 0 || MAP[(int)(tmpy)][(int)(PLAYER->pos.x)] > OBJECTCOL)
