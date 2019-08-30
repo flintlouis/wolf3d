@@ -56,8 +56,8 @@ static void sprite_threading(t_mlx *mlx, void*(*f)(void*), int x, int x_end)
 	while (i < THREAD)
 	{
 		ft_memcpy(&data[i], mlx, sizeof(t_mlx));
-		data[i].x[0] = x + v * i;
-		data[i].x[1] = i == THREAD - 1 ? x_end : x + v * (i + 1);
+		data[i].x[0] = x + (v * i);
+		data[i].x[1] = i == THREAD - 1 ? x_end : x + (v * (i + 1));
 		pthread_create(&threads[i], NULL, f, &data[i]);
 		i++;
 	}
