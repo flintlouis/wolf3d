@@ -120,10 +120,13 @@ static void threading(t_mlx *mlx, void*(*f)(void*))
 	join_threads(i, threads);
 }
 
+void gun(t_mlx *mlx, t_texture *gun, int size);
+
 int wolfenstein(t_mlx *mlx)
 {
 	threading(mlx, raycaster);
 	spritecaster(mlx);
+	gun(mlx, &mlx->gun[0], 3);
 	draw_image(mlx);
 	move_player(mlx);
 	player_look(PLAYER, CONTROLS);

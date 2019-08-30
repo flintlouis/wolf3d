@@ -78,7 +78,7 @@ static int		wall_hit(int **map, t_dpoint side_dist, t_dpoint delta_dist, t_point
 			map_pos->x += step.x;
 			side = 1;
 		}
-		if (map[map_pos->y][map_pos->x] > 0 && map[map_pos->y][map_pos->x] <= 5)
+		if (map[map_pos->y][map_pos->x] > 0 && map[map_pos->y][map_pos->x] <= 5) //<-----HERE!!!!!!!!!!!!
 			hit = 1;
 	}
 	return (side);

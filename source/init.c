@@ -39,7 +39,7 @@ static void init_mapobjects(t_mlx *mlx)
 		j = 0;
 		while (j < LEVEL->size.x)
 		{
-			if (MAP[i][j] > WALLCOUNT)
+			if (MAP[i][j] > WALLCOUNT) //<-----HERE!!!!!!!!!!!!
 			{
 				mlx->objects[obj_index].location.x = j + 0.5;
 				mlx->objects[obj_index].location.y = i + 0.5;
@@ -61,6 +61,8 @@ void	init_wolf(char *map)
 	init_level(mlx, map);
 	CONTROLS = MEM(t_controls);
 	TEXTURES = get_textures("source/textures.txt");
+	mlx->gun = get_textures("source/guns.txt"); /////////
 	init_mapobjects(mlx);
+
 	run_wolf(mlx);
 }
