@@ -10,8 +10,8 @@
 # define WIDTH			1200
 # define HEIGHT			800
 # define THREAD			4
-# define WALLCOUNT		5 //<-----HERE!!!!!!!!!!!!
-# define OBJECTCOL		12 /* PUT A SPACE BETWEEN THE TEXTURES TO COUNT THEM */ //<-----HERE!!!!!!!!!!!!
+# define WALLCOUNT		5
+# define OBJECTCOL		12
 # define MAP			mlx->level->map
 # define LEVEL			mlx->level
 # define PLAYER			mlx->player
@@ -102,6 +102,7 @@ typedef struct			s_player
 
 typedef struct			s_controls
 {
+	char				shoot:1;
 	char				run:1;
 	char				front:1;
 	char				back:1;

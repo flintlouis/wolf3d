@@ -1,6 +1,6 @@
 #include "wolf3d.h"
 
-void gun(t_mlx *mlx, t_texture *gun, int size)
+static void draw_gun(t_mlx *mlx, t_texture *gun, int size)
 {
 	int x;
 	int y;
@@ -18,17 +18,33 @@ void gun(t_mlx *mlx, t_texture *gun, int size)
 	x = 0;
 	while (x < draw_width)
 	{
-		text_x = (gun->width / draw_width) * x;
+		text_x = (gun->width / (double)draw_width) * x;
 		y = 0;
 		while (y < draw_height)
 		{
-			text_y = (gun->height / draw_height) * y;
+			text_y = (gun->height / (double)draw_height) * y;
 			if (gun->colours[text_y][text_x].opacity > 0)
-			// if (gun->colours[y][x].opacity > 0)
-				put_pixel(startx + x, starty + y, mlx, /* (t_colour){255,0,0} */gun->colours[text_y][text_x]);
-				// put_pixel(startx + x, starty + y, mlx, /* (t_colour){255,0,0} */gun->colours[y][x]);
+				put_pixel(startx + x, starty + y, mlx, gun->colours[text_y][text_x]);
 			y++;
 		}
 		x++;
+	}
+}
+
+void fire_gun(t_mlx *mlx, t_texture *gun, int size)
+{
+	static int i;
+
+	/* USE TIME BETWEEN FRAMES */
+	if (CONTROLS->shoot && i < 6)
+	{
+		draw_gun(mlx, &gun[i], size);
+		i++;
+	}
+	else
+	{
+		if (i == 6 && !CONTROLS->shoot)
+			i = 0;
+		draw_gun(mlx, &gun[0], size);
 	}
 }

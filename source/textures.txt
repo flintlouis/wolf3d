@@ -3,7 +3,6 @@ Textures/wood
 Textures/redbrick
 Textures/mossy
 Textures/greystone
-
 Sprites/barrel
 Sprites/cage
 Sprites/pillar
@@ -11,6 +10,5 @@ Sprites/plant
 Sprites/ss1
 Sprites/table
 Sprites/trans
-
-SpritesNoCol/chandelier
-SpritesNoCol/lamp
+NoCollSprites/chandelier
+NoCollSprites/lamp

@@ -69,7 +69,7 @@ static void	render_sprite(t_mlx *mlx)
 	set_sprite_width(&SPRITE->start, &SPRITE->end, &OBJECTS[SPRITE->id].rel_loc);
 	if (SPRITE->start >= WIDTH || SPRITE->end < 0) // Out of view
 		return ;
-	SPRITE->height = (int)((2 * HEIGHT) / OBJECTS[SPRITE->id].rel_loc.y);
+	SPRITE->height = (int)((/* 2 * */ HEIGHT) / OBJECTS[SPRITE->id].rel_loc.y);
 	set_wall_height(&SPRITE->draw_start, &SPRITE->draw_end, SPRITE->height);
 
 	sprite_threading(mlx, draw_sprite, ft_max(0, SPRITE->start), ft_min(SPRITE->end, WIDTH));

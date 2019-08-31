@@ -78,7 +78,7 @@ static int		wall_hit(int **map, t_dpoint side_dist, t_dpoint delta_dist, t_point
 			map_pos->x += step.x;
 			side = 1;
 		}
-		if (map[map_pos->y][map_pos->x] > 0 && map[map_pos->y][map_pos->x] <= 5) //<-----HERE!!!!!!!!!!!!
+		if (map[map_pos->y][map_pos->x] > 0 && map[map_pos->y][map_pos->x] <= WALLCOUNT)
 			hit = 1;
 	}
 	return (side);
@@ -126,7 +126,7 @@ void			*raycaster(void *data)
 		mlx->z[mlx->x[0]] = wall_distance; ////////////////////////// Z buffer
 		
 		/* MULTIPLY HEIGHT FOR BIGGER WALLS */
-		wall_height = (int)((2 * HEIGHT) / wall_distance);
+		wall_height = (int)((/* 2 * */ HEIGHT) / wall_distance);
 
 		/* SET HEIGHT OF WALLS TOO DRAW */
 		set_wall_height(&draw_start, &draw_end, wall_height);
