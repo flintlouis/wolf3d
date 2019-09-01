@@ -5,7 +5,6 @@ static void move(t_dpoint *move, t_mlx *mlx, double direction)
 {
 	double tmpy;
 	double tmpx;
-	// int speed;
 
 	if (CONTROLS->run)
 		direction /= 5;

@@ -54,4 +54,13 @@ void fire_gun(t_mlx *mlx, t_texture *gun, int size)
 			i = 0;
 		draw_gun(mlx, &gun[0], size);
 	}
+	for (int aim = -10; aim <= 10; aim++)
+	{
+		if (aim < -3 || aim > 3)
+		{
+			put_pixel((WIDTH>>1) + aim, HEIGHT>>1, mlx, (t_colour){255,255,0});
+			put_pixel(WIDTH>>1, (HEIGHT>>1) + aim, mlx, (t_colour){255,255,0});
+		}
+		put_pixel(WIDTH>>1, HEIGHT>>1, mlx, (t_colour){255,0,0});
+	}
 }
