@@ -40,7 +40,7 @@ void fire_gun(t_mlx *mlx, t_texture *gun, int size)
 	ms += time_between_frames();
 	if ((CONTROLS->shoot && i < 6) || (i > 0 && i < 6))
 	{
-		if (ms >= 0)
+		if (ms >= 20)
 		{
 			draw_gun(mlx, &gun[i], size);
 			i++;

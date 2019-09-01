@@ -1,17 +1,18 @@
 #include "wolf3d.h"
 
 /* Handles player movement + checks for wall collisions */
-static void move(t_dpoint *move, t_mlx *mlx, int direction)
+static void move(t_dpoint *move, t_mlx *mlx, double direction)
 {
 	double tmpy;
 	double tmpx;
-	int speed;
+	// int speed;
 
-	speed = 10;
 	if (CONTROLS->run)
-		speed = 5;
-	tmpy = PLAYER->pos.y + direction * (move->y / speed);
-	tmpx = PLAYER->pos.x + direction * (move->x / speed);
+		direction /= 5;
+	else
+		direction /= 10;
+	tmpy = PLAYER->pos.y + direction * (move->y);
+	tmpx = PLAYER->pos.x + direction * (move->x);
 	if (MAP[(int)(tmpy)][(int)(PLAYER->pos.x)] == 0 || MAP[(int)(tmpy)][(int)(PLAYER->pos.x)] > OBJECTCOL)
 		PLAYER->pos.y = tmpy;
 	if (MAP[(int)(PLAYER->pos.y)][(int)(tmpx)] == 0 || MAP[(int)(PLAYER->pos.y)][(int)(tmpx)] > OBJECTCOL)
