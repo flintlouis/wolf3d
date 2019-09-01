@@ -34,12 +34,19 @@ static void draw_gun(t_mlx *mlx, t_texture *gun, int size)
 void fire_gun(t_mlx *mlx, t_texture *gun, int size)
 {
 	static int i;
+	static long ms;
 
 	/* USE TIME BETWEEN FRAMES */
-	if (CONTROLS->shoot && i < 6)
+	ms += time_between_frames();
+	if ((CONTROLS->shoot && i < 6) || (i > 0 && i < 6))
 	{
-		draw_gun(mlx, &gun[i], size);
-		i++;
+		if (ms >= 0)
+		{
+			draw_gun(mlx, &gun[i], size);
+			i++;
+			ms = 0;
+		} else
+			draw_gun(mlx, &gun[i], size);
 	}
 	else
 	{

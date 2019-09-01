@@ -15,14 +15,14 @@ static long		ft_milsec(void)
 long			time_between_frames(void)
 {
 	static long ph_ms;
-	long dms;
+	long delta_ms;
 
 	// srand(time(0)); /* NEED THIS TO START THE TIME */
 	if (ph_ms == 0)
 		ph_ms = ft_milsec();
-	dms = ft_milsec() - ph_ms;
+	delta_ms = ft_milsec() - ph_ms;
 	ph_ms = ft_milsec();
-	return (dms);
+	return (delta_ms);
 }
 
 static int seconds(void)

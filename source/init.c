@@ -51,11 +51,13 @@ static void init_mapobjects(t_mlx *mlx)
 		i++;
 	}
 }
+#include <time.h> //////////
 
 void	init_wolf(char *map)
 {
 	t_mlx *mlx;
 
+	srand(time(0)); /////////
 	mlx = MEM(t_mlx);
 	init_mlx(mlx);
 	init_level(mlx, map);
