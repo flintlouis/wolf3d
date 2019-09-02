@@ -64,7 +64,7 @@ void	set_player_angle(t_player *player, double degrees)
 void	player_look(t_player *player, t_controls *controls)
 {
 	if (controls->look_right)
-		set_player_angle(player, player->angle + 1.5);
+		set_player_angle(player, player->angle + 1/* .5 */);
 	if (controls->look_left)
-		set_player_angle(player, player->angle - 1.5);
+		set_player_angle(player, player->angle - 1/* .5 */);
 }

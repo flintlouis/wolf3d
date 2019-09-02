@@ -1,6 +1,5 @@
 #include "wolf3d.h"
 #include "mlx.h"
-#include <stdlib.h> /* FOR MINIMAP */
 
 static void		mini_map(t_player *player, int **map)
 {

@@ -12,10 +12,8 @@ int	key_press(int key, t_mlx *mlx)
 {
 	if (key == KEY_PLUS)
 		ENEMIES[0]->location.x += 0.01;
-		// OBJECTS[0].location.x += 0.01;
 	else if (key == KEY_MIN)
-		ENEMIES[1]->location.x -= 0.01;
-		// OBJECTS[0].location.x -= 0.01;
+		ENEMIES[0]->location.x -= 0.01;
 	else if (key == KEY_ESC)
 		close_window(NULL);
 	else if (key == KEY_S)

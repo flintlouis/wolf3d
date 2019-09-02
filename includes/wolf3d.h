@@ -5,14 +5,15 @@
 # include "ft_printf.h"
 # include <pthread.h>
 # include <stdio.h> // voor testen ff
+# include <stdlib.h> /* FOR MINIMAP */
 
 # define MEM(x) 		(x*)ft_memalloc(sizeof(x))
 # define WIDTH			1200
 # define HEIGHT			800
 # define THREAD			4
-# define WALLCOUNT		5
-# define OBJECTCOL		12
-# define ENEMY			12
+# define WALLCOUNT		5 // AMOUNT OF WALLS
+# define OBJECTCOL		12 // AMOUNT OF OBJECTS WITH COLLISION
+# define ENEMY			12 // ENEMY NUMBER ON MAP
 # define MAP			mlx->level->map
 # define LEVEL			mlx->level
 # define PLAYER			mlx->player

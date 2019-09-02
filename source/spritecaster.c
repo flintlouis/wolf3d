@@ -20,7 +20,7 @@ static void	calculate_relative_positions(t_mlx *mlx)
 static int		compare_mapobject_distance(const void *a, const void *b)
 {
 	double diff = ((t_mapobject*)a)->rel_loc.y - ((t_mapobject*)b)->rel_loc.y;
-	return diff > 0 ? -1 : (diff == 0 ? 0 : 1);
+	return (diff > 0 ? -1 : (diff == 0 ? 0 : 1));
 }
 
 static void	set_sprite_width(int *start, int *end, t_dpoint *location)
