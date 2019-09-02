@@ -126,7 +126,7 @@ int wolfenstein(t_mlx *mlx)
 {
 	threading(mlx, raycaster);
 	spritecaster(mlx);
-	fire_gun(mlx, mlx->gun, 12);
+	fire_gun(mlx, GUN, 12);
 	draw_image(mlx);
 	move_player(mlx);
 	player_look(PLAYER, CONTROLS);

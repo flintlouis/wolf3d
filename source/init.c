@@ -1,6 +1,7 @@
 #include "wolf3d.h"
 #include "mlx.h"
 #include <stdlib.h>
+#include <time.h>
 
 static void	run_wolf(t_mlx *mlx)
 {
@@ -30,10 +31,13 @@ static void init_mapobjects(t_mlx *mlx)
 	int i;
 	int j;
 	int obj_index;
+	int enemy_index;
 
 	i = 0;
+	enemy_index = 0;
 	obj_index = 0;
-	mlx->objects = (t_mapobject*)ft_memalloc(sizeof(t_mapobject) * LEVEL->object_count);
+	OBJECTS = (t_mapobject*)ft_memalloc(sizeof(t_mapobject) * LEVEL->object_count);
+	ENEMIES = (t_mapobject**)ft_memalloc(sizeof(t_mapobject*) * LEVEL->enemy_count);
 	while (i < LEVEL->size.y)
 	{
 		j = 0;
@@ -41,9 +45,14 @@ static void init_mapobjects(t_mlx *mlx)
 		{
 			if (MAP[i][j] > WALLCOUNT)
 			{
-				mlx->objects[obj_index].location.x = j + 0.5;
-				mlx->objects[obj_index].location.y = i + 0.5;
-				mlx->objects[obj_index].sprite = TEXTURES[MAP[i][j] - 1];
+				OBJECTS[obj_index].location.x = j + 0.5;
+				OBJECTS[obj_index].location.y = i + 0.5;
+				OBJECTS[obj_index].sprite = TEXTURES[MAP[i][j] - 1];
+				if (MAP[i][j] == ENEMY)
+				{
+					ENEMIES[enemy_index] = &OBJECTS[obj_index];
+					enemy_index++;
+				}
 				obj_index++;
 			}
 			j++;
@@ -51,19 +60,19 @@ static void init_mapobjects(t_mlx *mlx)
 		i++;
 	}
 }
-#include <time.h> //////////
 
 void	init_wolf(char *map)
 {
 	t_mlx *mlx;
 
-	srand(time(0)); /////////
+	srand(time(0));
 	mlx = MEM(t_mlx);
 	init_mlx(mlx);
 	init_level(mlx, map);
 	CONTROLS = MEM(t_controls);
 	TEXTURES = get_textures("source/textures.txt");
-	mlx->gun = get_textures("source/guns.txt");
+	GUN = get_textures("source/guns.txt");
 	init_mapobjects(mlx);
+	// init_enemies(mlx);
 	run_wolf(mlx);
 }

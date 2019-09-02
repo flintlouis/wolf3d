@@ -12,6 +12,7 @@
 # define THREAD			4
 # define WALLCOUNT		5
 # define OBJECTCOL		12
+# define ENEMY			12
 # define MAP			mlx->level->map
 # define LEVEL			mlx->level
 # define PLAYER			mlx->player
@@ -19,6 +20,8 @@
 # define TEXTURES		mlx->textures
 # define OBJECTS		mlx->objects
 # define SPRITE			mlx->sprite
+# define GUN			mlx->gun
+# define ENEMIES		mlx->enemies
 
 # define KEY_ESC                53
 # define KEY_SPACE              49
@@ -115,6 +118,7 @@ typedef struct			s_controls
 typedef struct			s_level
 {
 	int					object_count;
+	int					enemy_count;
 	int					**map;
 	t_point				size;
 }						t_level;
@@ -140,13 +144,15 @@ typedef struct			s_mlx
 	int					endian;
 	int					x[2];
 	double				*z;
-	t_mapobject			*objects;
+
 	t_level				*level;
 	t_player			*player;
 	t_controls			*controls;
 	t_texture			*textures;
 	t_texture			*gun;
 	t_sprite			*sprite;
+	t_mapobject			*objects;
+	t_mapobject			**enemies;
 }						t_mlx;
 
 int						close_window(void *ptr);

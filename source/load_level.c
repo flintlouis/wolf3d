@@ -51,6 +51,8 @@ void				init_level(t_mlx *mlx, char *file)
 			MAP[j][i] = ft_atoi(tab[i]);
 			if (MAP[j][i] > WALLCOUNT)
 				LEVEL->object_count++;
+			if (MAP[j][i] == ENEMY)
+				LEVEL->enemy_count++;
 			i++;
 		}
 		ft_free_2darray((void**)tab);
