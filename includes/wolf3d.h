@@ -92,7 +92,8 @@ typedef struct			s_texture
 typedef	struct 			s_mapobject
 {
 	int					id;
-	char				hit:1;
+	int					hit;
+	long				ms;
 	t_dpoint			rel_loc;
 	t_dpoint			location;
 	t_texture			sprite;

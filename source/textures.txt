@@ -11,4 +11,9 @@ Sprites/table
 Sprites/trans
 NoCollSprites/chandelier
 NoCollSprites/lamp
-Enemies/ss1
+Enemies/ss
+Enemies/ssdead1
+Enemies/ssdead2
+Enemies/ssdead3
+Enemies/ssdead4
+Enemies/ssdead5

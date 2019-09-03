@@ -3,8 +3,12 @@
 void	enemy_hit(t_mlx *mlx, int *fired)
 {
 	int i;
+	static 
 	int mid;
+	long frames;
 
+
+	frames = time_between_frames();
 	mid = WIDTH >> 1;
 	i = LEVEL->enemy_count - 1;
 	if (*fired == 1)
@@ -15,12 +19,23 @@ void	enemy_hit(t_mlx *mlx, int *fired)
 				(ENEMIES[i]->rel_loc.x >= -0.2 && ENEMIES[i]->rel_loc.x <= 0.2)
 				&& mlx->z[mid] > ENEMIES[i]->rel_loc.y)
 			{
-				ENEMIES[i]->sprite = TEXTURES[7];
-				ENEMIES[i]->hit = 1;
+				ENEMIES[i]->hit = 13;
 				break ;
 			}
 			i--;
 		}
+	}
+	i = LEVEL->enemy_count - 1;
+	while (i >= 0)
+	{
+		ENEMIES[i]->ms += ENEMIES[i]->ms < 200 ? frames : 0;
+		if (ENEMIES[i]->hit && ENEMIES[i]->ms > 100 && ENEMIES[i]->hit < 19)
+		{
+			ENEMIES[i]->sprite = TEXTURES[ENEMIES[i]->hit];
+			ENEMIES[i]->hit++;
+			ENEMIES[i]->ms = 0;
+		}
+	i--;
 	}
 }
 
@@ -64,7 +79,8 @@ void fire_gun(t_mlx *mlx, t_texture *gun, int size)
 	fired += CONTROLS->shoot ? 1 : 0;
 	if (fired > 1 && !CONTROLS->shoot)
 		fired = 0;
-	ms += time_between_frames();
+	ms += ms < 200 ? time_between_frames() : 0;
+	enemy_hit(mlx, &fired);
 	if ((CONTROLS->shoot && i == 0) || (i > 0 && i < 6))
 	{
 		if (ms >= 20)
@@ -74,7 +90,6 @@ void fire_gun(t_mlx *mlx, t_texture *gun, int size)
 			ms = 0;
 		} else
 			draw_gun(mlx, &gun[i], size);
-		enemy_hit(mlx, &fired);
 	}
 	else
 	{
