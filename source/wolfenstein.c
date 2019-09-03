@@ -119,8 +119,6 @@ static void threading(t_mlx *mlx, void*(*f)(void*))
 	join_threads(i, threads);
 }
 
-void fire_gun(t_mlx *mlx, t_texture *gun, int size);
-
 int wolfenstein(t_mlx *mlx)
 {
 	threading(mlx, raycaster);

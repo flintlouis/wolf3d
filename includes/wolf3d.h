@@ -171,6 +171,7 @@ long					time_between_frames(void);
 double					to_radians(double degrees);
 
 void					draw_object(t_mlx *mlx, t_texture *texture, int x, t_draw draw);
+void					fire_gun(t_mlx *mlx, t_texture *gun, int size);
 void					init_wolf(char *map);
 void					init_level(t_mlx *mlx, char *file);
 void					join_threads(int i, pthread_t *threads);

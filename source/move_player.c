@@ -23,11 +23,11 @@ static void move(t_dpoint *move, t_mlx *mlx, double direction)
 	double tmpx;
 
 	if (CONTROLS->run)
-		direction /= 5;
+		direction /= 6;
 	else
-		direction /= 10;
-	tmpy = PLAYER->pos.y + direction * (move->y);
-	tmpx = PLAYER->pos.x + direction * (move->x);
+		direction /= 11;
+	tmpy = PLAYER->pos.y + (direction * move->y);
+	tmpx = PLAYER->pos.x + (direction * move->x);
 	if (!check_collision(mlx, PLAYER->pos.x, tmpy))
 		PLAYER->pos.y = tmpy;
 	if (!check_collision(mlx, tmpx, PLAYER->pos.y))

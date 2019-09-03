@@ -19,7 +19,7 @@ void	enemy_hit(t_mlx *mlx, int *fired)
 				(ENEMIES[i]->rel_loc.x >= -0.2 && ENEMIES[i]->rel_loc.x <= 0.2)
 				&& mlx->z[mid] > ENEMIES[i]->rel_loc.y)
 			{
-				ENEMIES[i]->hit = 13;
+				ENEMIES[i]->hit = 14;
 				break ;
 			}
 			i--;
