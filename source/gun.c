@@ -1,14 +1,29 @@
 #include "wolf3d.h"
 
-void	enemy_hit(t_mlx *mlx, int *fired)
+static void death_animation(t_mlx *mlx, long ms)
+{
+	int i;
+
+	i = LEVEL->enemy_count - 1;
+	while (i >= 0)
+	{
+		ENEMIES[i]->ms += ENEMIES[i]->ms < 200 ? ms : 0;
+		if (ENEMIES[i]->hit && ENEMIES[i]->ms > 120 && ENEMIES[i]->hit < 19)
+		{
+			ENEMIES[i]->sprite = TEXTURES[ENEMIES[i]->hit];
+			ENEMIES[i]->hit++;
+			ENEMIES[i]->ms = 0;
+		}
+	i--;
+	}
+}
+
+static void	enemy_hit(t_mlx *mlx, int *fired)
 {
 	int i;
 	static 
 	int mid;
-	long frames;
 
-
-	frames = time_between_frames();
 	mid = WIDTH >> 1;
 	i = LEVEL->enemy_count - 1;
 	if (*fired == 1)
@@ -24,18 +39,6 @@ void	enemy_hit(t_mlx *mlx, int *fired)
 			}
 			i--;
 		}
-	}
-	i = LEVEL->enemy_count - 1;
-	while (i >= 0)
-	{
-		ENEMIES[i]->ms += ENEMIES[i]->ms < 200 ? frames : 0;
-		if (ENEMIES[i]->hit && ENEMIES[i]->ms > 100 && ENEMIES[i]->hit < 19)
-		{
-			ENEMIES[i]->sprite = TEXTURES[ENEMIES[i]->hit];
-			ENEMIES[i]->hit++;
-			ENEMIES[i]->ms = 0;
-		}
-	i--;
 	}
 }
 
@@ -72,24 +75,27 @@ static void draw_gun(t_mlx *mlx, t_texture *gun, int size)
 
 void fire_gun(t_mlx *mlx, t_texture *gun, int size)
 {
+	long ms;
 	static int i;
-	static long ms;
+	static long frames;
 	static int fired;
 
+	ms = time_between_frames();
+	frames += frames < 200 ? ms : 0;
+	death_animation(mlx, ms);
 	fired += CONTROLS->shoot ? 1 : 0;
 	if (fired > 1 && !CONTROLS->shoot)
 		fired = 0;
-	ms += ms < 200 ? time_between_frames() : 0;
-	enemy_hit(mlx, &fired);
 	if ((CONTROLS->shoot && i == 0) || (i > 0 && i < 6))
 	{
-		if (ms >= 20)
+		if (frames >= 20)
 		{
 			draw_gun(mlx, &gun[i], size);
 			i++;
-			ms = 0;
+			frames = 0;
 		} else
 			draw_gun(mlx, &gun[i], size);
+		enemy_hit(mlx, &fired);
 	}
 	else
 	{
