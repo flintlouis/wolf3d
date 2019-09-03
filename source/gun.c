@@ -1,22 +1,25 @@
 #include "wolf3d.h"
 
-void	enemy_hit(t_mlx *mlx)
+void	enemy_hit(t_mlx *mlx, int *fired)
 {
 	int i;
+	int mid;
 
-	i = 0;
-	system("clear");
-	if (CONTROLS->shoot)
+	mid = WIDTH >> 1;
+	i = LEVEL->enemy_count - 1;
+	if (*fired == 1)
 	{
-		while (i < LEVEL->enemy_count)
+		while (i >= 0)
 		{
-			if (ENEMIES[i]->rel_loc.x >= -0.2 && ENEMIES[i]->rel_loc.x <= 0.2)
+			if (!ENEMIES[i]->hit &&
+				(ENEMIES[i]->rel_loc.x >= -0.2 && ENEMIES[i]->rel_loc.x <= 0.2)
+				&& mlx->z[mid] > ENEMIES[i]->rel_loc.y)
 			{
 				ENEMIES[i]->sprite = TEXTURES[7];
-				printf("ENEMY HIT\n");
+				ENEMIES[i]->hit = 1;
 				break ;
 			}
-			i++;
+			i--;
 		}
 	}
 }
@@ -56,13 +59,13 @@ void fire_gun(t_mlx *mlx, t_texture *gun, int size)
 {
 	static int i;
 	static long ms;
+	static int fired;
 
-	/* USE TIME BETWEEN FRAMES */
+	fired += CONTROLS->shoot ? 1 : 0;
+	if (fired > 1 && !CONTROLS->shoot)
+		fired = 0;
 	ms += time_between_frames();
-
-	enemy_hit(mlx);
-
-	if ((CONTROLS->shoot && i < 6) || (i > 0 && i < 6))
+	if ((CONTROLS->shoot && i == 0) || (i > 0 && i < 6))
 	{
 		if (ms >= 20)
 		{
@@ -71,6 +74,7 @@ void fire_gun(t_mlx *mlx, t_texture *gun, int size)
 			ms = 0;
 		} else
 			draw_gun(mlx, &gun[i], size);
+		enemy_hit(mlx, &fired);
 	}
 	else
 	{
@@ -78,13 +82,13 @@ void fire_gun(t_mlx *mlx, t_texture *gun, int size)
 			i = 0;
 		draw_gun(mlx, &gun[0], size);
 	}
-	// for (int aim = -10; aim <= 10; aim++)
-	// {
-	// 	if (aim < -3 || aim > 3)
-	// 	{
-	// 		put_pixel((WIDTH>>1) + aim, HEIGHT>>1, mlx, (t_colour){255,255,0});
-	// 		put_pixel(WIDTH>>1, (HEIGHT>>1) + aim, mlx, (t_colour){255,255,0});
-	// 	}
-	// 	put_pixel(WIDTH>>1, HEIGHT>>1, mlx, (t_colour){255,0,0});
-	// }
+	for (int aim = -10; aim <= 10; aim++)
+	{
+		if (aim < -3 || aim > 3)
+		{
+			put_pixel((WIDTH>>1) + aim, HEIGHT>>1, mlx, (t_colour){255,255,0});
+			put_pixel(WIDTH>>1, (HEIGHT>>1) + aim, mlx, (t_colour){255,255,0});
+		}
+		put_pixel(WIDTH>>1, HEIGHT>>1, mlx, (t_colour){255,0,0});
+	}
 }

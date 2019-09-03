@@ -9,6 +9,6 @@ Sprites/flint
 Sprites/plant
 Sprites/table
 Sprites/trans
-Enemies/ss1
 NoCollSprites/chandelier
 NoCollSprites/lamp
+Enemies/ss1

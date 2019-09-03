@@ -31,13 +31,10 @@ static void init_mapobjects(t_mlx *mlx)
 	int i;
 	int j;
 	int obj_index;
-	int enemy_index;
 
 	i = 0;
-	enemy_index = 0;
 	obj_index = 0;
 	OBJECTS = (t_mapobject*)ft_memalloc(sizeof(t_mapobject) * LEVEL->object_count);
-	ENEMIES = (t_mapobject**)ft_memalloc(sizeof(t_mapobject*) * LEVEL->enemy_count);
 	while (i < LEVEL->size.y)
 	{
 		j = 0;
@@ -45,14 +42,10 @@ static void init_mapobjects(t_mlx *mlx)
 		{
 			if (MAP[i][j] > WALLCOUNT)
 			{
+				OBJECTS[obj_index].id = MAP[i][j];
 				OBJECTS[obj_index].location.x = j + 0.5;
 				OBJECTS[obj_index].location.y = i + 0.5;
 				OBJECTS[obj_index].sprite = TEXTURES[MAP[i][j] - 1];
-				if (MAP[i][j] == ENEMY)
-				{
-					ENEMIES[enemy_index] = &OBJECTS[obj_index];
-					enemy_index++;
-				}
 				obj_index++;
 			}
 			j++;
@@ -73,6 +66,7 @@ void	init_wolf(char *map)
 	TEXTURES = get_textures("source/textures.txt");
 	GUN = get_textures("source/guns.txt");
 	init_mapobjects(mlx);
-	// init_enemies(mlx);
+	ENEMIES = (t_mapobject**)ft_memalloc(sizeof(t_mapobject*) * LEVEL->enemy_count);
+
 	run_wolf(mlx);
 }

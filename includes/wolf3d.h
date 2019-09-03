@@ -12,8 +12,8 @@
 # define HEIGHT			800
 # define THREAD			4
 # define WALLCOUNT		5 // AMOUNT OF WALLS
-# define OBJECTCOL		12 // AMOUNT OF OBJECTS WITH COLLISION
-# define ENEMY			12 // ENEMY NUMBER ON MAP
+# define OBJECTCOL		11 // AMOUNT OF OBJECTS WITH COLLISION
+# define ENEMY			14 // ENEMY NUMBER ON MAP
 # define MAP			mlx->level->map
 # define LEVEL			mlx->level
 # define PLAYER			mlx->player
@@ -91,6 +91,8 @@ typedef struct			s_texture
 
 typedef	struct 			s_mapobject
 {
+	int					id;
+	char				hit:1;
 	t_dpoint			rel_loc;
 	t_dpoint			location;
 	t_texture			sprite;

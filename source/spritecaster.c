@@ -75,12 +75,32 @@ static void	render_sprite(t_mlx *mlx)
 	sprite_threading(mlx, draw_sprite, ft_max(0, SPRITE->start), ft_min(SPRITE->end, WIDTH));
 }
 
+static void init_enemies(t_mlx *mlx, t_mapobject *objects)
+{
+	int i;
+	int enemy_index;
+
+	i = 0;
+	enemy_index = 0;
+	while (i < LEVEL->object_count)
+	{
+		if (objects[i].id == ENEMY)
+		{
+			ENEMIES[enemy_index] = &OBJECTS[i];
+			enemy_index++;
+		}
+		i++;
+	}
+}
+
 void	spritecaster(t_mlx *mlx)
 {
 	int i;
 
 	calculate_relative_positions(mlx);
-	qsort((void*)mlx->objects, LEVEL->object_count, sizeof(t_mapobject), compare_mapobject_distance);
+	qsort((void*)OBJECTS, LEVEL->object_count, sizeof(t_mapobject), compare_mapobject_distance);
+
+	init_enemies(mlx, OBJECTS);
 
 	i = 0;
 	while (i < LEVEL->object_count)

@@ -1,6 +1,22 @@
 #include "wolf3d.h"
 
-/* Handles player movement + checks for wall collisions */
+static int check_collision(t_mlx *mlx, int x, int y)
+{
+	int i;
+
+	i = 0;
+	if (MAP[y][x] > 0 && MAP[y][x] <= OBJECTCOL)
+		return (1);
+	while (i < LEVEL->enemy_count)
+	{
+		if (!ENEMIES[i]->hit &&
+		(int)ENEMIES[i]->location.y == y && (int)ENEMIES[i]->location.x == x)
+			return (1);
+		i++;
+	}
+	return(0);
+}
+
 static void move(t_dpoint *move, t_mlx *mlx, double direction)
 {
 	double tmpy;
@@ -12,9 +28,9 @@ static void move(t_dpoint *move, t_mlx *mlx, double direction)
 		direction /= 10;
 	tmpy = PLAYER->pos.y + direction * (move->y);
 	tmpx = PLAYER->pos.x + direction * (move->x);
-	if (MAP[(int)tmpy][(int)PLAYER->pos.x] == 0 || MAP[(int)(tmpy)][(int)(PLAYER->pos.x)] > OBJECTCOL)
+	if (!check_collision(mlx, PLAYER->pos.x, tmpy))
 		PLAYER->pos.y = tmpy;
-	if (MAP[(int)PLAYER->pos.y][(int)tmpx] == 0 || MAP[(int)(PLAYER->pos.y)][(int)(tmpx)] > OBJECTCOL)
+	if (!check_collision(mlx, tmpx, PLAYER->pos.y))
 		PLAYER->pos.x = tmpx;
 }
 
