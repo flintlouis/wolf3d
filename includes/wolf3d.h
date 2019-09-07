@@ -92,8 +92,8 @@ typedef struct			s_texture
 typedef	struct 			s_mapobject
 {
 	int					id;
-	int					hit;
-	long				ms;
+	int					hit;	/* <--- MOVE TO ENEMY STRUCT */
+	long				ms;		/* <--- MOVE TO ENEMY STRUCT */
 	t_dpoint			rel_loc;
 	t_dpoint			location;
 	t_texture			sprite;
@@ -136,6 +136,13 @@ typedef struct			s_prite
 	int					draw_end;
 	int					id;
 }						t_sprite;
+
+typedef struct			s_enemy /* <--- THIS IS WHAT ENEMIES SHOULD LOOK LIKE */
+{
+	int					hit;
+	long				ms;
+	t_mapobject			*object;
+}						t_enemy;
 
 typedef struct			s_mlx
 {

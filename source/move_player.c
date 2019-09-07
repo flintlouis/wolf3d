@@ -34,7 +34,6 @@ static void move(t_dpoint *move, t_mlx *mlx, double direction)
 		PLAYER->pos.x = tmpx;
 }
 
-/* Makes movement smoother */
 void	move_player(t_mlx *mlx)
 {
 	if (CONTROLS->front)
