@@ -86,7 +86,7 @@ static void init_enemies(t_mlx *mlx, t_mapobject *objects)
 	{
 		if (objects[i].id == ENEMY)
 		{
-			ENEMIES[enemy_index] = &OBJECTS[i];
+			ENEMIES[enemy_index].ss = &OBJECTS[i];
 			enemy_index++;
 		}
 		i++;

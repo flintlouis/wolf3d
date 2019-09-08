@@ -119,14 +119,25 @@ static void threading(t_mlx *mlx, void*(*f)(void*))
 	join_threads(i, threads);
 }
 
+void move_enemy(t_mlx *mlx);
+
 int wolfenstein(t_mlx *mlx)
 {
+	static int i;
+
 	threading(mlx, raycaster);
 	spritecaster(mlx);
 	fire_gun(mlx, GUN, 12);
 	draw_image(mlx);
 	move_player(mlx);
 	player_look(PLAYER, CONTROLS);
+
+	if (i >= 100) {
+		move_enemy(mlx);
+		i = 0;
+	}
+	i++;
+
 	// mini_map(PLAYER, MAP);
 	return (0);
 }

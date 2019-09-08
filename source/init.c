@@ -54,6 +54,8 @@ static void init_mapobjects(t_mlx *mlx)
 	}
 }
 
+void init_pathfinding(t_mlx *mlx);
+
 void	init_wolf(char *map)
 {
 	t_mlx *mlx;
@@ -66,7 +68,7 @@ void	init_wolf(char *map)
 	TEXTURES = get_textures("source/textures.txt");
 	GUN = get_textures("source/guns.txt");
 	init_mapobjects(mlx);
-	ENEMIES = (t_mapobject**)ft_memalloc(sizeof(t_mapobject*) * LEVEL->enemy_count);
-
+	ENEMIES = (t_enemy*)ft_memalloc(sizeof(t_enemy) * LEVEL->enemy_count);
+	init_pathfinding(mlx);
 	run_wolf(mlx);
 }

@@ -7,12 +7,12 @@ static void death_animation(t_mlx *mlx, long ms)
 	i = LEVEL->enemy_count - 1;
 	while (i >= 0)
 	{
-		ENEMIES[i]->ms += ENEMIES[i]->ms < 200 ? ms : 0;
-		if (ENEMIES[i]->hit && ENEMIES[i]->ms > 120 && ENEMIES[i]->hit < 19)
+		ENEMIES[i].ss->ms += ENEMIES[i].ss->ms < 200 ? ms : 0;
+		if (ENEMIES[i].ss->hit && ENEMIES[i].ss->ms > 120 && ENEMIES[i].ss->hit < 19)
 		{
-			ENEMIES[i]->sprite = TEXTURES[ENEMIES[i]->hit];
-			ENEMIES[i]->hit++;
-			ENEMIES[i]->ms = 0;
+			ENEMIES[i].ss->sprite = TEXTURES[ENEMIES[i].ss->hit];
+			ENEMIES[i].ss->hit++;
+			ENEMIES[i].ss->ms = 0;
 		}
 	i--;
 	}
@@ -30,11 +30,11 @@ static void	enemy_hit(t_mlx *mlx, int *fired)
 	{
 		while (i >= 0)
 		{
-			if (!ENEMIES[i]->hit &&
-				(ENEMIES[i]->rel_loc.x >= -0.2 && ENEMIES[i]->rel_loc.x <= 0.2)
-				&& mlx->z[mid] > ENEMIES[i]->rel_loc.y)
+			if (!ENEMIES[i].ss->hit &&
+				(ENEMIES[i].ss->rel_loc.x >= -0.2 && ENEMIES[i].ss->rel_loc.x <= 0.2)
+				&& mlx->z[mid] > ENEMIES[i].ss->rel_loc.y)
 			{
-				ENEMIES[i]->hit = 14;
+				ENEMIES[i].ss->hit = 14;
 				break ;
 			}
 			i--;
@@ -102,14 +102,5 @@ void fire_gun(t_mlx *mlx, t_texture *gun, int size)
 		if (i == 6 && !CONTROLS->shoot)
 			i = 0;
 		draw_gun(mlx, &gun[0], size);
-	}
-	for (int aim = -10; aim <= 10; aim++)
-	{
-		if (aim < -3 || aim > 3)
-		{
-			put_pixel((WIDTH>>1) + aim, HEIGHT>>1, mlx, (t_colour){255,255,0});
-			put_pixel(WIDTH>>1, (HEIGHT>>1) + aim, mlx, (t_colour){255,255,0});
-		}
-		put_pixel(WIDTH>>1, HEIGHT>>1, mlx, (t_colour){255,0,0});
 	}
 }

@@ -9,8 +9,8 @@ static int check_collision(t_mlx *mlx, int x, int y)
 		return (1);
 	while (i < LEVEL->enemy_count)
 	{
-		if (!ENEMIES[i]->hit &&
-		(int)ENEMIES[i]->location.y == y && (int)ENEMIES[i]->location.x == x)
+		if (!ENEMIES[i].ss->hit &&
+		(int)ENEMIES[i].ss->location.y == y && (int)ENEMIES[i].ss->location.x == x)
 			return (1);
 		i++;
 	}

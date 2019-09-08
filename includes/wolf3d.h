@@ -92,8 +92,8 @@ typedef struct			s_texture
 typedef	struct 			s_mapobject
 {
 	int					id;
-	int					hit;	/* <--- MOVE TO ENEMY STRUCT */
-	long				ms;		/* <--- MOVE TO ENEMY STRUCT */
+	int					hit;
+	long				ms;
 	t_dpoint			rel_loc;
 	t_dpoint			location;
 	t_texture			sprite;
@@ -137,11 +137,26 @@ typedef struct			s_prite
 	int					id;
 }						t_sprite;
 
-typedef struct			s_enemy /* <--- THIS IS WHAT ENEMIES SHOULD LOOK LIKE */
+typedef struct			s_node
 {
-	int					hit;
-	long				ms;
-	t_mapobject			*object;
+	double				f; // f(n) = g(n) + h(n)
+	double				g; // steps taken from start
+	double				h; // estimated distance to end
+	char				obstacle:1;
+	t_point				loc;
+	struct s_node		**neighbors;
+	struct s_node		*next;
+	struct s_node		*prev;
+}						t_node;
+
+typedef struct			s_enemy
+{
+	t_node				*open_set;
+	t_node				*closed_set;
+	t_node				*path;
+	t_node				*start;
+	t_node				*end;
+	t_mapobject			*ss;
 }						t_enemy;
 
 typedef struct			s_mlx
@@ -155,7 +170,6 @@ typedef struct			s_mlx
 	int					endian;
 	int					x[2];
 	double				*z;
-
 	t_level				*level;
 	t_player			*player;
 	t_controls			*controls;
@@ -163,7 +177,8 @@ typedef struct			s_mlx
 	t_texture			*gun;
 	t_sprite			*sprite;
 	t_mapobject			*objects;
-	t_mapobject			**enemies;
+	t_enemy				*enemies;
+	t_node				**grid;
 }						t_mlx;
 
 int						close_window(void *ptr);
