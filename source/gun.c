@@ -21,7 +21,6 @@ static void death_animation(t_mlx *mlx, long ms)
 static void	enemy_hit(t_mlx *mlx, int *fired)
 {
 	int i;
-	static 
 	int mid;
 
 	mid = WIDTH >> 1;
@@ -31,7 +30,7 @@ static void	enemy_hit(t_mlx *mlx, int *fired)
 		while (i >= 0)
 		{
 			if (!ENEMIES[i].ss->hit &&
-				(ENEMIES[i].ss->rel_loc.x >= -0.2 && ENEMIES[i].ss->rel_loc.x <= 0.2)
+				(ENEMIES[i].ss->rel_loc.x >= -0.3 && ENEMIES[i].ss->rel_loc.x <= 0.3)
 				&& mlx->z[mid] > ENEMIES[i].ss->rel_loc.y)
 			{
 				ENEMIES[i].ss->hit = 14;
@@ -73,14 +72,14 @@ static void draw_gun(t_mlx *mlx, t_texture *gun, int size)
 	}
 }
 
-void fire_gun(t_mlx *mlx, t_texture *gun, int size)
+void fire_gun(t_mlx *mlx, t_texture *gun, int size, long ms)
 {
-	long ms;
+	// long ms;
 	static int i;
 	static long frames;
 	static int fired;
 
-	ms = time_between_frames();
+	// ms = time_between_frames();
 	frames += frames < 200 ? ms : 0;
 	death_animation(mlx, ms);
 	fired += CONTROLS->shoot ? 1 : 0;

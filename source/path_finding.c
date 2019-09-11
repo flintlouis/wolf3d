@@ -12,13 +12,13 @@ void rm_node(t_node **set, t_node *node);
 double heuristic(t_node *a, t_node *b)
 {
 	double d;
-	double dx;
-	double dy;
+	// double dx;
+	// double dy;
 
-	dx = (double)b->loc.x - a->loc.x;
-	dy = (double)b->loc.y - a->loc.y;
-	d = sqrt(((dx*dx)+(dy*dy))); /* Euclidian distance */
-	// d = abs(a->loc.x - b->loc.x) + abs(a->loc.y - b->loc.y); /* Taxi distance */
+	// dx = (double)b->loc.x - a->loc.x;
+	// dy = (double)b->loc.y - a->loc.y;
+	// d = sqrt(((dx*dx)+(dy*dy))); /* Euclidian distance */
+	d = abs(a->loc.x - b->loc.x) + abs(a->loc.y - b->loc.y); /* Taxi distance */
 	return (d);
 }
 
@@ -31,28 +31,16 @@ static void update_node(t_node *neighbor, t_node *node, double g, t_node *end)
 
 }
 
-static int check_diag(t_node *neighbor, t_node *node)
-{
-	int dx;
-	int dy;
-
-	dx = neighbor->loc.x - node->loc.x;
-	dy = neighbor->loc.y - node->loc.y;
-	if (dx != 0 && dy != 0)
-		return (1);
-	return (0);
-}
-
 static void add_to_openSet(t_node *node, t_node **openSet, t_node **closedSet, t_node *end)
 {
 	t_node **nbs = node->neighbors;
 	int i = 0;
 	double tmpG;
-	while (i < 8)
+	while (i < 4)
 	{
 		if (nbs[i] && !in_set(closedSet, nbs[i]))
 		{
-			tmpG = check_diag(nbs[i], node) ? (node->g + 1.41) : (node->g + 1);
+			tmpG = node->g + 1;
 			if (in_set(openSet, nbs[i]))
 			{
 				if (tmpG < nbs[i]->g)
@@ -86,10 +74,7 @@ void find_path(t_node **openSet, t_node **closedSet, t_node **path, t_node *end)
 	if (compare_nodes(node, end))
 	{
 		*path = node;
-		// system("clear");
-		// ft_putendl("Path found");
 		return ;
 	}
-	*path = node;
 	add_to_openSet(node, openSet, closedSet, end);
 }

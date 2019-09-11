@@ -27,21 +27,33 @@ static void free_grid(t_node **grid, t_point grid_size)
 
 void move_enemy(t_mlx *mlx)
 {
-	if (ENEMIES[0].ss->hit)
-		return ;
-	ENEMIES[0].start = &mlx->grid[(int)(PLAYER->pos.x - 1)][(int)(PLAYER->pos.y - 1)];
-	ENEMIES[0].end = &mlx->grid[(int)(ENEMIES[0].ss->location.x - 1)][(int)(ENEMIES[0].ss->location.y - 1)];
-	ENEMIES[0].open_set = ENEMIES[0].start;
-	while (ENEMIES[0].open_set && !compare_nodes(ENEMIES[0].path, ENEMIES[0].end))
-		find_path(&ENEMIES[0].open_set, &ENEMIES[0].closed_set, &ENEMIES[0].path, ENEMIES[0].end);
-	system("clear");	
-		printf("start : (%d, %d), path : (%d, %d)\n\n", ENEMIES[0].start->loc.x + 1, ENEMIES[0].start->loc.y + 1, ENEMIES[0].path->prev->loc.x + 1, ENEMIES[0].path->prev->loc.y + 1);
-	if (ENEMIES[0].path->prev->loc.x != ENEMIES[0].start->loc.x || ENEMIES[0].path->prev->loc.y != ENEMIES[0].start->loc.y)
-		ENEMIES[0].ss->location = (t_dpoint){(ENEMIES[0].path->prev->loc.x + 1.5), (ENEMIES[0].path->prev->loc.y + 1.5)};
-	free_grid(mlx->grid, (t_point){(LEVEL->size.x - 2), (LEVEL->size.y - 2)});
-	ENEMIES[0].start = NULL;
-	ENEMIES[0].end = NULL;
-	ENEMIES[0].open_set = NULL;
-	ENEMIES[0].closed_set = NULL;
-	ENEMIES[0].path = NULL;
+	int i;
+	double x;
+	double y;
+
+	i = 0;
+	while (i < LEVEL->enemy_count)
+	{
+		if (!ENEMIES[i].ss->hit) {
+			ENEMIES[i].start = &mlx->grid[(int)(PLAYER->pos.x - 1)][(int)(PLAYER->pos.y - 1)];
+			ENEMIES[i].end = &mlx->grid[(int)(ENEMIES[i].ss->location.x - 1)][(int)(ENEMIES[i].ss->location.y - 1)];
+			ENEMIES[i].open_set = ENEMIES[i].start;
+			while (ENEMIES[i].open_set && !compare_nodes(ENEMIES[i].path, ENEMIES[i].end))
+				find_path(&ENEMIES[i].open_set, &ENEMIES[i].closed_set, &ENEMIES[i].path, ENEMIES[i].end);
+			x = ENEMIES[i].ss->location.x + (((ENEMIES[i].path->prev->loc.x + 1.5) - ENEMIES[i].ss->location.x) / 10);
+			y = ENEMIES[i].ss->location.y + (((ENEMIES[i].path->prev->loc.y + 1.5) - ENEMIES[i].ss->location.y) / 10);
+			if (ENEMIES[i].path->prev->loc.x != ENEMIES[i].start->loc.x || ENEMIES[i].path->prev->loc.y != ENEMIES[i].start->loc.y)
+				ENEMIES[i].ss->location = (t_dpoint){x, y};
+				// ENEMIES[i].ss->location = (t_dpoint){(ENEMIES[i].path->prev->loc.x + 1.5), (ENEMIES[i].path->prev->loc.y + 1.5)};
+			else
+				ft_putendl("DEAD");
+			free_grid(mlx->grid, (t_point){(LEVEL->size.x - 2), (LEVEL->size.y - 2)});
+			ENEMIES[i].start = NULL;
+			ENEMIES[i].end = NULL;
+			ENEMIES[i].open_set = NULL;
+			ENEMIES[i].closed_set = NULL;
+			ENEMIES[i].path = NULL;
+		}
+		i++;
+	}
 }

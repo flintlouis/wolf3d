@@ -14,7 +14,7 @@ static void init_grid(t_mlx *mlx, t_point grid_size)
 		while (j < grid_size.x)
 		{
 			mlx->grid[i][j].loc = (t_point){i,j};
-			mlx->grid[i][j].neighbors = (t_node**)ft_memalloc(sizeof(t_node*) * 8);
+			mlx->grid[i][j].neighbors = (t_node**)ft_memalloc(sizeof(t_node*) * 4);
 			if (MAP[(j + 1)][(i + 1)] > 0 && MAP[(j + 1)][(i + 1)] <= OBJECTCOL)
 				mlx->grid[i][j].obstacle = 1;
 			j++;
@@ -42,14 +42,6 @@ static void add_neighbors(t_node **grid, t_point grid_size)
 				grid[i][j].neighbors[2] = &grid[i][j + 1];
 			if (j > 0 && !grid[i][j - 1].obstacle)
 				grid[i][j].neighbors[3] = &grid[i][j - 1];
-			if (i < grid_size.x - 1 && j > 0 && !grid[i + 1][j - 1].obstacle)
-				grid[i][j].neighbors[4] = &grid[i + 1][j - 1];
-			if (i > 0 && j < grid_size.y - 1 && !grid[i - 1][j + 1].obstacle)
-				grid[i][j].neighbors[5] = &grid[i - 1][j + 1];
-			if (i < grid_size.x - 1 && j < grid_size.y - 1 && !grid[i + 1][j + 1].obstacle)
-				grid[i][j].neighbors[6] = &grid[i + 1][j + 1];
-			if (i > 0 && j > 0 && !grid[i - 1][j - 1].obstacle)
-				grid[i][j].neighbors[7] = &grid[i - 1][j - 1];
 			j++;
 		}
 		i++;
