@@ -93,6 +93,7 @@ typedef	struct 			s_mapobject
 {
 	int					id;
 	int					hit;
+	// int					shoot;
 	long				ms;
 	t_dpoint			rel_loc;
 	t_dpoint			location;
@@ -101,6 +102,7 @@ typedef	struct 			s_mapobject
 
 typedef struct			s_player
 {
+	int					health;
 	t_dpoint			pos;
 	t_dpoint			looking_dir;
 	t_dpoint			plane;
@@ -151,6 +153,7 @@ typedef struct			s_node
 
 typedef struct			s_enemy
 {
+	int					shoot;
 	t_node				*open_set;
 	t_node				*closed_set;
 	t_node				*path;

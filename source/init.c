@@ -70,5 +70,6 @@ void	init_wolf(char *map)
 	init_mapobjects(mlx);
 	ENEMIES = (t_enemy*)ft_memalloc(sizeof(t_enemy) * LEVEL->enemy_count);
 	init_pathfinding(mlx);
+	PLAYER->health = 100;
 	run_wolf(mlx);
 }

@@ -17,3 +17,5 @@ Enemies/ssdead2
 Enemies/ssdead3
 Enemies/ssdead4
 Enemies/ssdead5
+Enemies/ssfiring
+Enemies/ssfiring2

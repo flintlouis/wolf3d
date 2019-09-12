@@ -61,11 +61,12 @@ static void write_info(t_mlx *mlx, char *label, int value1, int value2, int line
 
 static void		info(t_mlx *mlx)
 {
-	write_info(mlx, "FPS", 0, frames(), 0);
-	write_info(mlx, "Player pos x,y", PLAYER->pos.x, PLAYER->pos.y, 1);
-	write_info(mlx, "Plane x,y", PLAYER->plane.x*100, PLAYER->plane.y*100, 2);
-	write_info(mlx, "Looking dir x,y", PLAYER->looking_dir.x*100, PLAYER->looking_dir.y*100, 3);
-	write_info(mlx, "Angle", 0, PLAYER->angle, 4);
+	write_info(mlx, "HEALTH", 0, PLAYER->health, 0);
+	// write_info(mlx, "FPS", 0, frames(), 0);
+	// write_info(mlx, "Player pos x,y", PLAYER->pos.x, PLAYER->pos.y, 1);
+	// write_info(mlx, "Plane x,y", PLAYER->plane.x*100, PLAYER->plane.y*100, 2);
+	// write_info(mlx, "Looking dir x,y", PLAYER->looking_dir.x*100, PLAYER->looking_dir.y*100, 3);
+	// write_info(mlx, "Angle", 0, PLAYER->angle, 4);
 }
 
 static void		draw_image(t_mlx *mlx)

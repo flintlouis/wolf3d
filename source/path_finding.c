@@ -9,7 +9,7 @@ void add_node(t_node **set, t_node *node);
 void rm_node(t_node **set, t_node *node);
 
 
-double heuristic(t_node *a, t_node *b)
+static double heuristic(t_node *a, t_node *b)
 {
 	double d;
 	// double dx;
