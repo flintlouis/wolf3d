@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   move_player.c                                      :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2019/09/23 11:51:42 by fhignett       #+#    #+#                */
+/*   Updated: 2019/09/23 12:38:36 by fhignett      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf3d.h"
 
-static int check_collision(t_mlx *mlx, int x, int y)
+static int		check_collision(t_mlx *mlx, int x, int y)
 {
 	int i;
 
@@ -10,14 +22,15 @@ static int check_collision(t_mlx *mlx, int x, int y)
 	while (i < LEVEL->enemy_count)
 	{
 		if (!ENEMIES[i].ss->hit &&
-		(int)ENEMIES[i].ss->location.y == y && (int)ENEMIES[i].ss->location.x == x)
+		(int)ENEMIES[i].ss->location.y == y
+		&& (int)ENEMIES[i].ss->location.x == x)
 			return (1);
 		i++;
 	}
-	return(0);
+	return (0);
 }
 
-static void move(t_dpoint *move, t_mlx *mlx, double direction)
+static void		move(t_dpoint *move, t_mlx *mlx, double direction)
 {
 	double tmpy;
 	double tmpx;
@@ -34,7 +47,7 @@ static void move(t_dpoint *move, t_mlx *mlx, double direction)
 		PLAYER->pos.x = tmpx;
 }
 
-void	move_player(t_mlx *mlx)
+void			move_player(t_mlx *mlx)
 {
 	if (CONTROLS->front)
 		move(&PLAYER->looking_dir, mlx, 1);
@@ -45,4 +58,3 @@ void	move_player(t_mlx *mlx)
 	if (CONTROLS->right)
 		move(&PLAYER->plane, mlx, 1);
 }
-

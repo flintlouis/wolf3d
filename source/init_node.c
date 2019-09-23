@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   init_node.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2019/09/23 11:51:21 by fhignett       #+#    #+#                */
+/*   Updated: 2019/09/23 12:15:26 by fhignett      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf3d.h"
 
-static void init_grid(t_mlx *mlx, t_point grid_size)
+static void	init_grid(t_mlx *mlx, t_point grid_size)
 {
 	int i;
 	int j;
@@ -13,8 +25,9 @@ static void init_grid(t_mlx *mlx, t_point grid_size)
 		mlx->grid[i] = (t_node*)ft_memalloc(sizeof(t_node) * grid_size.x);
 		while (j < grid_size.x)
 		{
-			mlx->grid[i][j].loc = (t_point){i,j};
-			mlx->grid[i][j].neighbors = (t_node**)ft_memalloc(sizeof(t_node*) * 4);
+			mlx->grid[i][j].loc = (t_point){i, j};
+			mlx->grid[i][j].neighbors =
+			(t_node**)ft_memalloc(sizeof(t_node*) * 4);
 			if (MAP[(j + 1)][(i + 1)] > 0 && MAP[(j + 1)][(i + 1)] <= OBJECTCOL)
 				mlx->grid[i][j].obstacle = 1;
 			j++;
@@ -23,7 +36,7 @@ static void init_grid(t_mlx *mlx, t_point grid_size)
 	}
 }
 
-static void add_neighbors(t_node **grid, t_point grid_size)
+static void	add_neighbors(t_node **grid, t_point grid_size)
 {
 	int i;
 	int j;
@@ -48,7 +61,7 @@ static void add_neighbors(t_node **grid, t_point grid_size)
 	}
 }
 
-void init_pathfinding(t_mlx *mlx)
+void		init_pathfinding(t_mlx *mlx)
 {
 	t_point grid_size;
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   gun.c                                              :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2019/09/23 11:51:14 by fhignett       #+#    #+#                */
+/*   Updated: 2019/09/23 12:14:16 by fhignett      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf3d.h"
 
 static void death_animation(t_mlx *mlx, long ms)
@@ -74,12 +86,10 @@ static void draw_gun(t_mlx *mlx, t_texture *gun, int size)
 
 void fire_gun(t_mlx *mlx, t_texture *gun, int size, long ms)
 {
-	// long ms;
-	static int i;
-	static long frames;
-	static int fired;
+	static int	i;
+	static int	fired;
+	static long	frames;
 
-	// ms = time_between_frames();
 	frames += frames < 200 ? ms : 0;
 	death_animation(mlx, ms);
 	fired += CONTROLS->shoot ? 1 : 0;
@@ -92,7 +102,8 @@ void fire_gun(t_mlx *mlx, t_texture *gun, int size, long ms)
 			draw_gun(mlx, &gun[i], size);
 			i++;
 			frames = 0;
-		} else
+		}
+		else
 			draw_gun(mlx, &gun[i], size);
 		enemy_hit(mlx, &fired);
 	}

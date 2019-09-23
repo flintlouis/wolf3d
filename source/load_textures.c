@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   load_textures.c                                    :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2019/09/23 11:51:34 by fhignett       #+#    #+#                */
+/*   Updated: 2019/09/23 12:33:12 by fhignett      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf3d.h"
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
 
-static int		get_textures_size(char *file)
+static int			get_textures_size(char *file)
 {
-	char *line;
-	int fd;
-	int size;
+	char	*line;
+	int		fd;
+	int		size;
 
 	size = 0;
 	fd = open(file, O_RDONLY);
@@ -22,11 +34,11 @@ static int		get_textures_size(char *file)
 
 static ssize_t		*get_textures_fd(int *size, char *file)
 {
-	int fd;
+	int		fd;
 	ssize_t	*textures_fd;
-	char *line;
-	char *tmp;
-	int i;
+	char	*line;
+	char	*tmp;
+	int		i;
 
 	i = 0;
 	fd = open(file, O_RDONLY);
@@ -48,34 +60,48 @@ static ssize_t		*get_textures_fd(int *size, char *file)
 	return (textures_fd);
 }
 
+static t_texture	read_bitmap_header(t_byte *header, ssize_t fd)
+{
+	t_texture		texture;
+	t_byte			*xtra;
+	int				offset;
+
+	offset = (int)header[11] * 256 + (int)header[10];
+	texture.width = (int)header[21] * 16777216 + (int)header[20] * 65536
+	+ (int)header[19] * 256 + (int)header[18];
+	texture.height = (int)header[25] * 16777216 + (int)header[24] * 65536
+	+ (int)header[23] * 256 + (int)header[22];
+	texture.colours =
+	(t_colour**)ft_memalloc(sizeof(t_colour*) * texture.height);
+	if (offset > 54)
+	{
+		offset -= 54;
+		xtra = (t_byte*)ft_memalloc(sizeof(t_byte) * offset);
+		read(fd, xtra, offset);
+	}
+	return (texture);
+}
+
 static t_texture	store_texture(ssize_t fd)
 {
 	t_texture		texture;
 	t_byte			header[54];
 	t_byte			*buff;
 	int				offset;
-	int 			i;
+	int				i;
 	int				j;
 	int				bpp;
 
-	/* read bitmap header */
 	read(fd, header, 54);
-	offset = (int)header[11] * 256 + (int)header[10];
-	texture.width = (int)header[21]*16777216+(int)header[20]*65536+(int)header[19]*256+(int)header[18];
-	texture.height = (int)header[25]*16777216+(int)header[24]*65536+(int)header[23]*256+(int)header[22];
-	texture.colours = (t_colour**)ft_memalloc(sizeof(t_colour*) * texture.height);
+	texture = read_bitmap_header(header, fd);
 	i = texture.height - 1;
-	if (offset > 54)
-	{
-		offset -= 54;
-		t_byte xtra[offset];
-		read(fd, xtra, offset);
-	}
 	bpp = (int)header[28] / 8;
 	buff = (t_byte*)malloc(sizeof(t_byte) * bpp);
-	while (i >= 0){
+	while (i >= 0)
+	{
 		j = 0;
-		texture.colours[i] = (t_colour*)ft_memalloc(sizeof(t_colour) * texture.width);
+		texture.colours[i] =
+		(t_colour*)ft_memalloc(sizeof(t_colour) * texture.width);
 		while (j < texture.width)
 		{
 			read(fd, buff, bpp);

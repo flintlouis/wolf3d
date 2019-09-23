@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   draw.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2019/09/23 11:51:08 by fhignett       #+#    #+#                */
+/*   Updated: 2019/09/23 12:12:42 by fhignett      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf3d.h"
 
 static void	shift_colour(t_colour *c, int nb)
@@ -20,19 +32,26 @@ void		put_pixel(int x, int y, t_mlx *mlx, t_colour colour)
 	}
 }
 
-void	draw_object(t_mlx *mlx, t_texture *texture, int x, t_draw draw)
-{
-	int y;
-	int pixel_y;
-	long d; /* Goes beyond an integer */
-	t_colour **colours = texture->colours;
-	t_colour colour;
+/*
+** 'd' needs to be a long because it goes beyond an integer
+** bitshift operators do the same as :
+** y * 256 - HEIGHT * 128 + (long)wall_height * 128 (Voor afronding fouten)
+*/
 
+void		draw_object(t_mlx *mlx, t_texture *texture, int x, t_draw draw)
+{
+	int			y;
+	int			pixel_y;
+	long		d;
+	t_colour	**colours;
+	t_colour	colour;
+
+	colours = texture->colours;
 	y = draw.start;
 	while (y < draw.end)
 	{
-		d = (y << 8) - ((HEIGHT - (long)draw.height) << 7); //y * 256 - HEIGHT * 128 + (long)wall_height * 128 (Voor afronding fouten)
-		pixel_y = ((d * texture->height) / draw.height) >> 8; // / 256
+		d = (y << 8) - ((HEIGHT - (long)draw.height) << 7);
+		pixel_y = ((d * texture->height) / draw.height) >> 8;
 		colour = colours[pixel_y][draw.x];
 		if (draw.side == 1)
 			shift_colour(&colour, 1);

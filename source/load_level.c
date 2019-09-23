@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   load_level.c                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2019/09/23 11:51:31 by fhignett       #+#    #+#                */
+/*   Updated: 2019/09/23 12:21:12 by fhignett      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf3d.h"
 #include <fcntl.h>
 #include <stdlib.h>
@@ -18,7 +30,10 @@ static int		get_level_info(t_mlx *mlx, char *file)
 		if (ft_strequ(info[0], "level_size:"))
 			LEVEL->size = (t_point){ft_atoi(info[1]), ft_atoi(info[2])};
 		if (ft_strequ(info[0], "player_pos:"))
-			PLAYER->pos = (t_dpoint){ft_atoi(info[1]) + 0.5, ft_atoi(info[2]) + 0.5};
+		{
+			PLAYER->pos =
+			(t_dpoint){ft_atoi(info[1]) + 0.5, ft_atoi(info[2]) + 0.5};
+		}
 		if (ft_strequ(info[0], "player_dir:"))
 			PLAYER->angle = (double)ft_atoi(info[1]);
 		ft_free_2darray((void**)info);
@@ -28,7 +43,7 @@ static int		get_level_info(t_mlx *mlx, char *file)
 	return (fd);
 }
 
-void				init_level(t_mlx *mlx, char *file)
+void			init_level(t_mlx *mlx, char *file)
 {
 	int		fd;
 	int		i;

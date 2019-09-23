@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   init.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2019/09/23 11:51:24 by fhignett       #+#    #+#                */
+/*   Updated: 2019/09/23 12:19:59 by fhignett      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf3d.h"
 #include "mlx.h"
 #include <stdlib.h>
@@ -8,7 +20,6 @@ static void	run_wolf(t_mlx *mlx)
 	// mlx_hook(mlx->win, 4, 1L << 2, mouse_press, mlx);
 	// mlx_hook(mlx->win, 5, 1L << 3, mouse_release, mlx);
 	mlx_loop_hook(mlx->mlx, wolfenstein, mlx);
-	mlx_hook(mlx->win, 6, 1L << 6, mouse_move, mlx);
 	mlx_hook(mlx->win, 2, 1L << 0, key_press, mlx);
 	mlx_hook(mlx->win, 2, 1L << 0, key_press, mlx);
 	mlx_hook(mlx->win, 3, 1L << 1, key_release, mlx);
@@ -21,12 +32,13 @@ static void	init_mlx(t_mlx *mlx)
 	mlx->mlx = mlx_init();
 	mlx->win = mlx_new_window(mlx->mlx, WIDTH, HEIGHT, "WOLF3D");
 	mlx->img = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
-	mlx->data_addr = mlx_get_data_addr(mlx->img, &(mlx->bits_per_pixel), &(mlx->size_line), &(mlx->endian));
+	mlx->data_addr = mlx_get_data_addr(mlx->img, &(mlx->bits_per_pixel),
+	&(mlx->size_line), &(mlx->endian));
 	mlx->z = (double*)ft_memalloc(sizeof(double) * WIDTH);
 	mlx->sprite = MEM(t_sprite);
 }
 
-static void init_mapobjects(t_mlx *mlx)
+static void	init_mapobjects(t_mlx *mlx)
 {
 	int i;
 	int j;
@@ -34,7 +46,8 @@ static void init_mapobjects(t_mlx *mlx)
 
 	i = 0;
 	obj_index = 0;
-	OBJECTS = (t_mapobject*)ft_memalloc(sizeof(t_mapobject) * LEVEL->object_count);
+	OBJECTS =
+	(t_mapobject*)ft_memalloc(sizeof(t_mapobject) * LEVEL->object_count);
 	while (i < LEVEL->size.y)
 	{
 		j = 0;
@@ -54,9 +67,7 @@ static void init_mapobjects(t_mlx *mlx)
 	}
 }
 
-void init_pathfinding(t_mlx *mlx);
-
-void	init_wolf(char *map)
+void		init_wolf(char *map)
 {
 	t_mlx *mlx;
 

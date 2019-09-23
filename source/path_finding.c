@@ -1,13 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   path_finding.c                                     :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2019/09/23 11:51:48 by fhignett       #+#    #+#                */
+/*   Updated: 2019/09/23 12:41:58 by fhignett      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf3d.h"
 #include <math.h>
-
-
-
-int compare_nodes(t_node *s1, t_node *s2);
-int in_set(t_node **set, t_node *node);
-void add_node(t_node **set, t_node *node);
-void rm_node(t_node **set, t_node *node);
-
+#include <stdlib.h>
 
 static double heuristic(t_node *a, t_node *b)
 {

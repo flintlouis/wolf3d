@@ -1,9 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   move_enemy.c                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2019/09/23 11:51:39 by fhignett       #+#    #+#                */
+/*   Updated: 2019/09/23 12:37:35 by fhignett      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf3d.h"
 
-void find_path(t_node **openSet, t_node **closedSet, t_node **path, t_node *end);
-int compare_nodes(t_node *s1, t_node *s2);
-
-static void free_grid(t_node **grid, t_point grid_size)
+static	void	free_grid(t_node **grid, t_point grid_size)
 {
 	int i;
 	int j;
@@ -25,11 +34,11 @@ static void free_grid(t_node **grid, t_point grid_size)
 	}
 }
 
-void move_enemy(t_mlx *mlx)
+void			move_enemy(t_mlx *mlx)
 {
-	int i;
-	double x;
-	double y;
+	int		i;
+	double	x;
+	double	y;
 
 	i = 0;
 	while (i < LEVEL->enemy_count)

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   nodes.c                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2019/09/23 11:51:46 by fhignett       #+#    #+#                */
+/*   Updated: 2019/09/23 12:39:00 by fhignett      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf3d.h"
 
-int compare_nodes(t_node *s1, t_node *s2)
+int		compare_nodes(t_node *s1, t_node *s2)
 {
 	if (!s1 || !s2)
 		return (0);
@@ -9,7 +21,7 @@ int compare_nodes(t_node *s1, t_node *s2)
 	return (0);
 }
 
-int in_set(t_node **set, t_node *node)
+int		in_set(t_node **set, t_node *node)
 {
 	t_node *tmp;
 
@@ -25,7 +37,7 @@ int in_set(t_node **set, t_node *node)
 	return (0);
 }
 
-void add_node(t_node **set, t_node *node)
+void	add_node(t_node **set, t_node *node)
 {
 	if (!node || !set)
 		return ;
@@ -33,7 +45,7 @@ void add_node(t_node **set, t_node *node)
 	*set = node;
 }
 
-void rm_node(t_node **set, t_node *node)
+void	rm_node(t_node **set, t_node *node)
 {
 	t_node *tmp;
 	t_node *ph;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   wolf3d.h                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2019/09/23 11:53:21 by fhignett       #+#    #+#                */
+/*   Updated: 2019/09/23 12:41:20 by fhignett      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef WOLF3D_H
 # define WOLF3D_H
 
@@ -5,7 +17,6 @@
 # include "ft_printf.h"
 # include <pthread.h>
 # include <stdio.h> // voor testen ff
-# include <stdlib.h> /* FOR MINIMAP */
 
 # define MEM(x) 		(x*)ft_memalloc(sizeof(x))
 # define WIDTH			1200
@@ -139,11 +150,17 @@ typedef struct			s_prite
 	int					id;
 }						t_sprite;
 
+/*
+** f(n) = g(n) + h(n)
+** g = steps taken from start
+** h = estimated distance to end
+*/
+
 typedef struct			s_node
 {
-	double				f; // f(n) = g(n) + h(n)
-	double				g; // steps taken from start
-	double				h; // estimated distance to end
+	double				f;
+	double				g;
+	double				h;
 	char				obstacle:1;
 	t_point				loc;
 	struct s_node		**neighbors;
@@ -184,26 +201,35 @@ typedef struct			s_mlx
 	t_node				**grid;
 }						t_mlx;
 
+int						compare_nodes(t_node *s1, t_node *s2);
 int						close_window(void *ptr);
 int						frames(void);
 int						key_press(int key, t_mlx *mlx);
 int						key_release(int key, t_mlx *mlx);
 int						mouse_move(int x, int y, t_mlx *mlx);
 int						wolfenstein(t_mlx *mlx);
+int						compare_nodes(t_node *s1, t_node *s2);
+int						in_set(t_node **set, t_node *node);
 
 long					time_between_frames(void);
 
 double					to_radians(double degrees);
 
+void					add_node(t_node **set, t_node *node);
 void					draw_object(t_mlx *mlx, t_texture *texture, int x, t_draw draw);
+void					find_path(t_node **openSet, t_node **closedSet, t_node **path, t_node *end);
 void					fire_gun(t_mlx *mlx, t_texture *gun, int size, long ms);
-void					init_wolf(char *map);
 void					init_level(t_mlx *mlx, char *file);
+void					init_pathfinding(t_mlx *mlx);
+void					init_wolf(char *map);
 void					join_threads(int i, pthread_t *threads);
+void					mini_map(t_player *player, int **map);
+void					move_enemy(t_mlx *mlx);
 void					move_player(t_mlx *mlx);
 void					multiply_vector(double m, t_dpoint *vector);
 void					player_look(t_player *player, t_controls *controls);
 void					put_pixel(int x, int y, t_mlx *mlx, t_colour colour);;
+void					rm_node(t_node **set, t_node *node);
 void					rotate(t_mlx *mlx, double degrees);
 void					rotate_vector(t_dpoint *vector, double rad);
 void					set_player_angle(t_player *player, double degrees);

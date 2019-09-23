@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   keys_conf.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2019/09/23 11:51:27 by fhignett       #+#    #+#                */
+/*   Updated: 2019/09/23 12:19:45 by fhignett      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf3d.h"
 #include <stdlib.h>
 
@@ -49,10 +61,5 @@ int	key_release(int key, t_mlx *mlx)
 		CONTROLS->look_right = 0;
 	else if (key == KEY_SPACE)
 		CONTROLS->shoot = 0;
-	return (0);
-}
-
-int	mouse_move(int x, int y, t_mlx *mlx)
-{
 	return (0);
 }
