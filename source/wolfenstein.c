@@ -1,18 +1,30 @@
 #include "wolf3d.h"
 #include "mlx.h"
 
+static int		angle_moved(t_player *player)
+{
+	static int prev_angle;
+
+	if (prev_angle < (int)player->angle - 80 || prev_angle > (int)player->angle + 80)
+	{
+		prev_angle = (int)player->angle;
+		return (1);
+	}
+	return (0);
+}
+
 static void		mini_map(t_player *player, int **map)
 {
+	int i = 0;
+	int j = 0;
 	static int prev_pos_x;
 	static int prev_pos_y;
 
-	if (prev_pos_x != (int)player->pos.x || prev_pos_y != (int)player->pos.y)
+	if (prev_pos_x != (int)player->pos.x || prev_pos_y != (int)player->pos.y || angle_moved(player))
 	{
 		system("clear");
 		prev_pos_y = player->pos.y;
 		prev_pos_x = player->pos.x;
-		int i = 0;
-		int j = 0;
 		while (j < 24)
 		{
 			while (i < 24)
@@ -28,12 +40,10 @@ static void		mini_map(t_player *player, int **map)
 					else
 						ft_putstr("v ");
 				}
-				else if (!map[j][i])
+				else if (!map[j][i] || map[j][i] > WALLCOUNT)
 					ft_putstr("  ");
-				else if (map[j][i] > WALLCOUNT)
-					ft_putstr("S ");
 				else
-					ft_putstr("W ");
+					ft_putstr("[]");
 				i++;
 			}
 			ft_putendl("");
@@ -62,7 +72,7 @@ static void write_info(t_mlx *mlx, char *label, int value1, int value2, int line
 static void		info(t_mlx *mlx)
 {
 	write_info(mlx, "HEALTH", 0, PLAYER->health, 0);
-	// write_info(mlx, "FPS", 0, frames(), 0);
+	write_info(mlx, "FPS", 0, frames(), 1);
 	// write_info(mlx, "Player pos x,y", PLAYER->pos.x, PLAYER->pos.y, 1);
 	// write_info(mlx, "Plane x,y", PLAYER->plane.x*100, PLAYER->plane.y*100, 2);
 	// write_info(mlx, "Looking dir x,y", PLAYER->looking_dir.x*100, PLAYER->looking_dir.y*100, 3);
@@ -141,6 +151,6 @@ int wolfenstein(t_mlx *mlx)
 		frames = 0;
 	}
 
-	// mini_map(PLAYER, MAP);
+	mini_map(PLAYER, MAP);
 	return (0);
 }
