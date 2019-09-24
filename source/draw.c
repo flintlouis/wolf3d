@@ -6,11 +6,15 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:08 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/23 12:12:42 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/24 11:08:53 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
+
+/*
+** Divides colour for a darker texture
+*/
 
 static void	shift_colour(t_colour *c, int nb)
 {
@@ -18,6 +22,11 @@ static void	shift_colour(t_colour *c, int nb)
 	c->g >>= nb;
 	c->b >>= nb;
 }
+
+/*
+** Convert the char data address to an int array
+** so that we can copy the colours in sections of 4 bytes instead of one
+*/
 
 void		put_pixel(int x, int y, t_mlx *mlx, t_colour colour)
 {

@@ -6,13 +6,17 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:21 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/23 12:15:26 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/24 11:29:53 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-static void	init_grid(t_mlx *mlx, t_point grid_size)
+/*
+** Makes a node grid of the current map to use in pathfinding for enemies
+*/
+
+static	void	init_grid(t_mlx *mlx, t_point grid_size)
 {
 	int i;
 	int j;
@@ -36,7 +40,11 @@ static void	init_grid(t_mlx *mlx, t_point grid_size)
 	}
 }
 
-static void	add_neighbors(t_node **grid, t_point grid_size)
+/*
+** Add nodes to neigbors that are next to each other
+*/
+
+static	void	add_neighbors(t_node **grid, t_point grid_size)
 {
 	int i;
 	int j;
@@ -61,7 +69,7 @@ static void	add_neighbors(t_node **grid, t_point grid_size)
 	}
 }
 
-void		init_pathfinding(t_mlx *mlx)
+void			init_pathfinding(t_mlx *mlx)
 {
 	t_point grid_size;
 

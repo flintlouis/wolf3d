@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:52:00 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/23 12:07:21 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/24 11:23:33 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ static long		ft_milsec(void)
 	ns = spec.tv_nsec;
 	return (s * 1000 + ns / 1000000);
 }
+
+/*
+** Calculate the mil sec between each frame
+*/
 
 long			time_between_frames(void)
 {
@@ -45,6 +49,10 @@ static	int		seconds(void)
 	tm = localtime(&now);
 	return (tm->tm_sec);
 }
+
+/*
+** Calculate how many frames per second
+*/
 
 int				frames(void)
 {

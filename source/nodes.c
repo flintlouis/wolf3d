@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:46 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/23 12:39:00 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/24 11:25:12 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ int		compare_nodes(t_node *s1, t_node *s2)
 		return (1);
 	return (0);
 }
+
+/*
+** Check if given node is in given set
+*/
 
 int		in_set(t_node **set, t_node *node)
 {
@@ -37,6 +41,10 @@ int		in_set(t_node **set, t_node *node)
 	return (0);
 }
 
+/*
+** Add given node to given set
+*/
+
 void	add_node(t_node **set, t_node *node)
 {
 	if (!node || !set)
@@ -44,6 +52,10 @@ void	add_node(t_node **set, t_node *node)
 	node->next = *set;
 	*set = node;
 }
+
+/*
+** Remove given node from given set
+*/
 
 void	rm_node(t_node **set, t_node *node)
 {

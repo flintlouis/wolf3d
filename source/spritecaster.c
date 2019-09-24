@@ -6,62 +6,39 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:58 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/23 11:51:58 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/24 12:15:49 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-#include <math.h>
 #include <stdlib.h>
 
-static void	calculate_relative_positions(t_mlx *mlx)
+static void		*draw_sprite(void *data)
 {
-	int i;
-
-	i = 0;
-	while (i < LEVEL->object_count)
-	{
-		t_mapobject *current = &mlx->objects[i];
-		current->rel_loc = sub_vector(&current->location, &PLAYER->pos);
-		rotate_vector(&current->rel_loc, to_radians(-PLAYER->angle));
-		current->rel_loc.x *= -1;
-		i++;
-	}
-}
-
-static int		compare_mapobject_distance(const void *a, const void *b)
-{
-	double diff = ((t_mapobject*)a)->rel_loc.y - ((t_mapobject*)b)->rel_loc.y;
-	return (diff > 0 ? -1 : (diff == 0 ? 0 : 1));
-}
-
-static void	set_sprite_width(int *start, int *end, t_dpoint *location)
-{
-	*start = (int)((((location->x - 0.5) / (location->y * 0.66)) + 1) * (WIDTH / 2)); // Maps it to a number from 0 - WIDTH
-	*end = (int)((((location->x + 0.5) / (location->y * 0.66)) + 1) * (WIDTH / 2));
-}
-
-static void *draw_sprite(void *data)
-{
-	t_mlx *mlx;
+	int		texture_x;
+	t_mlx	*mlx;
 
 	mlx = (t_mlx*)data;
-	while(mlx->x[0] < mlx->x[1])
+	while (mlx->x[0] < mlx->x[1])
 	{
-		int texture_x = ((mlx->x[0] - SPRITE->start) * OBJECTS[SPRITE->id].sprite.width) / (SPRITE->end - SPRITE->start);
+		texture_x = ((mlx->x[0] - SPRITE->start) *
+		OBJECTS[SPRITE->id].sprite.width) / (SPRITE->end - SPRITE->start);
 		if (OBJECTS[SPRITE->id].rel_loc.y < mlx->z[mlx->x[0]])
-			draw_object(mlx, &OBJECTS[SPRITE->id].sprite, mlx->x[0], (t_draw){SPRITE->height, SPRITE->draw_start, SPRITE->draw_end, texture_x, 0});
+			draw_object(mlx, &OBJECTS[SPRITE->id].sprite, mlx->x[0],
+			(t_draw){SPRITE->height, SPRITE->draw_start,
+			SPRITE->draw_end, texture_x, 0});
 		mlx->x[0]++;
 	}
 	return (0);
 }
 
-static void sprite_threading(t_mlx *mlx, void*(*f)(void*), int x, int x_end)
+static	void	sprite_threading(t_mlx *mlx, void *(*f)(void*),
+int x, int x_end)
 {
 	int			i;
+	int			v;
 	t_mlx		data[THREAD];
 	pthread_t	threads[THREAD];
-	int v;
 
 	i = 0;
 	v = (x_end - x) / THREAD;
@@ -76,18 +53,27 @@ static void sprite_threading(t_mlx *mlx, void*(*f)(void*), int x, int x_end)
 	join_threads(i, threads);
 }
 
-static void	render_sprite(t_mlx *mlx)
-{
-	set_sprite_width(&SPRITE->start, &SPRITE->end, &OBJECTS[SPRITE->id].rel_loc);
-	if (SPRITE->start >= WIDTH || SPRITE->end < 0) // Out of view
-		return ;
-	SPRITE->height = (int)((/* 2 * */ HEIGHT) / OBJECTS[SPRITE->id].rel_loc.y);
-	set_wall_height(&SPRITE->draw_start, &SPRITE->draw_end, SPRITE->height);
+/*
+** If start >= then Width or end < 0 it means they're not on the screen
+*/
 
-	sprite_threading(mlx, draw_sprite, ft_max(0, SPRITE->start), ft_min(SPRITE->end, WIDTH));
+static	void	render_sprite(t_mlx *mlx)
+{
+	set_sprite_width(&SPRITE->start, &SPRITE->end,
+	&OBJECTS[SPRITE->id].rel_loc);
+	if (SPRITE->start >= WIDTH || SPRITE->end < 0)
+		return ;
+	SPRITE->height = (int)((HEIGHT) / OBJECTS[SPRITE->id].rel_loc.y);
+	set_wall_height(&SPRITE->draw_start, &SPRITE->draw_end, SPRITE->height);
+	sprite_threading(mlx, draw_sprite, ft_max(0, SPRITE->start),
+	ft_min(SPRITE->end, WIDTH));
 }
 
-static void init_enemies(t_mlx *mlx, t_mapobject *objects)
+/*
+** Put the enemy sprites in a pointer array
+*/
+
+static	void	init_enemies(t_mlx *mlx, t_mapobject *objects)
 {
 	int i;
 	int enemy_index;
@@ -105,15 +91,21 @@ static void init_enemies(t_mlx *mlx, t_mapobject *objects)
 	}
 }
 
-void	spritecaster(t_mlx *mlx)
+/*
+** Calculate the relative position of each sprite and sort it
+** into an array from furthest away to closest
+** Then render sprites from furthest to closest and break if rel-pos.y
+** is less then 0, which means that they are behind the player
+*/
+
+void			spritecaster(t_mlx *mlx)
 {
 	int i;
 
 	calculate_relative_positions(mlx);
-	qsort((void*)OBJECTS, LEVEL->object_count, sizeof(t_mapobject), compare_mapobject_distance);
-
+	qsort((void*)OBJECTS, LEVEL->object_count,
+	sizeof(t_mapobject), compare_mapobject_distance);
 	init_enemies(mlx, OBJECTS);
-
 	i = 0;
 	while (i < LEVEL->object_count)
 	{

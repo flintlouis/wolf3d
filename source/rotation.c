@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:55 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/23 12:09:03 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/24 11:14:41 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ double		to_radians(double degrees)
 **
 ** void	rotate_vector(t_dpoint *vector, double rad)
 ** {
-** 	t_dpoint ux = get_unit_x(rad);
-** 	t_dpoint uy = get_unit_y(rad);
+** 		t_dpoint ux = get_unit_x(rad);
+** 		t_dpoint uy = get_unit_y(rad);
 **
-** 	multiply_vector(vector->x, &ux);
-** 	multiply_vector(vector->y, &uy);
+** 		multiply_vector(vector->x, &ux);
+** 		multiply_vector(vector->y, &uy);
 **
-** 	t_dpoint sum = add_vector(&ux, &uy);
+** 		t_dpoint sum = add_vector(&ux, &uy);
 **
-** 	vector->x = sum.x;
-** 	vector->y = sum.y;
+** 		vector->x = sum.x;
+** 		vector->y = sum.y;
 ** }
 */
 

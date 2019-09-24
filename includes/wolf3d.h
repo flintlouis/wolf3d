@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:53:21 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/23 12:41:20 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/24 12:19:33 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,20 @@
 # include "libft.h"
 # include "ft_printf.h"
 # include <pthread.h>
-# include <stdio.h> // voor testen ff
+
+/*
+** WALLCOUNT		AMOUNT OF WALLS
+** OBJECTCOL		AMOUNT OF OBJECTS WITH COLLISION
+** ENEMY			ENEMY NUMBER ON MAP 
+*/
 
 # define MEM(x) 		(x*)ft_memalloc(sizeof(x))
 # define WIDTH			1200
 # define HEIGHT			800
 # define THREAD			4
-# define WALLCOUNT		5 // AMOUNT OF WALLS
-# define OBJECTCOL		11 // AMOUNT OF OBJECTS WITH COLLISION
-# define ENEMY			14 // ENEMY NUMBER ON MAP
+# define WALLCOUNT		5
+# define OBJECTCOL		11
+# define ENEMY			14
 # define MAP			mlx->level->map
 # define LEVEL			mlx->level
 # define PLAYER			mlx->player
@@ -104,7 +109,6 @@ typedef	struct 			s_mapobject
 {
 	int					id;
 	int					hit;
-	// int					shoot;
 	long				ms;
 	t_dpoint			rel_loc;
 	t_dpoint			location;
@@ -201,6 +205,7 @@ typedef struct			s_mlx
 	t_node				**grid;
 }						t_mlx;
 
+int						compare_mapobject_distance(const void *a, const void *b);
 int						compare_nodes(t_node *s1, t_node *s2);
 int						close_window(void *ptr);
 int						frames(void);
@@ -216,6 +221,7 @@ long					time_between_frames(void);
 double					to_radians(double degrees);
 
 void					add_node(t_node **set, t_node *node);
+void					calculate_relative_positions(t_mlx *mlx);
 void					draw_object(t_mlx *mlx, t_texture *texture, int x, t_draw draw);
 void					find_path(t_node **openSet, t_node **closedSet, t_node **path, t_node *end);
 void					fire_gun(t_mlx *mlx, t_texture *gun, int size, long ms);
@@ -233,6 +239,7 @@ void					rm_node(t_node **set, t_node *node);
 void					rotate(t_mlx *mlx, double degrees);
 void					rotate_vector(t_dpoint *vector, double rad);
 void					set_player_angle(t_player *player, double degrees);
+void					set_sprite_width(int *start, int *end, t_dpoint *location);
 void					set_wall_height(int *draw_start, int *draw_end, int line_height);
 void					spritecaster(t_mlx *mlx);
 
