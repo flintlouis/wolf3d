@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:52:03 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/24 11:22:33 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/25 11:10:35 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <math.h>
 
 /*
-** Get unit vector of X
+** Get unit vector of X (Magnitude == 1)
 */
 
 t_dpoint	get_unit_x(double rot)
@@ -27,7 +27,7 @@ t_dpoint	get_unit_x(double rot)
 }
 
 /*
-** Get unit vector of Y
+** Get unit vector of Y (Magnitude == 1)
 */
 
 t_dpoint	get_unit_y(double rot)
