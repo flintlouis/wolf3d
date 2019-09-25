@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:53:21 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/25 11:26:59 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/25 16:25:58 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,15 @@ typedef struct			s_colour
 	t_byte				b;
 	t_byte				opacity;
 }						t_colour;
+
+typedef struct			s_raycaster
+{
+	t_point				step;
+	t_point				map_pos;
+	t_dpoint			side_dist;
+	t_dpoint			delta_dist;
+	t_dpoint			dir;
+}						t_raycaster;
 
 typedef struct			s_draw
 {
@@ -212,12 +221,14 @@ int						frames(void);
 int						key_press(int key, t_mlx *mlx);
 int						key_release(int key, t_mlx *mlx);
 int						mouse_move(int x, int y, t_mlx *mlx);
+int						wall_hit(int **map, t_raycaster ray, t_point *map_pos);
 int						wolfenstein(t_mlx *mlx);
 int						compare_nodes(t_node *s1, t_node *s2);
 int						in_set(t_node **set, t_node *node);
 
 long					time_between_frames(void);
 
+double					calc_wall_distance(t_player *player, int side, t_raycaster ray);
 double					to_radians(double degrees);
 
 void					add_node(t_node **set, t_node *node);
@@ -227,6 +238,7 @@ void					draw_object(t_mlx *mlx, t_texture *texture,
 void					find_path(t_node **openSet, t_node **closedSet,
 						t_node **path, t_node *end);
 void					fire_gun(t_mlx *mlx, t_texture *gun, int size, long ms);
+void					info(t_mlx *mlx);
 void					init_level(t_mlx *mlx, char *file);
 void					init_pathfinding(t_mlx *mlx);
 void					init_wolf(char *map);
@@ -248,18 +260,14 @@ void					spritecaster(t_mlx *mlx);
 
 void					*raycaster(void *data);
 
+t_point					calc_step_dir(t_player *player, t_raycaster ray, t_dpoint *side_dist);
+
 t_dpoint				add_vector(t_dpoint *a, t_dpoint *b);
 t_dpoint				get_unit_x(double rot);
 t_dpoint				get_unit_y(double rot);
+t_dpoint				set_raydir(int x, t_player *player);
 t_dpoint				sub_vector(t_dpoint *a, t_dpoint *b);
 
 t_texture				*get_textures(char *file);
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-double	calc_wall_distance(t_player *player, int side, t_point map_pos, t_point step, t_dpoint ray_dir);
-t_dpoint	set_raydir(int x, t_player *player);
-t_point	calc_step_dir(t_player *player, t_dpoint ray_dir, t_dpoint *side_dist, t_dpoint delta_dist, t_point map_pos);
-int		wall_hit(int **map, t_dpoint side_dist, t_dpoint delta_dist, t_point *map_pos, t_point step);
 
 #endif

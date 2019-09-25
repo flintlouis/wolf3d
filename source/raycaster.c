@@ -6,77 +6,63 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:51 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/25 11:12:39 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/25 15:49:11 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 #include <math.h>
 
+static void		add_texture(t_mlx *mlx, t_raycaster ray,
+double wall_distance, t_draw draw)
+{
+	int		texture_id;
+	double	wall_coll;
+
+	texture_id = MAP[ray.map_pos.y][ray.map_pos.x] - 1;
+	if (draw.side == 0)
+		wall_coll = PLAYER->pos.x + wall_distance * ray.dir.x;
+	else
+		wall_coll = PLAYER->pos.y + wall_distance * ray.dir.y;
+	wall_coll -= floor(wall_coll);
+	draw.x = (int)(wall_coll * TEXTURES[texture_id].width);
+	if ((draw.side == 0 && ray.dir.y > 0) || (draw.side == 1 && ray.dir.x < 0))
+		draw.x = TEXTURES[texture_id].width - draw.x - 1;
+	draw_object(mlx, &TEXTURES[texture_id], mlx->x[0], draw);
+}
+
+/*
+** Calculate the vector for the current ray on the plane
+** Which loc is the player standing
+** DISTANCE FROM X/Y SIDE TO OTHER X/Y SIDE
+** CALC STEP FOR MAP + INIT SIDE_DIST
+** X OR Y WALL HIT
+** ADD DISTANCE TO Z BUFFER
+** SET HEIGHT OF WALLS TOO DRAW
+*/
+
 void			*raycaster(void *data)
 {
-	int draw_start;
-	int draw_end;
-	int side;
-	int wall_height;
+	double		wall_distance;
+	t_raycaster	ray;
+	t_draw		draw;
+	t_mlx		*mlx;
 
-	double wall_distance;
-
-	t_dpoint side_dist;
-	t_dpoint delta_dist;
-	t_dpoint ray_dir;
-
-	t_point step;
-	t_point map_pos;
-
-	t_mlx *mlx;
-	
 	mlx = (t_mlx*)data;
-	/* PLANE */
 	while (mlx->x[0] < mlx->x[1])
 	{
-		/* CALC VECTOR FOR RAY ON PLANE POS */
-		ray_dir = set_raydir(mlx->x[0], PLAYER);
-
-		/* WHICH BOX THE PLAYER IS STANDING IN */
-		map_pos = (t_point){(int)PLAYER->pos.x, (int)PLAYER->pos.y};
-
-		/* DISTANCE FROM X/Y SIDE TO OTHER X/Y SIDE */
-		delta_dist = (t_dpoint){fabs(1 / ray_dir.x), fabs(1 / ray_dir.y)};
-
-		/* CALC STEP FOR MAP + INIT SIDE_DIST */
-		step = calc_step_dir(PLAYER, ray_dir, &side_dist, delta_dist, map_pos);
-
-		/* X OR Y WALL HIT */
-		side = wall_hit(MAP, side_dist, delta_dist, &map_pos, step);
-
-		wall_distance = calc_wall_distance(PLAYER, side, map_pos, step, ray_dir);
-
-		mlx->z[mlx->x[0]] = wall_distance; ////////////////////////// Z buffer
-		
-		/* MULTIPLY HEIGHT FOR BIGGER WALLS */
-		wall_height = (int)((/* 2 * */ HEIGHT) / wall_distance);
-
-		/* SET HEIGHT OF WALLS TOO DRAW */
-		set_wall_height(&draw_start, &draw_end, wall_height);
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////////// DRAW TEXTURES
-		int texture_id;
-		double wall_coll; /* Where exactly the wall was hit */
-		int texture_x;
-
-		texture_id = MAP[map_pos.y][map_pos.x] - 1;
-		if (side == 0)
-			wall_coll = PLAYER->pos.x + wall_distance * ray_dir.x;
-		else
-			wall_coll = PLAYER->pos.y + wall_distance * ray_dir.y;
-		wall_coll -= floor(wall_coll);
-
-		texture_x = (int)(wall_coll * TEXTURES[texture_id].width);
-		if ((side == 0 && ray_dir.y > 0) || (side == 1 && ray_dir.x < 0))
-			texture_x = TEXTURES[texture_id].width - texture_x - 1;
-		
-		draw_object(mlx, &TEXTURES[texture_id], mlx->x[0], (t_draw){wall_height, draw_start, draw_end, texture_x, side});
+		ray.dir = set_raydir(mlx->x[0], PLAYER);
+		ray.map_pos = (t_point){(int)PLAYER->pos.x, (int)PLAYER->pos.y};
+		ray.delta_dist = (t_dpoint){fabs(1 / ray.dir.x), fabs(1 / ray.dir.y)};
+		ray.step = calc_step_dir(PLAYER, ray, &ray.side_dist);
+		draw.side =
+		wall_hit(MAP, ray, &ray.map_pos);
+		wall_distance =
+		calc_wall_distance(PLAYER, draw.side, ray);
+		mlx->z[mlx->x[0]] = wall_distance;
+		draw.height = (int)((HEIGHT) / wall_distance);
+		set_wall_height(&draw.start, &draw.end, draw.height);
+		add_texture(mlx, ray, wall_distance, draw);
 		mlx->x[0]++;
 	}
 	return (0);

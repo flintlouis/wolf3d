@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:24 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/25 11:29:26 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/25 16:27:54 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 
 static void	run_wolf(t_mlx *mlx)
 {
-	// mlx_hook(mlx->win, 4, 1L << 2, mouse_press, mlx);
-	// mlx_hook(mlx->win, 5, 1L << 3, mouse_release, mlx);
 	mlx_loop_hook(mlx->mlx, wolfenstein, mlx);
 	mlx_hook(mlx->win, 2, 1L << 0, key_press, mlx);
 	mlx_hook(mlx->win, 2, 1L << 0, key_press, mlx);

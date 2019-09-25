@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:39 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/25 14:50:46 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/25 16:02:28 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static	void	free_grid(t_node **grid, t_point grid_size, t_enemy *enemy)
 
 static	void	enemy_pathfinding(t_mlx *mlx, double *x, double *y, int i)
 {
-
 	ENEMIES[i].start =
 	&mlx->grid[(int)(PLAYER->pos.x - 1)][(int)(PLAYER->pos.y - 1)];
 	ENEMIES[i].end = &mlx->grid[(int)(ENEMIES[i].ss->location.x - 1)]
@@ -77,7 +76,7 @@ void			move_enemy(t_mlx *mlx)
 				ENEMIES[i].shoot = !ENEMIES[i].shoot ? 1 : 0;
 				ENEMIES[i].ss->sprite = TEXTURES[ENEMIES[i].shoot + 19];
 				if (mlx->z[WIDTH >> 1] > ENEMIES[i].ss->rel_loc.y)
-					PLAYER->health -= 2;
+					PLAYER->health -= PLAYER->health > 0 ? 2 : 0;
 			}
 			free_grid(mlx->grid, (t_point){(LEVEL->size.x - 2),
 			(LEVEL->size.y - 2)}, &ENEMIES[i]);

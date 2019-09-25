@@ -6,30 +6,12 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:52:06 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/25 13:25:00 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/25 16:31:24 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 #include "mlx.h"
-#include <stdlib.h>
-
-static	void	write_info(t_mlx *mlx, char *label, int value1, int line)
-{
-	int		y_pos;
-	char	*ch_val1;
-
-	y_pos = 10 + 20 * line;
-	ch_val1 = ft_itoa(value1);
-	mlx_string_put(mlx->mlx, mlx->win, 10, y_pos, 0xffffff, label);
-	mlx_string_put(mlx->mlx, mlx->win, 200, y_pos, 0xffffff, ch_val1);
-	free(ch_val1);
-}
-
-static void		info(t_mlx *mlx)
-{
-	write_info(mlx, "HEALTH", PLAYER->health, 0);
-}
 
 static void		draw_image(t_mlx *mlx)
 {
@@ -38,7 +20,6 @@ static void		draw_image(t_mlx *mlx)
 	int size;
 
 	i = 0;
-
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
 	size = HEIGHT * WIDTH;
 	data = (int*)mlx->data_addr;
@@ -52,7 +33,6 @@ static void		draw_image(t_mlx *mlx)
 		data[i] = 0x1F1F1F;
 		i++;
 	}
-	info(mlx);
 }
 
 void			join_threads(int i, pthread_t *threads)
@@ -87,19 +67,23 @@ int				wolfenstein(t_mlx *mlx)
 	long		ms;
 	static long	frames;
 
-	ms = time_between_frames();
-	frames += frames < 5000 ? ms : 0;
-	threading(mlx, raycaster);
-	spritecaster(mlx);
-	fire_gun(mlx, GUN, 12, ms);
-	draw_image(mlx);
-	move_player(mlx);
-	player_look(PLAYER, CONTROLS);
-	if (frames >= 60)
+	if (PLAYER->health)
 	{
-		move_enemy(mlx);
-		frames = 0;
+		ms = time_between_frames();
+		frames += frames < 5000 ? ms : 0;
+		threading(mlx, raycaster);
+		spritecaster(mlx);
+		fire_gun(mlx, GUN, 12, ms);
+		draw_image(mlx);
+		move_player(mlx);
+		player_look(PLAYER, CONTROLS);
+		if (frames >= 60)
+		{
+			move_enemy(mlx);
+			frames = 0;
+		}
+		mini_map(PLAYER, MAP);
 	}
-	mini_map(PLAYER, MAP);
+	info(mlx);
 	return (0);
 }
