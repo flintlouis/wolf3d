@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:52:06 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/25 16:31:24 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/25 16:39:48 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int				wolfenstein(t_mlx *mlx)
 			move_enemy(mlx);
 			frames = 0;
 		}
-		mini_map(PLAYER, MAP);
+		mini_map(PLAYER, LEVEL, MAP);
 	}
 	info(mlx);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:53:21 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/25 16:25:58 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/25 16:39:35 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,7 +243,7 @@ void					init_level(t_mlx *mlx, char *file);
 void					init_pathfinding(t_mlx *mlx);
 void					init_wolf(char *map);
 void					join_threads(int i, pthread_t *threads);
-void					mini_map(t_player *player, int **map);
+void					mini_map(t_player *player, t_level *level, int **map);
 void					move_enemy(t_mlx *mlx);
 void					move_player(t_mlx *mlx);
 void					multiply_vector(double m, t_dpoint *vector);

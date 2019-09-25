@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:52:19 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/24 11:00:22 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/25 16:40:51 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,16 @@ static void		set_arrow(t_player *player)
 		ft_putstr("v ");
 }
 
-static void		draw_map(t_player *player, int **map)
+static void		draw_map(t_player *player, t_level *level, int **map)
 {
 	int i;
 	int j;
 
 	i = 0;
 	j = 0;
-	while (j < 24)
+	while (j < level->size.y)
 	{
-		while (i < 24)
+		while (i < level->size.x)
 		{
 			if (j == (int)player->pos.y && i == (int)player->pos.x)
 				set_arrow(player);
@@ -63,7 +63,7 @@ static void		draw_map(t_player *player, int **map)
 	}
 }
 
-void			mini_map(t_player *player, int **map)
+void			mini_map(t_player *player, t_level *level, int **map)
 {
 	static int prev_pos_x;
 	static int prev_pos_y;
@@ -74,6 +74,6 @@ void			mini_map(t_player *player, int **map)
 		system("clear");
 		prev_pos_y = player->pos.y;
 		prev_pos_x = player->pos.x;
-		draw_map(player, map);
+		draw_map(player, level, map);
 	}
 }
