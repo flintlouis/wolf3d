@@ -6,13 +6,13 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:14 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/23 12:14:16 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/25 14:29:02 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-static void death_animation(t_mlx *mlx, long ms)
+static void			death_animation(t_mlx *mlx, long ms)
 {
 	int i;
 
@@ -20,17 +20,18 @@ static void death_animation(t_mlx *mlx, long ms)
 	while (i >= 0)
 	{
 		ENEMIES[i].ss->ms += ENEMIES[i].ss->ms < 200 ? ms : 0;
-		if (ENEMIES[i].ss->hit && ENEMIES[i].ss->ms > 120 && ENEMIES[i].ss->hit < 19)
+		if (ENEMIES[i].ss->hit && ENEMIES[i].ss->ms > 120
+		&& ENEMIES[i].ss->hit < 19)
 		{
 			ENEMIES[i].ss->sprite = TEXTURES[ENEMIES[i].ss->hit];
 			ENEMIES[i].ss->hit++;
 			ENEMIES[i].ss->ms = 0;
 		}
-	i--;
+		i--;
 	}
 }
 
-static void	enemy_hit(t_mlx *mlx, int *fired)
+static void			enemy_hit(t_mlx *mlx, int *fired)
 {
 	int i;
 	int mid;
@@ -42,7 +43,8 @@ static void	enemy_hit(t_mlx *mlx, int *fired)
 		while (i >= 0)
 		{
 			if (!ENEMIES[i].ss->hit &&
-				(ENEMIES[i].ss->rel_loc.x >= -0.3 && ENEMIES[i].ss->rel_loc.x <= 0.3)
+				(ENEMIES[i].ss->rel_loc.x >= -0.3
+				&& ENEMIES[i].ss->rel_loc.x <= 0.3)
 				&& mlx->z[mid] > ENEMIES[i].ss->rel_loc.y)
 			{
 				ENEMIES[i].ss->hit = 14;
@@ -53,48 +55,52 @@ static void	enemy_hit(t_mlx *mlx, int *fired)
 	}
 }
 
-static void draw_gun(t_mlx *mlx, t_texture *gun, int size)
+static void			draw_gun(t_mlx *mlx, t_texture *gun, int size)
 {
-	int x;
-	int y;
-	int startx;
-	int starty;
-	int draw_width;
-	int draw_height;
-	int text_x;
-	int text_y;
+	int		x;
+	int		y;
+	t_point	draw;
+	t_point start;
+	t_point txtr;
 
-	draw_width = gun->width * size;
-	draw_height = gun->height * size;
-	startx = (WIDTH >> 1) - (draw_width >> 1);
-	starty = HEIGHT - draw_height;
+	draw.x = gun->width * size;
+	draw.y = gun->height * size;
+	start.x = (WIDTH >> 1) - (draw.x >> 1);
+	start.y = HEIGHT - draw.y;
 	x = 0;
-	while (x < draw_width)
+	while (x < draw.x)
 	{
-		text_x = (gun->width / (double)draw_width) * x;
+		txtr.x = (gun->width / (double)draw.x) * x;
 		y = 0;
-		while (y < draw_height)
+		while (y < draw.x)
 		{
-			text_y = (gun->height / (double)draw_height) * y;
-			if (gun->colours[text_y][text_x].opacity > 0)
-				put_pixel(startx + x, starty + y, mlx, gun->colours[text_y][text_x]);
+			txtr.y = (gun->height / (double)draw.y) * y;
+			if (gun->colours[txtr.y][txtr.x].opacity > 0)
+				put_pixel(start.x + x, start.y + y,
+				mlx, gun->colours[txtr.y][txtr.x]);
 			y++;
 		}
 		x++;
 	}
 }
 
-void fire_gun(t_mlx *mlx, t_texture *gun, int size, long ms)
+static void			fired_frames(long *frames, int *fired,
+t_controls *controls, long ms)
+{
+	*frames += *frames < 200 ? ms : 0;
+	*fired += controls->shoot ? 1 : 0;
+	if (*fired > 1 && !controls->shoot)
+		*fired = 0;
+}
+
+void				fire_gun(t_mlx *mlx, t_texture *gun, int size, long ms)
 {
 	static int	i;
 	static int	fired;
 	static long	frames;
 
-	frames += frames < 200 ? ms : 0;
+	fired_frames(&frames, &fired, CONTROLS, ms);
 	death_animation(mlx, ms);
-	fired += CONTROLS->shoot ? 1 : 0;
-	if (fired > 1 && !CONTROLS->shoot)
-		fired = 0;
 	if ((CONTROLS->shoot && i == 0) || (i > 0 && i < 6))
 	{
 		if (frames >= 20)

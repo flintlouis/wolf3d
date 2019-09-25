@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:34 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/25 13:10:10 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/25 13:21:12 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static ssize_t		*get_textures_fd(int *size, char *file)
 	return (textures_fd);
 }
 
-static t_texture	read_bitmap_header(ssize_t fd, int *bpp)
+static t_texture	read_bitmap_header(int fd, int *bpp, t_byte **buff, int *i)
 {
 	t_texture		texture;
 	t_byte			*xtra;
@@ -83,20 +83,20 @@ static t_texture	read_bitmap_header(ssize_t fd, int *bpp)
 		free(xtra);
 	}
 	*bpp = (int)header[28] / 8;
+	*buff = (t_byte*)malloc(sizeof(t_byte) * *bpp);
+	*i = texture.height - 1;
 	return (texture);
 }
 
 static t_texture	store_texture(ssize_t fd)
 {
-	t_texture		texture;
-	t_byte			*buff;
 	int				i;
 	int				j;
 	int				bpp;
+	t_byte			*buff;
+	t_texture		texture;
 
-	texture = read_bitmap_header(fd, &bpp);
-	i = texture.height - 1;
-	buff = (t_byte*)malloc(sizeof(t_byte) * bpp);
+	texture = read_bitmap_header(fd, &bpp, &buff, &i);
 	while (i >= 0)
 	{
 		j = 0;
@@ -108,9 +108,7 @@ static t_texture	store_texture(ssize_t fd)
 			texture.colours[i][j].b = buff[0];
 			texture.colours[i][j].g = buff[1];
 			texture.colours[i][j].r = buff[2];
-			texture.colours[i][j].opacity = 255;
-			if (bpp == 4)
-				texture.colours[i][j].opacity = buff[3];
+			texture.colours[i][j].opacity = bpp == 4 ? buff[3] : 255;
 			j++;
 		}
 		i--;

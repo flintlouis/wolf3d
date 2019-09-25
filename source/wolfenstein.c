@@ -6,38 +6,30 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:52:06 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/23 12:02:16 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/25 13:25:00 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 #include "mlx.h"
+#include <stdlib.h>
 
-// static	void	write_info(t_mlx *mlx, char *label, int value1, int value2, int line)
-// {
-// 	int y_pos = 10 + 20 * line;
-// 	char *ch_val1;
-// 	char *ch_val2;
+static	void	write_info(t_mlx *mlx, char *label, int value1, int line)
+{
+	int		y_pos;
+	char	*ch_val1;
 
-// 	ch_val1 = ft_itoa(value1);
-// 	ch_val2 = ft_itoa(value2);
+	y_pos = 10 + 20 * line;
+	ch_val1 = ft_itoa(value1);
+	mlx_string_put(mlx->mlx, mlx->win, 10, y_pos, 0xffffff, label);
+	mlx_string_put(mlx->mlx, mlx->win, 200, y_pos, 0xffffff, ch_val1);
+	free(ch_val1);
+}
 
-// 	mlx_string_put(mlx->mlx, mlx->win, 10, y_pos, 0xffffff, label);
-// 	mlx_string_put(mlx->mlx, mlx->win, 200, y_pos, 0xffffff, ch_val1);
-// 	mlx_string_put(mlx->mlx, mlx->win, 250, y_pos, 0xffffff, ch_val2);
-// 	free(ch_val1);
-// 	free(ch_val2);
-// }
-
-// static void		info(t_mlx *mlx)
-// {
-// 	write_info(mlx, "HEALTH", 0, PLAYER->health, 0);
-// 	write_info(mlx, "FPS", 0, frames(), 1);
-// 	// write_info(mlx, "Player pos x,y", PLAYER->pos.x, PLAYER->pos.y, 1);
-// 	// write_info(mlx, "Plane x,y", PLAYER->plane.x*100, PLAYER->plane.y*100, 2);
-// 	// write_info(mlx, "Looking dir x,y", PLAYER->looking_dir.x*100, PLAYER->looking_dir.y*100, 3);
-// 	// write_info(mlx, "Angle", 0, PLAYER->angle, 4);
-// }
+static void		info(t_mlx *mlx)
+{
+	write_info(mlx, "HEALTH", PLAYER->health, 0);
+}
 
 static void		draw_image(t_mlx *mlx)
 {
@@ -60,7 +52,7 @@ static void		draw_image(t_mlx *mlx)
 		data[i] = 0x1F1F1F;
 		i++;
 	}
-	// info(mlx);
+	info(mlx);
 }
 
 void			join_threads(int i, pthread_t *threads)
