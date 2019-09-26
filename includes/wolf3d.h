@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:53:21 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/25 16:39:35 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/26 13:41:03 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,6 @@ typedef struct			s_player
 typedef struct			s_controls
 {
 	char				shoot:1;
-	char				run:1;
 	char				front:1;
 	char				back:1;
 	char				left:1;

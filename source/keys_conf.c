@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:27 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/24 11:26:12 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/26 13:23:25 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ int	key_press(int key, t_mlx *mlx)
 		CONTROLS->look_right = 1;
 	else if (key == KEY_LEFT)
 		CONTROLS->look_left = 1;
-	else if (key == KEY_LSHIFT)
-		CONTROLS->run = 1;
 	else if (key == KEY_SPACE)
 		CONTROLS->shoot = 1;
 	return (0);
@@ -45,9 +43,7 @@ int	key_press(int key, t_mlx *mlx)
 
 int	key_release(int key, t_mlx *mlx)
 {
-	if (key == KEY_LSHIFT)
-		CONTROLS->run = 0;
-	else if (key == KEY_W)
+	if (key == KEY_W)
 		CONTROLS->front = 0;
 	else if (key == KEY_S)
 		CONTROLS->back = 0;
