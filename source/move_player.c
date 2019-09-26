@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:42 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/26 13:23:27 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/26 15:14:57 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void		move(t_dpoint *move, t_mlx *mlx, double direction)
 	double tmpy;
 	double tmpx;
 
-	direction /= 11;
+	direction /= 20;
 	tmpy = PLAYER->pos.y + (direction * move->y);
 	tmpx = PLAYER->pos.x + (direction * move->x);
 	if (!check_collision(mlx, PLAYER->pos.x, tmpy))

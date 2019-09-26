@@ -6,11 +6,24 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:39 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/25 16:02:28 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/26 17:43:04 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
+#include <math.h>
+
+static double	distance(t_dpoint a, t_dpoint b)
+{
+	double d;
+	double dx;
+	double dy;
+
+	dx = (double)b.x - a.x;
+	dy = (double)b.y - a.y;
+	d = sqrt(((dx * dx) + (dy * dy)));
+	return (d);
+}
 
 static	void	free_grid(t_node **grid, t_point grid_size, t_enemy *enemy)
 {
@@ -65,11 +78,11 @@ void			move_enemy(t_mlx *mlx)
 	i = 0;
 	while (i < LEVEL->enemy_count)
 	{
-		if (!ENEMIES[i].ss->hit && ENEMIES[i].ss->rel_loc.y < 25)
+		if (!ENEMIES[i].ss->hit)
 		{
 			enemy_pathfinding(mlx, &x, &y, i);
 			ENEMIES[i].ss->sprite = TEXTURES[ENEMY - 1];
-			if (ENEMIES[i].ss->rel_loc.y >= 5)
+			if (distance(ENEMIES[i].ss->location, PLAYER->pos) >= 7.5)
 				ENEMIES[i].ss->location = (t_dpoint){x, y};
 			else
 			{

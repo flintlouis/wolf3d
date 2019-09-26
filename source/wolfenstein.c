@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:52:06 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/26 12:46:40 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/26 17:24:37 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void		draw_image(t_mlx *mlx)
 	data = (int*)mlx->data_addr;
 	while (i < (size >> 1))
 	{
-		data[i] = 0x000000;
+		data[i] = 0x000010;
 		i++;
 	}
 	while (i < size)
@@ -73,7 +73,7 @@ int				wolfenstein(t_mlx *mlx)
 		frames += frames < 5000 ? ms : 0;
 		threading(mlx, raycaster);
 		spritecaster(mlx);
-		fire_gun(mlx, GUN, 12, ms);
+		fire_gun(mlx, GUN, 25, ms);
 		draw_image(mlx);
 		move_player(mlx);
 		player_look(PLAYER, CONTROLS);

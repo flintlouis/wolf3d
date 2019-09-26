@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:53:21 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/26 13:41:03 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/26 17:21:31 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 */
 
 # define MEM(x) 		(x*)ft_memalloc(sizeof(x))
-# define WIDTH			1200
-# define HEIGHT			800
+# define WIDTH			2400
+# define HEIGHT			1200
 # define THREAD			4
 # define WALLCOUNT		5
 # define OBJECTCOL		11
@@ -42,30 +42,12 @@
 
 # define KEY_ESC                53
 # define KEY_SPACE              49
-# define KEY_LSHIFT             257
-# define KEY_RSHIFT             258
-# define KEY_UP                 126
-# define KEY_DOWN               125
 # define KEY_RIGHT              124
 # define KEY_LEFT               123
 # define KEY_W                  13
 # define KEY_A                  0
 # define KEY_S                  1
 # define KEY_D                  2
-# define KEY_PLUS               24
-# define KEY_MIN                27
-# define KEY_R                  15
-# define KEY_G                  5
-# define KEY_I                  34
-# define KEY_ENTER              36
-# define L_MOUSE                1
-# define R_MOUSE                2
-# define WHEEL_FORW             4
-# define WHEEL_BACK             5
-# define KEY_1                  18
-# define KEY_2                  19
-# define KEY_3                  20
-# define KEY_P                  35
 
 typedef unsigned char	t_byte;
 
@@ -213,7 +195,8 @@ typedef struct			s_mlx
 	t_node				**grid;
 }						t_mlx;
 
-int						compare_mapobject_distance(const void *a, const void *b);
+int						compare_mapobject_distance(const void *a,
+						const void *b);
 int						compare_nodes(t_node *s1, t_node *s2);
 int						close_window(void *ptr);
 int						frames(void);
@@ -227,7 +210,8 @@ int						in_set(t_node **set, t_node *node);
 
 long					time_between_frames(void);
 
-double					calc_wall_distance(t_player *player, int side, t_raycaster ray);
+double					calc_wall_distance(t_player *player, int side,
+						t_raycaster ray);
 double					to_radians(double degrees);
 
 void					add_node(t_node **set, t_node *node);
@@ -236,8 +220,10 @@ void					draw_object(t_mlx *mlx, t_texture *texture,
 						int x, t_draw draw);
 void					find_path(t_node **openSet, t_node **closedSet,
 						t_node **path, t_node *end);
+void					fd_error(int fd);
 void					fire_gun(t_mlx *mlx, t_texture *gun, int size, long ms);
 void					info(t_mlx *mlx);
+void					info_error(t_level *level, t_player *player);
 void					init_level(t_mlx *mlx, char *file);
 void					init_pathfinding(t_mlx *mlx);
 void					init_wolf(char *map);
@@ -252,14 +238,19 @@ void					rm_node(t_node **set, t_node *node);
 void					rotate(t_mlx *mlx, double degrees);
 void					rotate_vector(t_dpoint *vector, double rad);
 void					set_player_angle(t_player *player, double degrees);
-void					set_sprite_width(int *start, int *end, t_dpoint *location);
+void					set_sprite_width(int *start, int *end,
+						t_dpoint *location);
 void					set_wall_height(int *draw_start, int *draw_end,
 						int line_height);
+void					size_error1(int i, int j, t_point size);
+void					size_error2(int n, int size);
+void					spawn_error(int i, int j, t_dpoint spawn);
 void					spritecaster(t_mlx *mlx);
 
 void					*raycaster(void *data);
 
-t_point					calc_step_dir(t_player *player, t_raycaster ray, t_dpoint *side_dist);
+t_point					calc_step_dir(t_player *player, t_raycaster ray,
+						t_dpoint *side_dist);
 
 t_dpoint				add_vector(t_dpoint *a, t_dpoint *b);
 t_dpoint				get_unit_x(double rot);
