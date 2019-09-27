@@ -1,10 +1,10 @@
+Textures/redbrick
 Textures/eagle
 Textures/wood
-Textures/redbrick
-Textures/mossy
 Textures/greystone
-Sprites/barrel
+Textures/mossy
 Sprites/cage
+Sprites/elkan
 Sprites/flint
 Sprites/plant
 Sprites/table

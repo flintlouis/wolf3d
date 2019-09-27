@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:53:21 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/26 17:21:31 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/27 14:32:17 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 */
 
 # define MEM(x) 		(x*)ft_memalloc(sizeof(x))
-# define WIDTH			2400
-# define HEIGHT			1200
+# define WIDTH			2000
+# define HEIGHT			1000
 # define THREAD			4
 # define WALLCOUNT		5
 # define OBJECTCOL		11
@@ -242,8 +242,7 @@ void					set_sprite_width(int *start, int *end,
 						t_dpoint *location);
 void					set_wall_height(int *draw_start, int *draw_end,
 						int line_height);
-void					size_error1(int i, int j, t_point size);
-void					size_error2(int n, int size);
+void					size_error(int n, int size, char op);
 void					spawn_error(int i, int j, t_dpoint spawn);
 void					spritecaster(t_mlx *mlx);
 

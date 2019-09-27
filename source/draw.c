@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:08 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/26 13:43:14 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/27 14:53:45 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void		draw_object(t_mlx *mlx, t_texture *texture, int x, t_draw draw)
 		colour = colours[pixel_y][draw.x];
 		if (draw.side == 1)
 			shift_colour(&colour, 1);
-		if (colour.opacity > 0)
+		if (colour.opacity > 200)
 			put_pixel(x, y, mlx, colour);
 		y++;
 	}

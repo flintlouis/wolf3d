@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:31 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/26 17:14:55 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/27 14:07:58 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static void		level(t_mlx *mlx, char **tab, int j, int *i)
 {
 	while (tab[*i])
 	{
+		size_error(*i, LEVEL->size.x, '>');
 		MAP[j][*i] = ft_atoi(tab[*i]);
 		if (MAP[j][*i] > 0)
 			spawn_error(*i, j, PLAYER->pos);
@@ -75,15 +76,15 @@ void			init_level(t_mlx *mlx, char *file)
 	j = 0;
 	while (ft_get_next_line(fd, &line))
 	{
+		size_error(j, LEVEL->size.y, '>');
 		i = 0;
 		MAP[j] = (int*)ft_memalloc(sizeof(int) * LEVEL->size.x);
 		tab = ft_strsplit(line, ' ');
 		level(mlx, tab, j, &i);
 		free_something(line, tab);
 		j++;
-		size_error1(i, j, LEVEL->size);
-		size_error2(i, LEVEL->size.x);
+		size_error(i, LEVEL->size.x, '<');
 	}
-	size_error2(j, LEVEL->size.y);
+	size_error(j, LEVEL->size.y, '<');
 	close(fd);
 }

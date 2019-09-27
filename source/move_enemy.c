@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:39 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/26 17:43:04 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/27 14:29:51 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void			move_enemy(t_mlx *mlx)
 		{
 			enemy_pathfinding(mlx, &x, &y, i);
 			ENEMIES[i].ss->sprite = TEXTURES[ENEMY - 1];
-			if (distance(ENEMIES[i].ss->location, PLAYER->pos) >= 7.5)
+			if (distance(ENEMIES[i].ss->location, PLAYER->pos) >= 5)
 				ENEMIES[i].ss->location = (t_dpoint){x, y};
 			else
 			{
