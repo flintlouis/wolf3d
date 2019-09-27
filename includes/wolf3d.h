@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:53:21 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/27 14:32:17 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/27 15:19:02 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define WIDTH			2000
 # define HEIGHT			1000
 # define THREAD			4
-# define WALLCOUNT		5
+# define WALLCOUNT		4
 # define OBJECTCOL		11
 # define ENEMY			14
 # define MAP			mlx->level->map

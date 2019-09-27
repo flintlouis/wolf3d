@@ -1,8 +1,8 @@
 Textures/redbrick
 Textures/eagle
 Textures/wood
-Textures/greystone
 Textures/mossy
+Sprites/toilet
 Sprites/cage
 Sprites/elkan
 Sprites/flint
