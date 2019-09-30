@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:51 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/30 15:42:35 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/30 18:25:48 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,8 @@ void			*raycaster(void *data)
 		ray.map_pos = (t_point){(int)PLAYER->pos.x, (int)PLAYER->pos.y};
 		ray.delta_dist = (t_dpoint){fabs(1 / ray.dir.x), fabs(1 / ray.dir.y)};
 		ray.step = calc_step_dir(PLAYER, ray, &ray.side_dist);
-		draw.side =
-		wall_hit(MAP, ray, &ray.map_pos);
-		wall_distance =
-		calc_wall_distance(PLAYER, draw.side, ray);
+		draw.side = wall_hit(MAP, ray, &ray.map_pos);
+		wall_distance = calc_wall_distance(PLAYER, draw.side, ray);
 		mlx->z[mlx->x[0]] = wall_distance;
 		draw.height = (int)((HEIGHT) / wall_distance);
 		set_wall_height(&draw.start, &draw.end, draw.height);
