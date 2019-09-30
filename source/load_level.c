@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:31 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/27 14:07:58 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/30 18:17:52 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ static void		level(t_mlx *mlx, char **tab, int j, int *i)
 	{
 		size_error(*i, LEVEL->size.x, '>');
 		MAP[j][*i] = ft_atoi(tab[*i]);
+		if ((j == 0 || *i == 0 || j == LEVEL->size.y - 1 ||
+		*i == LEVEL->size.x - 1) && !MAP[j][*i])
+			MAP[j][*i] = 1;
 		if (MAP[j][*i] > 0)
 			spawn_error(*i, j, PLAYER->pos);
 		LEVEL->object_count += MAP[j][*i] > WALLCOUNT ? 1 : 0;

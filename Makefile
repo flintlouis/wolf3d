@@ -6,7 +6,7 @@
 #    By: fhignett <fhignett@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/06/04 14:19:05 by fhignett       #+#    #+#                 #
-#    Updated: 2019/09/27 13:09:10 by fhignett      ########   odam.nl          #
+#    Updated: 2019/09/27 16:08:18 by fhignett      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ FLAGS = -Wall -Werror -Wextra -O2 -funroll-loops
 
 all: $(NAME)
 
-$(NAME): libft/printflibft.a $(OFILES)
+$(NAME): libft/printflibft.a .objects $(OFILES)
 	@gcc -o $(NAME) $(OFILES) $(LIB) $(INCL) $(FRAMEWORK) $(FLAGS)
 	@echo "$(DONE) $(NAME)"
 
@@ -40,8 +40,11 @@ libft/printflibft.a:
 	@make -C libft
 
 .objects/%.o: source/%.c includes/wolf3d.h
-	@echo "$(PLUS) $@"
 	@gcc -o $@ -c $< $(INCL) $(FLAGS)
+	@echo "$(PLUS) $@"
+
+.objects:
+	@mkdir .objects
 
 clean:
 	@make clean -C libft/

@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:53:21 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/27 15:19:02 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/09/30 18:15:34 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 # include <pthread.h>
 
 /*
-** WALLCOUNT		AMOUNT OF WALLS
-** OBJECTCOL		AMOUNT OF OBJECTS WITH COLLISION
-** ENEMY			ENEMY NUMBER ON MAP 
+** WALLCOUNT			AMOUNT OF WALLS
+** OBJECTCOL			AMOUNT OF OBJECTS WITH COLLISION
+** ENEMY				ENEMY NUMBER ON MAP
 */
 
 # define MEM(x) 		(x*)ft_memalloc(sizeof(x))
@@ -40,14 +40,14 @@
 # define GUN			mlx->gun
 # define ENEMIES		mlx->enemies
 
-# define KEY_ESC                53
-# define KEY_SPACE              49
-# define KEY_RIGHT              124
-# define KEY_LEFT               123
-# define KEY_W                  13
-# define KEY_A                  0
-# define KEY_S                  1
-# define KEY_D                  2
+# define KEY_ESC		53
+# define KEY_SPACE		49
+# define KEY_RIGHT		124
+# define KEY_LEFT		123
+# define KEY_W			13
+# define KEY_A			0
+# define KEY_S			1
+# define KEY_D			2
 
 typedef unsigned char	t_byte;
 
@@ -96,7 +96,7 @@ typedef struct			s_texture
 	t_colour			**colours;
 }						t_texture;
 
-typedef	struct 			s_mapobject
+typedef	struct			s_mapobject
 {
 	int					id;
 	int					hit;
@@ -218,7 +218,7 @@ void					add_node(t_node **set, t_node *node);
 void					calculate_relative_positions(t_mlx *mlx);
 void					draw_object(t_mlx *mlx, t_texture *texture,
 						int x, t_draw draw);
-void					find_path(t_node **openSet, t_node **closedSet,
+void					find_path(t_node **open_set, t_node **closed_set,
 						t_node **path, t_node *end);
 void					fd_error(int fd);
 void					fire_gun(t_mlx *mlx, t_texture *gun, int size, long ms);
@@ -233,7 +233,7 @@ void					move_enemy(t_mlx *mlx);
 void					move_player(t_mlx *mlx);
 void					multiply_vector(double m, t_dpoint *vector);
 void					player_look(t_player *player, t_controls *controls);
-void					put_pixel(int x, int y, t_mlx *mlx, t_colour colour);;
+void					put_pixel(int x, int y, t_mlx *mlx, t_colour colour);
 void					rm_node(t_node **set, t_node *node);
 void					rotate(t_mlx *mlx, double degrees);
 void					rotate_vector(t_dpoint *vector, double rad);
