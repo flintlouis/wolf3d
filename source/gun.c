@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:14 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/25 16:25:51 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/10/01 15:22:51 by flintlouis    ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void			death_animation(t_mlx *mlx, long ms)
 	{
 		ENEMIES[i].ss->ms += ENEMIES[i].ss->ms < 200 ? ms : 0;
 		if (ENEMIES[i].ss->hit && ENEMIES[i].ss->ms > 120
-		&& ENEMIES[i].ss->hit < 19)
+		&& ENEMIES[i].ss->hit < ENEMY_DEAD)
 		{
 			ENEMIES[i].ss->sprite = TEXTURES[ENEMIES[i].ss->hit];
 			ENEMIES[i].ss->hit++;
@@ -47,7 +47,7 @@ static void			enemy_hit(t_mlx *mlx, int *fired)
 				&& ENEMIES[i].ss->rel_loc.x <= 0.3)
 				&& mlx->z[mid] > ENEMIES[i].ss->rel_loc.y)
 			{
-				ENEMIES[i].ss->hit = 14;
+				ENEMIES[i].ss->hit = ENEMY;
 				break ;
 			}
 			i--;

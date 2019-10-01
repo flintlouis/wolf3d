@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:53:21 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/30 18:26:05 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/10/01 16:03:15 by flintlouis    ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define WALLCOUNT		4
 # define OBJECTCOL		11
 # define ENEMY			14
+# define ENEMY_DEAD		(ENEMY + 5)
 # define MAP			mlx->level->map
 # define LEVEL			mlx->level
 # define PLAYER			mlx->player

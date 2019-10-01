@@ -6,12 +6,20 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:51 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/30 18:25:48 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/10/01 16:07:26 by flintlouis    ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 #include <math.h>
+
+static void		side_compass(int *side, t_point step)
+{
+	if (*side == 1 && step.x == 1)
+		*side = 3;
+	else if (!*side && step.y == 1)
+		*side = 2;
+}
 
 static void		add_texture(t_mlx *mlx, t_raycaster ray,
 double wall_distance, t_draw draw)
@@ -24,10 +32,11 @@ double wall_distance, t_draw draw)
 		wall_coll = PLAYER->pos.x + wall_distance * ray.dir.x;
 	else
 		wall_coll = PLAYER->pos.y + wall_distance * ray.dir.y;
+	side_compass(&draw.side, ray.step);
 	wall_coll -= floor(wall_coll);
 	draw.x = (int)(wall_coll * TEXTURES[texture_id].width);
-	if ((draw.side == 0 && ray.dir.y > 0) || (draw.side == 1 && ray.dir.x < 0))
-		draw.x = TEXTURES[texture_id].width - draw.x - 1;
+	// if ((draw.side == 0 && ray.dir.y > 0) || (draw.side == 1 && ray.dir.x < 0))
+	// 	draw.x = TEXTURES[texture_id].width - draw.x - 1;
 	draw_object(mlx, &TEXTURES[texture_id], mlx->x[0], draw);
 }
 

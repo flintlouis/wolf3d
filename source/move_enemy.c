@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:39 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/27 14:29:51 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/10/01 15:57:02 by flintlouis    ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void			move_enemy(t_mlx *mlx)
 			else
 			{
 				ENEMIES[i].shoot = !ENEMIES[i].shoot ? 1 : 0;
-				ENEMIES[i].ss->sprite = TEXTURES[ENEMIES[i].shoot + 19];
+				ENEMIES[i].ss->sprite = TEXTURES[ENEMIES[i].shoot + ENEMY_DEAD];
 				if (mlx->z[WIDTH >> 1] > ENEMIES[i].ss->rel_loc.y)
 					PLAYER->health -= PLAYER->health > 0 ? 2 : 0;
 			}
