@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:08 by fhignett       #+#    #+#                */
-/*   Updated: 2019/10/01 15:07:00 by flintlouis    ########   odam.nl         */
+/*   Updated: 2019/10/02 12:42:26 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** Divides colour for a darker texture
 */
 
-static void	shift_colour(t_colour *c, int nb)
+static void		shift_colour(t_colour *c, int nb)
 {
 	c->r >>= nb;
 	c->g >>= nb;
@@ -28,7 +28,7 @@ static void	shift_colour(t_colour *c, int nb)
 ** so that we can copy the colours in sections of 4 bytes instead of one
 */
 
-void		put_pixel(int x, int y, t_mlx *mlx, t_colour colour)
+void			put_pixel(int x, int y, t_mlx *mlx, t_colour colour)
 {
 	int	*mem;
 	int i;
@@ -41,13 +41,25 @@ void		put_pixel(int x, int y, t_mlx *mlx, t_colour colour)
 	}
 }
 
+static	void	coloured_walls(t_colour *c, int side)
+{
+	if (side == 1)
+		*c = (t_colour){150, 0, 0, 255};
+	else if (side == 2)
+		*c = (t_colour){0, 150, 0, 255};
+	else if (side == 3)
+		*c = (t_colour){0, 0, 150, 255};
+	else
+		*c = (t_colour){150, 0, 150, 255};
+}
+
 /*
 ** 'd' needs to be a long because it goes beyond an integer
 ** bitshift operators do the same as :
 ** y * 256 - HEIGHT * 128 + (long)wall_height * 128 (Voor afronding fouten)
 */
 
-void		draw_object(t_mlx *mlx, t_texture *texture, int x, t_draw draw)
+void			draw_object(t_mlx *mlx, t_texture *texture, int x, t_draw draw)
 {
 	int			y;
 	int			pixel_y;
@@ -62,7 +74,9 @@ void		draw_object(t_mlx *mlx, t_texture *texture, int x, t_draw draw)
 		d = (y << 8) - ((HEIGHT - (long)draw.height) << 7);
 		pixel_y = ((d * texture->height) / draw.height) >> 8;
 		colour = colours[pixel_y][draw.x];
-		if (draw.side == 1 || draw.side == 3)
+		if (mlx->l == 3)
+			coloured_walls(&colour, draw.side);
+		else if (draw.side == 1 || draw.side == 3)
 			shift_colour(&colour, 1);
 		if (colour.opacity > 200)
 			put_pixel(x, y, mlx, colour);

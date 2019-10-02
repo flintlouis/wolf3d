@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:53:21 by fhignett       #+#    #+#                */
-/*   Updated: 2019/10/01 16:03:15 by flintlouis    ########   odam.nl         */
+/*   Updated: 2019/10/02 12:39:48 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,7 @@ typedef struct			s_mlx
 	int					size_line;
 	int					endian;
 	int					x[2];
+	int					l;
 	double				*z;
 	t_level				*level;
 	t_player			*player;

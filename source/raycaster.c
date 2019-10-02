@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:51 by fhignett       #+#    #+#                */
-/*   Updated: 2019/10/01 16:07:26 by flintlouis    ########   odam.nl         */
+/*   Updated: 2019/10/02 13:15:18 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ double wall_distance, t_draw draw)
 	side_compass(&draw.side, ray.step);
 	wall_coll -= floor(wall_coll);
 	draw.x = (int)(wall_coll * TEXTURES[texture_id].width);
-	// if ((draw.side == 0 && ray.dir.y > 0) || (draw.side == 1 && ray.dir.x < 0))
-	// 	draw.x = TEXTURES[texture_id].width - draw.x - 1;
 	draw_object(mlx, &TEXTURES[texture_id], mlx->x[0], draw);
 }
 

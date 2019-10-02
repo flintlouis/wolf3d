@@ -6,7 +6,7 @@
 #    By: fhignett <fhignett@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/06/04 14:19:05 by fhignett       #+#    #+#                 #
-#    Updated: 2019/09/27 16:08:18 by fhignett      ########   odam.nl          #
+#    Updated: 2019/10/02 12:43:56 by fhignett      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,12 +27,13 @@ minimap move_enemy move_player nodes path_finding ray_info raycaster rotation \
 sprite_info spritecaster time vectors wolfenstein errors
 CFILES = $(SOURCE:%=source/%.c)
 OFILES = $(CFILES:source/%.c=.objects/%.o)
-FLAGS = -Wall -Werror -Wextra -O2 -funroll-loops
+FLAGS = -Wall -Werror -Wextra
+OPT = -O2 -funroll-loops
 
 all: $(NAME)
 
 $(NAME): libft/printflibft.a .objects $(OFILES)
-	@gcc -o $(NAME) $(OFILES) $(LIB) $(INCL) $(FRAMEWORK) $(FLAGS)
+	@gcc -o $(NAME) $(OFILES) $(LIB) $(INCL) $(FRAMEWORK) $(OPT) $(FLAGS)
 	@echo "$(DONE) $(NAME)"
 
 libft/printflibft.a:
@@ -40,7 +41,7 @@ libft/printflibft.a:
 	@make -C libft
 
 .objects/%.o: source/%.c includes/wolf3d.h
-	@gcc -o $@ -c $< $(INCL) $(FLAGS)
+	@gcc -o $@ -c $< $(INCL) $(OPT) $(FLAGS)
 	@echo "$(PLUS) $@"
 
 .objects:
