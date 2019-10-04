@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:31 by fhignett       #+#    #+#                */
-/*   Updated: 2019/10/02 12:41:33 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/10/04 17:45:42 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,4 @@ void			init_level(t_mlx *mlx, char *file)
 	}
 	size_error(j, LEVEL->size.y, '<');
 	close(fd);
-	if (ft_strequ("level.3", file))
-		mlx->l = 3;
 }

@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:52:06 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/27 14:32:31 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/10/04 17:42:44 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ int				wolfenstein(t_mlx *mlx)
 		frames += frames < 5000 ? ms : 0;
 		threading(mlx, raycaster);
 		spritecaster(mlx);
-		fire_gun(mlx, GUN, 18, ms);
+		if (mlx->l != 3)
+			fire_gun(mlx, GUN, 18, ms);
 		draw_image(mlx);
 		move_player(mlx);
 		player_look(PLAYER, CONTROLS);
