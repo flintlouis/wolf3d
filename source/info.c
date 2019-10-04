@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/25 15:55:03 by fhignett       #+#    #+#                */
-/*   Updated: 2019/10/04 17:53:47 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/10/04 17:55:00 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,5 @@ void			info(t_mlx *mlx)
 		0xff0000, "DEAD");
 	if (mlx->l == 2 && no_more_enemies(ENEMIES, LEVEL))
 		mlx_string_put(mlx->mlx, mlx->win, WIDTH >> 1, HEIGHT >> 1,
-		0xffff00, "RAMBO");
+		0xffff00, "ACHIEVEMENT: RAMBO");
 }
