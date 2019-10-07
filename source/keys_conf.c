@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:27 by fhignett       #+#    #+#                */
-/*   Updated: 2019/09/26 13:23:25 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/10/07 12:08:48 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,7 @@ int	key_release(int key, t_mlx *mlx)
 		CONTROLS->look_right = 0;
 	else if (key == KEY_SPACE)
 		CONTROLS->shoot = 0;
+	else if (key == KEY_T)
+		CONTROLS->t = (CONTROLS->t + 1) % 3;
 	return (0);
 }

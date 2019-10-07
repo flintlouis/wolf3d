@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:24 by fhignett       #+#    #+#                */
-/*   Updated: 2019/10/07 11:18:42 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/10/07 12:06:23 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ void		init_wolf(char *map)
 	PLAYER = MEM(t_player);
 	init_level(mlx, map);
 	if (ft_strequ("level.test", map))
-		mlx->l = 3;
+		LEVEL->l = 3;
 	else if (ft_strequ("level.survival", map))
-		mlx->l = 2;
+		LEVEL->l = 2;
 	set_player_angle(PLAYER, PLAYER->angle);
 	CONTROLS = MEM(t_controls);
 	TEXTURES = get_textures("source/textures.txt");

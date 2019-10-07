@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:08 by fhignett       #+#    #+#                */
-/*   Updated: 2019/10/04 17:42:22 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/10/07 12:13:18 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,37 @@ void			put_pixel(int x, int y, t_mlx *mlx, t_colour colour)
 	}
 }
 
-static	void	coloured_walls(t_colour *c, int side)
+static	void	mix_colours(t_colour *c, t_byte r, t_byte g, t_byte b)
 {
-	if (side == 1)
-		*c = (t_colour){150, 0, 0, 255};
-	else if (side == 2)
-		*c = (t_colour){0, 150, 0, 255};
-	else if (side == 3)
-		*c = (t_colour){0, 0, 150, 255};
+	c->r = r;
+	c->g = g;
+	c->b = b;
+}
+
+static	void	coloured_walls(t_colour *c, int side, int textures)
+{
+	if (!textures)
+	{
+		if (side == 1)
+			*c = (t_colour){150, 0, 0, 255};
+		else if (side == 2)
+			*c = (t_colour){0, 150, 0, 255};
+		else if (side == 3)
+			*c = (t_colour){0, 0, 150, 255};
+		else
+			*c = (t_colour){150, 0, 150, 255};
+	}
 	else
-		*c = (t_colour){150, 0, 150, 255};
+	{
+		if (side == 1)
+			mix_colours(c, c->b, c->g, c->r);
+		else if (side == 2)
+			mix_colours(c, c->b, c->r, c->g);
+		else if (side == 3)
+			mix_colours(c, c->g, c->r, c->b);
+		else
+			mix_colours(c, c->r, c->b, c->g);
+	}
 }
 
 /*
@@ -74,8 +95,8 @@ void			draw_object(t_mlx *mlx, t_texture *texture, int x, t_draw draw)
 		d = (y << 8) - ((HEIGHT - (long)draw.height) << 7);
 		pixel_y = ((d * texture->height) / draw.height) >> 8;
 		colour = colours[pixel_y][draw.x];
-		if (mlx->l == 3)
-			coloured_walls(&colour, draw.side);
+		if (LEVEL->l == 3 && CONTROLS->t != 1)
+			coloured_walls(&colour, draw.side, CONTROLS->t);
 		else if (draw.side == 1 || draw.side == 3)
 			shift_colour(&colour, 1);
 		if (colour.opacity > 200)

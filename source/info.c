@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/25 15:55:03 by fhignett       #+#    #+#                */
-/*   Updated: 2019/10/04 17:55:00 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/10/07 12:13:53 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,19 @@ static int		no_more_enemies(t_enemy *enemies, t_level *level)
 
 void			info(t_mlx *mlx)
 {
-	write_info(mlx, "HEALTH", PLAYER->health, 0);
+	if (LEVEL->l != 3)
+		write_info(mlx, "HEALTH", PLAYER->health, 0);
 	if (!PLAYER->health)
 		mlx_string_put(mlx->mlx, mlx->win, WIDTH >> 1, HEIGHT >> 1,
 		0xff0000, "DEAD");
-	if (mlx->l == 2 && no_more_enemies(ENEMIES, LEVEL))
+	if (LEVEL->l == 2 && no_more_enemies(ENEMIES, LEVEL))
 		mlx_string_put(mlx->mlx, mlx->win, WIDTH >> 1, HEIGHT >> 1,
 		0xffff00, "ACHIEVEMENT: RAMBO");
+	else if (LEVEL->l == 3)
+	{
+		write_info(mlx, "FPS	:", frames(), 2);
+		write_info(mlx, "LOOKING DEG	:", PLAYER->angle, 3);
+		mlx_string_put(mlx->mlx, mlx->win, 10, 10 + 20 * 1,
+		0xffffff, "PRESS	:             T");
+	}
 }

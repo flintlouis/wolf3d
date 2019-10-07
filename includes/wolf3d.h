@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:53:21 by fhignett       #+#    #+#                */
-/*   Updated: 2019/10/07 11:11:27 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/10/07 12:07:54 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@
 # define KEY_A			0
 # define KEY_S			1
 # define KEY_D			2
+# define KEY_T			17
 
 typedef unsigned char	t_byte;
 
@@ -125,10 +126,12 @@ typedef struct			s_controls
 	char				right:1;
 	char				look_left:1;
 	char				look_right:1;
+	int					t;
 }						t_controls;
 
 typedef struct			s_level
 {
+	int					l;
 	int					object_count;
 	int					enemy_count;
 	int					**map;
@@ -184,7 +187,6 @@ typedef struct			s_mlx
 	int					size_line;
 	int					endian;
 	int					x[2];
-	int					l;
 	int					gun_size;
 	double				*z;
 	t_level				*level;
