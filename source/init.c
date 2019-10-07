@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:51:24 by fhignett       #+#    #+#                */
-/*   Updated: 2019/10/04 17:46:10 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/10/07 11:18:42 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ void		init_wolf(char *map)
 	LEVEL = MEM(t_level);
 	PLAYER = MEM(t_player);
 	init_level(mlx, map);
-	if (ft_strequ("level.3", map))
+	if (ft_strequ("level.test", map))
 		mlx->l = 3;
-	else if (ft_strequ("level.2", map))
+	else if (ft_strequ("level.survival", map))
 		mlx->l = 2;
 	set_player_angle(PLAYER, PLAYER->angle);
 	CONTROLS = MEM(t_controls);
@@ -87,5 +87,6 @@ void		init_wolf(char *map)
 	ENEMIES = (t_enemy*)ft_memalloc(sizeof(t_enemy) * LEVEL->enemy_count);
 	init_pathfinding(mlx);
 	PLAYER->health = 100;
+	mlx->gun_size = (WIDTH + HEIGHT) / 160;
 	run_wolf(mlx);
 }

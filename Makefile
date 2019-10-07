@@ -6,7 +6,7 @@
 #    By: fhignett <fhignett@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/06/04 14:19:05 by fhignett       #+#    #+#                 #
-#    Updated: 2019/10/02 12:43:56 by fhignett      ########   odam.nl          #
+#    Updated: 2019/10/07 11:05:52 by fhignett      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,8 +37,8 @@ $(NAME): libft/printflibft.a .objects $(OFILES)
 	@echo "$(DONE) $(NAME)"
 
 libft/printflibft.a:
-	@echo "$(PLUS) printflibft.a"
 	@make -C libft
+	@echo "$(PLUS) printflibft.a"
 
 .objects/%.o: source/%.c includes/wolf3d.h
 	@gcc -o $@ -c $< $(INCL) $(OPT) $(FLAGS)
@@ -50,7 +50,7 @@ libft/printflibft.a:
 clean:
 	@make clean -C libft/
 	@rm -f $(OFILES)
-	@echo "$(MIN) Removing object files"
+	@echo "$(MIN) object files removed"
 
 fclean: clean
 	@make fclean -C libft
