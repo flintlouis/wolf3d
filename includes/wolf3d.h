@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/09/23 11:53:21 by fhignett       #+#    #+#                */
-/*   Updated: 2019/10/07 12:07:54 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/11/28 13:08:31 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 */
 
 # define MEM(x) 		(x*)ft_memalloc(sizeof(x))
-# define WIDTH			2000
-# define HEIGHT			1000
+# define WIDTH			1500
+# define HEIGHT			800
 # define THREAD			4
 # define WALLCOUNT		4
 # define OBJECTCOL		11
