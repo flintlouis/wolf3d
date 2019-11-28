@@ -1,4 +1,5 @@
 # wolf3d
-![](.wolf3d.git)
+
+![](.wolf3d.gif)
 
 shooting zombies
